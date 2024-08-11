@@ -139,28 +139,6 @@ ENV/
 env.bak/
 venv.bak/
 
-ventasApp/__pycache__/forms.cpython-312.pyc
-ventasApp/__pycache__/models.cpython-312.pyc
-ventasApp/__pycache__/urls.cpython-312.pyc
-ventasApp/__pycache__/views.cpython-312.pyc
-
-seguridadApp/__pycache__/forms.cpython-312.pyc
-seguridadApp/__pycache__/models.cpython-312.pyc
-seguridadApp/__pycache__/urls.cpython-312.pyc
-seguridadApp/__pycache__/views.cpython-312.pyc
-
-django_sisventas/__pycache__/forms.cpython-312.pyc
-django_sisventas/__pycache__/models.cpython-312.pyc
-django_sisventas/__pycache__/urls.cpython-312.pyc
-django_sisventas/__pycache__/views.cpython-312.pyc
-
-**/_pycache_/
-**.pyc
-*.pyc
-_pycache_/
-*.py[cod]
-*$py.class
-
 # Spyder project settings
 .spyderproject
 .spyproject
@@ -191,3 +169,17 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+
+__pycache__/
+django_sisventas/__pycache__/
+seguridadApp/__pycache__/
+seguridadApp/migrations/__pycache__/
+ventasApp/__pycache__/
+ventasApp/migrations/__pycache__/
+
+**/_pycache_/
+**.pyc
+*.pyc
+_pycache_/
+*.py[cod]
+*$py.class
