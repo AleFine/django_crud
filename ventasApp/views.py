@@ -16,14 +16,14 @@ from django.http import JsonResponse
 #CATEGORIAS
 @login_required
 def listarcategoria(request):
-    queryset = request.GET.get("buscar")
+    queryset = request.GET.get('search','').strip().lower()
     categoria = Categoria.objects.filter(estado=True)
     
     if queryset:
         categoria = Categoria.objects.filter(
             Q(descripcion__icontains=queryset),
             estado=True
-        ).distinct()
+        )
         
     context = {'categoria': categoria}
     return render(request, "listarCategoria2.html", context)
@@ -65,14 +65,14 @@ def eliminarcategoria(request, id):
 #UNIDADES
 @login_required
 def listar_unidades(request):
-    queryset = request.GET.get("buscar")
+    queryset = request.GET.get("search",'').strip().lower()
     unidad = Unidad.objects.filter(estado=True)
     
     if queryset:
         unidad = Unidad.objects.filter(
             Q(descripcion__icontains=queryset),
             estado=True
-        ).distinct()
+        )
         
     context = {'unidad': unidad}
     return render(request, "listar_unidades.html", context)
@@ -114,8 +114,13 @@ def eliminar_unidades(request, id):
 #PRODUCTOS
 @login_required
 def listar_productos(request):
-    productos = Producto.objects.all()
+    search_query = request.GET.get('search', '').strip().lower()
+    if search_query:
+        productos = Producto.objects.filter(descripcion__icontains=search_query)
+    else:
+        productos = Producto.objects.all()
     return render(request, 'listar_productos.html', {'productos': productos})
+
 @login_required
 def crear_producto(request):
     if request.method == 'POST':
@@ -157,7 +162,11 @@ def eliminar_producto(request, id):
 #CLIENTES
 @login_required
 def listar_clientes(request):
-    clientes = Cliente.objects.all()
+    search_query = request.GET.get('search', '').strip().lower()
+    if search_query:
+        clientes = Cliente.objects.filter(nombre__icontains=search_query)
+    else:
+        clientes = Cliente.objects.all()
     return render(request, 'listar_clientes.html', {'clientes': clientes})
 
 def crear_cliente(request):
@@ -214,8 +223,16 @@ def reporte_pdf(request):
 
 #INICIO VENTAS
 def listar_ventas(request):
-    ventas = Venta.objects.all()
-    return render(request, 'listar_ventas.html', {'ventas': ventas})
+    search_query = request.GET.get('search', '').strip().lower()
+    if search_query:
+        ventas = Venta.objects.filter(cliente__nombre__icontains=search_query)
+    else:
+        ventas = Venta.objects.all()
+
+    context = {
+        'ventas': ventas,
+    }
+    return render(request, 'listar_ventas.html', context)
 
 @transaction.atomic
 def crear_venta(request):

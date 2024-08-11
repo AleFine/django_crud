@@ -18,13 +18,13 @@
     </div>
 
     <div class="flex justify-between">
-        <form action="" method="GET" class="flex items-center bg-white shadow-md rounded-md overflow-hidden dark:bg-gray-800 max-w-md">
+        <form action="{% url 'listar_clientes' %}" method="GET" class="flex items-center bg-white shadow-md rounded-md overflow-hidden dark:bg-gray-800 max-w-md">
             <input 
                 type="text" 
                 name="search" 
                 class="form-input px-4 py-2 w-full text-black dark:text-black dark:bg-gray-700 focus:ring-2 focus:ring-blue-600 focus:border-transparent rounded-none" 
                 placeholder="Buscar cliente" 
-                value="">
+                value="{{ request.GET.search }}"> 
             <button 
                 type="submit" 
                 class="px-4 py-2 transition duration-200 ease-in-out">
