@@ -5,12 +5,20 @@ ventasApp/__pycache__/models.cpython-312.pyc
 ventasApp/__pycache__/urls.cpython-312.pyc
 ventasApp/__pycache__/views.cpython-312.pyc
 
-**/__pycache__/
+_pycache_/
+django_sisventas/_pycache_/
+seguridadApp/_pycache_/
+seguridadApp/migrations/_pycache_/
+ventasApp/_pycache_/
+ventasApp/migrations/_pycache_/
+
+**/pycache/
 **.pyc
 *.pyc
-__pycache__/
+pycache/
 *.py[cod]
 *$py.class
+
 
 # C extensions
 *.so

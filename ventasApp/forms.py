@@ -1,6 +1,6 @@
 from django import forms 
 from django.forms import fields 
-from .models import Categoria, Cliente, Unidad,Producto
+from .models import Categoria, Cliente, Unidad,Producto,Venta,DetalleVenta
 
 class CategoriaForm(forms.ModelForm):
     class Meta:
@@ -72,3 +72,60 @@ class ProductoForm(forms.ModelForm):
             }),
         }
 
+class VentaForm(forms.ModelForm):
+    class Meta:
+        model = Venta
+        fields = ['cliente', 'fecha_venta', 'documento', 'total']
+        widgets = {
+            'cliente': forms.Select(attrs={
+                'class': 'relative z-20 w-full appearance-none rounded border-[1.5px] border-stroke bg-transparent py-3 pl-5 pr-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary',
+                'x-data': '{ isOptionSelected: false }',
+                '@change': 'isOptionSelected = true',
+                ':class': 'isOptionSelected && "text-black dark:text-white"'
+            }),
+            'fecha_venta': forms.DateInput(attrs={
+                'class': 'w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary',
+                'type': 'date'
+            }),
+            'documento': forms.TextInput(attrs={
+                'class': 'w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary',
+                'placeholder': 'DNI del cliente',
+                'readonly':'readonly'
+            }),
+            'total': forms.NumberInput(attrs={
+                'class': 'w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary',
+                'step': '0.01',
+                'readonly': 'readonly'
+            }),
+            'subtotal': forms.NumberInput(attrs={
+                'class': 'w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary',
+                'step': '0.01',
+                'readonly': 'readonly'
+            }),
+            'igv': forms.NumberInput(attrs={
+                'class': 'w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary',
+                'step': '0.01',
+                'readonly': 'readonly'
+            }),
+        }
+        
+class DetalleVentaForm(forms.ModelForm):
+    class Meta:
+        model = DetalleVenta
+        fields = ['producto', 'precio', 'cantidad']
+        widgets = {
+            'producto': forms.Select(attrs={
+                'class': 'relative z-20 w-full appearance-none rounded border-[1.5px] border-stroke bg-transparent py-3 pl-5 pr-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary',
+                'x-data': '{ isOptionSelected: false }',
+                '@change': 'isOptionSelected = true',
+                ':class': 'isOptionSelected && "text-black dark:text-white"'
+            }),
+            'precio': forms.NumberInput(attrs={
+                'class': 'w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary',
+                'step': '0.01'
+            }),
+            'cantidad': forms.NumberInput(attrs={
+                'class': 'w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary',
+                'min': '1'
+            }),
+        }

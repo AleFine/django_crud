@@ -1,5 +1,9 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.core.validators import MinValueValidator
+from decimal import Decimal
+from django.db import transaction
+from django.db.models import F
 
 # Create your models here.
 class Categoria(models.Model):
@@ -43,3 +47,47 @@ class Producto(models.Model):
     def __str__(self):
         return self.descripcion
         
+class Venta(models.Model):
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, related_name='ventas')
+    fecha_venta = models.DateField()
+    documento = models.CharField(max_length=50)
+    total = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(Decimal('0.01'))])
+
+    @property
+    def igv(self):
+        return self.total * Decimal('0.18')
+
+    @property
+    def subtotal(self):
+        return self.total - self.igv
+
+    def __str__(self):
+        return f'Venta {self.id} - {self.fecha_venta}'
+
+class DetalleVenta(models.Model):
+    venta = models.ForeignKey(Venta, on_delete=models.CASCADE, related_name='detalles')
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    precio = models.DecimalField(max_digits=10, decimal_places=2)
+    cantidad = models.PositiveIntegerField()
+
+    def save(self, *args, **kwargs):
+        with transaction.atomic():
+            # Obtener el producto actual con un bloqueo de fila
+            producto_actual = Producto.objects.select_for_update().get(pk=self.producto.pk)
+            
+            # Verificar que hay suficiente stock
+            if producto_actual.stock < self.cantidad:
+                raise ValueError(f"No hay suficiente stock para {producto_actual.descripcion}. Stock disponible: {producto_actual.stock}, solicitado: {self.cantidad}")
+
+            # Actualizar el stock usando F()
+            producto_actual.stock = F('stock') - self.cantidad
+            producto_actual.save(update_fields=['stock'])
+
+            # Guardar el detalle de la venta
+            super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f'Detalle Venta {self.id} - {self.producto.descripcion}'
+
+    def __str__(self):
+        return f'Detalle Venta {self.id} - {self.producto.descripcion}'

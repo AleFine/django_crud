@@ -1,8 +1,11 @@
 from django.shortcuts import render,redirect, get_object_or_404
-from ventasApp.models import Categoria,Cliente,Unidad,Producto
+from ventasApp.models import Categoria,Cliente,Unidad,Producto,Venta,DetalleVenta
 from django.contrib import messages
+from django.db import transaction
+from decimal import Decimal
 from django.db.models import Q
-from .forms import CategoriaForm,ClienteForm,UnidadForm,ProductoForm
+from .forms import CategoriaForm,ClienteForm,UnidadForm,ProductoForm,DetalleVentaForm,VentaForm
+from django.http import JsonResponse
 # Create your views here.
 
 #CATEGORIAS
@@ -180,3 +183,182 @@ def eliminar_cliente(request, id):
     messages.success(request, f'El cliente "{cliente.nombre} {cliente.apellidos}" ha sido eliminado.')
     return redirect('listar_clientes')
 #FIN CLIENTES
+
+
+#INICIO VENTAS
+def listar_ventas(request):
+    ventas = Venta.objects.all()
+    return render(request, 'listar_ventas.html', {'ventas': ventas})
+
+@transaction.atomic
+def crear_venta(request):
+    productos = Producto.objects.all()
+    clientes = Cliente.objects.all()
+
+    if request.method == 'POST':
+        venta_form = VentaForm(request.POST)
+        if venta_form.is_valid():
+            try:
+                with transaction.atomic():
+                    venta = venta_form.save(commit=False)
+                    
+                    total = Decimal('0.00')
+                    productos_ids = request.POST.getlist('id_producto[]')
+                    cantidades = request.POST.getlist('cantidad[]')
+
+                    if not productos_ids or not cantidades:
+                        raise ValueError("No se han proporcionado productos o cantidades.")
+
+                    for producto_id, cantidad in zip(productos_ids, cantidades):
+                        producto = get_object_or_404(Producto, id=producto_id)
+                        
+                        stock_disponible = int(producto.stock or 0) 
+                        cantidad_solicitada = int(cantidad)
+                        
+                        if stock_disponible < cantidad_solicitada:
+                            raise ValueError(f"No hay suficiente stock para {producto.descripcion}. Stock disponible: {stock_disponible}, solicitado: {cantidad_solicitada}")
+                        
+                        total += producto.precio * Decimal(cantidad_solicitada)
+                    total_con_igv = total * Decimal('1.18')
+                    venta.total = total_con_igv
+                    venta.save()
+
+                    # crea detalles de la venta
+                    for producto_id, cantidad in zip(productos_ids, cantidades):
+                        producto = get_object_or_404(Producto, id=producto_id)
+                        detalle = DetalleVenta(
+                            venta=venta,
+                            producto=producto,
+                            precio=producto.precio,
+                            cantidad=int(cantidad) 
+                        )
+                        detalle.save()
+                        
+                        #actualiza stock
+                        producto.stock = int(producto.stock or 0) - int(cantidad)
+                        producto.save()
+
+                messages.success(request, 'Venta creada exitosamente.')
+                return redirect('listar_ventas')
+            except ValueError as e:
+                messages.error(request, str(e))
+            except Exception as e:
+                messages.error(request, f'Error al crear la venta: {str(e)}')
+        else:
+            messages.error(request, 'Por favor, corrija los errores en el formulario.')
+    else:
+        venta_form = VentaForm()
+
+    return render(request, 'venta_form.html', {
+        'venta_form': venta_form,
+        'productos': productos,
+        'clientes': clientes
+    })
+
+    
+@transaction.atomic
+def editar_venta(request, venta_id):
+    venta = get_object_or_404(Venta, id=venta_id)
+    productos = Producto.objects.all()
+    clientes = Cliente.objects.all()
+
+    if request.method == 'POST':
+        venta_form = VentaForm(request.POST, instance=venta)
+        if venta_form.is_valid():
+            try:
+                with transaction.atomic():
+                    venta = venta_form.save(commit=False)
+                    
+                    total = Decimal('0.00')
+                    productos_ids = request.POST.getlist('id_producto[]')
+                    cantidades = request.POST.getlist('cantidad[]')
+
+                    if not productos_ids or not cantidades:
+                        raise ValueError("No se han proporcionado productos o cantidades.")
+
+                    for detalle in venta.detalleventa_set.all():
+                        detalle.producto.stock += detalle.cantidad
+                        detalle.producto.save()
+
+                    venta.detalleventa_set.all().delete()
+
+                    for producto_id, cantidad in zip(productos_ids, cantidades):
+                        producto = get_object_or_404(Producto, id=producto_id)
+                        
+                        stock_disponible = int(producto.stock or 0) 
+                        cantidad_solicitada = int(cantidad)
+                        
+                        if stock_disponible < cantidad_solicitada:
+                            raise ValueError(f"No hay suficiente stock para {producto.descripcion}. Stock disponible: {stock_disponible}, solicitado: {cantidad_solicitada}")
+                        
+                        total += producto.precio * Decimal(cantidad_solicitada)
+                    
+                    total_con_igv = total * Decimal('1.18')
+                    venta.total = total_con_igv
+                    venta.save()
+
+                    for producto_id, cantidad in zip(productos_ids, cantidades):
+                        producto = get_object_or_404(Producto, id=producto_id)
+                        detalle = DetalleVenta(
+                            venta=venta,
+                            producto=producto,
+                            precio=producto.precio,
+                            cantidad=int(cantidad)
+                        )
+                        detalle.save()
+                        
+                        producto.stock = int(producto.stock or 0) - int(cantidad)
+                        producto.save()
+
+                messages.success(request, 'Venta actualizada exitosamente.')
+                return redirect('listar_ventas')
+            except ValueError as e:
+                messages.error(request, str(e))
+            except Exception as e:
+                messages.error(request, f'Error al actualizar la venta: {str(e)}')
+        else:
+            messages.error(request, 'Por favor, corrija los errores en el formulario.')
+    else:
+        venta_form = VentaForm(instance=venta)
+
+    return render(request, 'venta_form.html', {
+        'venta_form': venta_form,
+        'productos': productos,
+        'clientes': clientes,
+        'venta': venta
+    })
+
+@transaction.atomic
+def eliminar_venta(request, venta_id):
+    venta = get_object_or_404(Venta, id=venta_id)
+
+    if request.method == 'POST':
+        try:
+            detalles = venta.detalles.all()
+
+            if detalles.exists():
+                for detalle in detalles:
+                    producto = detalle.producto
+                    producto.stock += detalle.cantidad
+                    producto.save()
+                
+                detalles.delete()
+
+            venta.delete()
+
+            messages.success(request, 'Venta eliminada exitosamente.')
+        except Exception as e:
+            messages.error(request, f'Error al eliminar la venta: {str(e)}')
+        return redirect('listar_ventas')
+
+    return redirect('listar_ventas')
+
+    
+def get_cliente_documento(request, cliente_id):
+    try:
+        cliente = Cliente.objects.get(id=cliente_id)
+        return JsonResponse({'documento': cliente.documento})
+    except Cliente.DoesNotExist:
+        return JsonResponse({'error': 'Cliente no encontrado'}, status=404)
+
+#FIN VENTAS
