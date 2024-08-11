@@ -81,17 +81,14 @@
                     </h2>
 
                     <form class="" method="POST" action="">
+                      {% csrf_token %}
                       <div class="mb-4">
                         <label
                           class="mb-2.5 block font-medium text-black dark:text-white"
-                          >Nombre</label
+                          >{{ form.username.label }}</label
                         >
                         <div class="relative">
-                          <input
-                            type="text"
-                            placeholder="Ingresa tu nombre"
-                            class="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                          />
+                          {{ form.username }}
 
                           <span class="absolute right-4 top-4">
                             <svg
@@ -120,14 +117,10 @@
                       <div class="mb-4">
                         <label
                           class="mb-2.5 block font-medium text-black dark:text-white"
-                          >Gmail</label
+                          >{{ form.email.label }}</label
                         >
                         <div class="relative">
-                          <input
-                            type="email"
-                            placeholder="Ingresa tu gmail"
-                            class="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                          />
+                          {{ form.email }}
 
                           <span class="absolute right-4 top-4">
                             <svg
@@ -152,14 +145,10 @@
                       <div class="mb-4">
                         <label
                           class="mb-2.5 block font-medium text-black dark:text-white"
-                          >Contraseña</label
+                          >{{ form.contraseña1.label }}</label
                         >
                         <div class="relative">
-                          <input
-                            type="password"
-                            placeholder="Ingresa tu contraseña"
-                            class="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                          />
+                          {{ form.contraseña1 }}
 
                           <span class="absolute right-4 top-4">
                             <svg
@@ -188,14 +177,10 @@
                       <div class="mb-6">
                         <label
                           class="mb-2.5 block font-medium text-black dark:text-white"
-                          >Repite la Contraseña</label
+                          >{{ form.contraseña2.label }}</label
                         >
                         <div class="relative">
-                          <input
-                            type="password"
-                            placeholder="Repite la contraseña"
-                            class="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                          />
+                          {{ form.contraseña1 }}
 
                           <span class="absolute right-4 top-4">
                             <svg

@@ -34,7 +34,7 @@ class RegistroForm(forms.ModelForm):
         label='Nombre de usuario',
         widget=forms.EmailInput(attrs={
             'class': 'w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-strokedark dark:bg-form-input dark:focus:border-primary',
-            'placeholder': 'Ingresa tu nombre de usuario'
+            'placeholder': 'Ingresa tu correo electronico'
         })
     )
     password1 = forms.CharField(
@@ -45,10 +45,10 @@ class RegistroForm(forms.ModelForm):
         })
     )
     password2 = forms.CharField(
-        label='Contraseña',
+        label='Reingresar Contraseña',
         widget=forms.PasswordInput(attrs={
             'class': 'w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary',
-            'placeholder': 'Ingresa tu contraseña'
+            'placeholder': 'Ingresa otra vez tu contraseña'
         })
     )
 
