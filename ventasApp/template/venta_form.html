@@ -177,18 +177,14 @@
         }
 
         function actualizarDropdowns() {
-            // Obtener todos los valores seleccionados
             const seleccionados = Array.from(document.querySelectorAll('select[name="id_producto[]"]')).map(select => select.value);
         
-            // Iterar sobre cada select y deshabilitar las opciones ya seleccionadas
             document.querySelectorAll('select[name="id_producto[]"]').forEach(select => {
                 const opciones = select.querySelectorAll('option');
                 opciones.forEach(opcion => {
                     if (opcion.value !== "" && seleccionados.includes(opcion.value)) {
-                        // Si la opción ya está seleccionada en otro dropdown, deshabilitarla
                         opcion.disabled = true;
                     } else {
-                        // Si no está seleccionada, habilitarla
                         opcion.disabled = false;
                     }
                 });
@@ -209,17 +205,14 @@
             const productosSelects = detallesBody.querySelectorAll('select[name^="id_producto"]');
             const cantidadesInputs = detallesBody.querySelectorAll('input[name^="cantidad"]');
     
-            // Limpiar los datos antiguos
             formData.delete('id_producto[]');
             formData.delete('cantidad[]');
     
-            // Agregar los productos y cantidades al FormData
             productosSelects.forEach((select, index) => {
                 formData.append(`id_producto[]`, select.value);
                 formData.append(`cantidad[]`, cantidadesInputs[index].value);
             });
     
-            // Log de los datos del formulario antes de enviar
             for (let [key, value] of formData.entries()) {
                 console.log(key, value);
             }

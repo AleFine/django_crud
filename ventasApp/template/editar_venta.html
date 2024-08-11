@@ -213,7 +213,7 @@
             subtotales.forEach(subtotal => {
                 total += parseFloat(subtotal.textContent);
             });
-            total = 1.18 * total;  // Calcula el total con IGV del 18%
+            total = 1.18 * total;  
             totalVentaSpan.textContent = total.toFixed(2);
             totalInput.value = total.toFixed(2);
         }
