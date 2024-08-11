@@ -129,9 +129,18 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-ventasApp/__pycache__/
-seguridadApp/__pycache__/
-django_sisventas/__pycache__/
+
+ventasApp/_pycache_/forms.cpython-312.pyc
+ventasApp/_pycache_/models.cpython-312.pyc
+ventasApp/_pycache_/urls.cpython-312.pyc
+ventasApp/_pycache_/views.cpython-312.pyc
+
+**/_pycache_/
+**.pyc
+*.pyc
+_pycache_/
+*.py[cod]
+*$py.class
 
 # Spyder project settings
 .spyderproject
