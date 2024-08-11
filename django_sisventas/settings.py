@@ -75,6 +75,10 @@ TEMPLATES = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # Este es el backend predeterminado
+]
+
 WSGI_APPLICATION = 'django_sisventas.wsgi.application'
 
 

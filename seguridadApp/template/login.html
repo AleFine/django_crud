@@ -49,9 +49,9 @@
                                         {% csrf_token %}
                                         <div class="mb-4">
                                             <label
-                                                class="mb-2.5 block font-medium text-black dark:text-white">{{ form.email.label }}</label>
+                                                class="mb-2.5 block font-medium text-black dark:text-white">{{ form.username.label }}</label>
                                             <div class="relative">
-                                                {{ form.email }}
+                                                {{ form.username }}
                                                 <span class="absolute right-4 top-4">
                                                     <svg
                                                       class="fill-current"
@@ -94,14 +94,23 @@
                                                           d="M10.9977 11.8594C10.5852 11.8594 10.207 12.2031 10.207 12.65V16.2594C10.207 16.6719 10.5508 17.05 10.9977 17.05C11.4102 17.05 11.7883 16.7063 11.7883 16.2594V12.6156C11.7883 12.2031 11.4102 11.8594 10.9977 11.8594Z"
                                                           fill=""
                                                         />
-                                                    </g>
+                                                      </g>
                                                     </svg>
-                                                </span>
-                                            </div>
-                                            
+                                                  </span>
+                                            </div>  
                                         </div>
 
-                                        <div class="mb-5">
+                                        <div class="container m-3">
+                                            {%if messages %}
+                                                {% for message in messages %}
+                                                    <div class="m-3 alert alert-{{ message.tags}}">
+                                                        {{message}}
+                                                    </div>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </div>
+
+                                        <div class="mb-5 mt-5">
                                             <input type="submit" value="Ingresar"
                                                 class="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 font-medium text-white transition hover:bg-opacity-90" />
                                         </div>
@@ -109,7 +118,7 @@
                                         <div class="mt-6 text-center">
                                             <p class="font-medium">
                                                 No tienes una cuenta?
-                                                <a href="register.html" class="text-primary">Registrarse</a>
+                                                <a href="{% url 'register' %}" class="text-primary">Registrarse</a>
                                             </p>
                                         </div>
                                     </form>

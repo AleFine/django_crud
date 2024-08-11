@@ -28,9 +28,9 @@ def ingresar_login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
-            email = form.cleaned_data.get("email")
+            user = form.cleaned_data.get("username")
             password = form.cleaned_data.get("password")
-            usuario = authenticate(request, username=email, password=password)
+            usuario = authenticate(username= user, password=password)
             if usuario is not None:
                 login(request, usuario)
                 return redirect('homePage')  
@@ -42,6 +42,8 @@ def ingresar_login(request):
         form = LoginForm()
     return render(request, 'login.html', {"form": form})
 
+def register(request):
+    return render(request, 'register.html')
 
 def homePage(request):
     context = {}
