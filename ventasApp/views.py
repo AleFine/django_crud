@@ -12,6 +12,7 @@ from .forms import CategoriaForm,ClienteForm,UnidadForm,ProductoForm
 from .forms import CategoriaForm,ClienteForm,UnidadForm,ProductoForm,DetalleVentaForm,VentaForm
 from django.http import JsonResponse
 from django.urls import reverse
+from django.db.models import F
 # Create your views here.
 
 #CATEGORIAS
@@ -314,70 +315,60 @@ def editar_venta(request, venta_id):
         venta_form = VentaForm(request.POST, instance=venta)
         if venta_form.is_valid():
             try:
-                with transaction.atomic():
-                    venta = venta_form.save(commit=False)
-                    
-                    total = Decimal('0.00')
-                    productos_ids = request.POST.getlist('id_producto[]')
-                    cantidades = request.POST.getlist('cantidad[]')
+                venta = venta_form.save(commit=False)
+                total = Decimal('0.00')
+                productos_ids = request.POST.getlist('id_producto[]')
+                cantidades = request.POST.getlist('cantidad[]')
 
-                    if not productos_ids or not cantidades:
-                        raise ValueError("No se han proporcionado productos o cantidades.")
+                if not productos_ids or not cantidades:
+                    raise ValueError("No se han proporcionado productos o cantidades.")
 
-                    # Restablecer el stock antes de editar
-                    detalles_anteriores = DetalleVenta.objects.filter(venta=venta)
-                    for detalle in detalles_anteriores:
-                        detalle.producto.stock += detalle.cantidad
-                        detalle.producto.save()
-                        detalle.delete()
+                # Eliminar detalles actuales
+                venta.detalles.all().delete()
 
-                    for producto_id, cantidad in zip(productos_ids, cantidades):
-                        producto = get_object_or_404(Producto, id=producto_id)
-                        
-                        stock_disponible = int(producto.stock or 0) 
-                        cantidad_solicitada = int(cantidad)
-                        
-                        if stock_disponible < cantidad_solicitada:
-                            raise ValueError(f"No hay suficiente stock para {producto.descripcion}. Stock disponible: {stock_disponible}, solicitado: {cantidad_solicitada}")
-                        
-                        total += producto.precio * Decimal(cantidad_solicitada)
-                    total_con_igv = total * Decimal('1.18')
-                    venta.total = total_con_igv
-                    venta.save()
+                for producto_id, cantidad in zip(productos_ids, cantidades):
+                    producto = get_object_or_404(Producto, id=producto_id)
 
-                    # Crear los nuevos detalles de la venta
-                    for producto_id, cantidad in zip(productos_ids, cantidades):
-                        producto = get_object_or_404(Producto, id=producto_id)
-                        detalle = DetalleVenta(
-                            venta=venta,
-                            producto=producto,
-                            precio=producto.precio,
-                            cantidad=int(cantidad) 
-                        )
-                        detalle.save()
-                        
-                        # Actualizar stock
-                        producto.stock = int(producto.stock or 0) - int(cantidad)
-                        producto.save()
+                    stock_disponible = int(producto.stock or 0)
+                    cantidad_solicitada = int(cantidad)
+
+                    if stock_disponible < cantidad_solicitada:
+                        raise ValueError(f"No hay suficiente stock para {producto.descripcion}. Stock disponible: {stock_disponible}, solicitado: {cantidad_solicitada}")
+
+                    total += producto.precio * Decimal(cantidad_solicitada)
+
+                    detalle = DetalleVenta(
+                        venta=venta,
+                        producto=producto,
+                        precio=producto.precio,
+                        cantidad=cantidad_solicitada
+                    )
+                    detalle.save()
+
+                    # Actualizar stock de manera segura
+                    Producto.objects.filter(id=producto_id).update(stock=F('stock') - cantidad_solicitada)
+
+                venta.total = total * Decimal('1.18')
+                venta.save()
 
                 return JsonResponse({'success': True, 'redirect_url': reverse('listar_ventas')})
             except ValueError as e:
                 return JsonResponse({'success': False, 'error': str(e)})
             except Exception as e:
-                return JsonResponse({'success': False, 'error': f'Error al editar la venta: {str(e)}'})
+                return JsonResponse({'success': False, 'error': f'Error al actualizar la venta: {str(e)}'})
         else:
             return JsonResponse({'success': False, 'error': 'Por favor, corrija los errores en el formulario.'})
     else:
         venta_form = VentaForm(instance=venta)
-        detalles_venta = DetalleVenta.objects.filter(venta=venta)
 
-    return render(request, 'venta_form.html', {
+    return render(request, 'editar_venta.html', {
         'venta_form': venta_form,
         'productos': productos,
         'clientes': clientes,
-        'detalles_venta': detalles_venta,
-        'edit_mode': True
+        'venta': venta
     })
+
+
 
 @transaction.atomic
 def eliminar_venta(request, venta_id):
