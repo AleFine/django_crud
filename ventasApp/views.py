@@ -11,6 +11,7 @@ from django.http import HttpResponse
 from .forms import CategoriaForm,ClienteForm,UnidadForm,ProductoForm
 from .forms import CategoriaForm,ClienteForm,UnidadForm,ProductoForm,DetalleVentaForm,VentaForm
 from django.http import JsonResponse
+from django.urls import reverse
 # Create your views here.
 
 #CATEGORIAS
@@ -249,6 +250,9 @@ def crear_venta(request):
                     total = Decimal('0.00')
                     productos_ids = request.POST.getlist('id_producto[]')
                     cantidades = request.POST.getlist('cantidad[]')
+                    print("POST data:", request.POST)
+                    print("Productos IDs:", request.POST.getlist('id_producto[]'))
+                    print("Cantidades:", request.POST.getlist('cantidad[]'))
 
                     if not productos_ids or not cantidades:
                         raise ValueError("No se han proporcionado productos o cantidades.")
@@ -267,7 +271,7 @@ def crear_venta(request):
                     venta.total = total_con_igv
                     venta.save()
 
-                    # crea detalles de la venta
+                    # Create sale details
                     for producto_id, cantidad in zip(productos_ids, cantidades):
                         producto = get_object_or_404(Producto, id=producto_id)
                         detalle = DetalleVenta(
@@ -278,18 +282,17 @@ def crear_venta(request):
                         )
                         detalle.save()
                         
-                        #actualiza stock
+                        # Update stock
                         producto.stock = int(producto.stock or 0) - int(cantidad)
                         producto.save()
 
-                messages.success(request, 'Venta creada exitosamente.')
-                return redirect('listar_ventas')
+                return JsonResponse({'success': True, 'redirect_url': reverse('listar_ventas')})
             except ValueError as e:
-                messages.error(request, str(e))
+                return JsonResponse({'success': False, 'error': str(e)})
             except Exception as e:
-                messages.error(request, f'Error al crear la venta: {str(e)}')
+                return JsonResponse({'success': False, 'error': f'Error al crear la venta: {str(e)}'})
         else:
-            messages.error(request, 'Por favor, corrija los errores en el formulario.')
+            return JsonResponse({'success': False, 'error': 'Por favor, corrija los errores en el formulario.'})
     else:
         venta_form = VentaForm()
 
@@ -298,6 +301,7 @@ def crear_venta(request):
         'productos': productos,
         'clientes': clientes
     })
+
 
     
 @transaction.atomic
@@ -320,11 +324,12 @@ def editar_venta(request, venta_id):
                     if not productos_ids or not cantidades:
                         raise ValueError("No se han proporcionado productos o cantidades.")
 
-                    for detalle in venta.detalleventa_set.all():
+                    # Restablecer el stock antes de editar
+                    detalles_anteriores = DetalleVenta.objects.filter(venta=venta)
+                    for detalle in detalles_anteriores:
                         detalle.producto.stock += detalle.cantidad
                         detalle.producto.save()
-
-                    venta.detalleventa_set.all().delete()
+                        detalle.delete()
 
                     for producto_id, cantidad in zip(productos_ids, cantidades):
                         producto = get_object_or_404(Producto, id=producto_id)
@@ -336,40 +341,42 @@ def editar_venta(request, venta_id):
                             raise ValueError(f"No hay suficiente stock para {producto.descripcion}. Stock disponible: {stock_disponible}, solicitado: {cantidad_solicitada}")
                         
                         total += producto.precio * Decimal(cantidad_solicitada)
-                    
                     total_con_igv = total * Decimal('1.18')
                     venta.total = total_con_igv
                     venta.save()
 
+                    # Crear los nuevos detalles de la venta
                     for producto_id, cantidad in zip(productos_ids, cantidades):
                         producto = get_object_or_404(Producto, id=producto_id)
                         detalle = DetalleVenta(
                             venta=venta,
                             producto=producto,
                             precio=producto.precio,
-                            cantidad=int(cantidad)
+                            cantidad=int(cantidad) 
                         )
                         detalle.save()
                         
+                        # Actualizar stock
                         producto.stock = int(producto.stock or 0) - int(cantidad)
                         producto.save()
 
-                messages.success(request, 'Venta actualizada exitosamente.')
-                return redirect('listar_ventas')
+                return JsonResponse({'success': True, 'redirect_url': reverse('listar_ventas')})
             except ValueError as e:
-                messages.error(request, str(e))
+                return JsonResponse({'success': False, 'error': str(e)})
             except Exception as e:
-                messages.error(request, f'Error al actualizar la venta: {str(e)}')
+                return JsonResponse({'success': False, 'error': f'Error al editar la venta: {str(e)}'})
         else:
-            messages.error(request, 'Por favor, corrija los errores en el formulario.')
+            return JsonResponse({'success': False, 'error': 'Por favor, corrija los errores en el formulario.'})
     else:
         venta_form = VentaForm(instance=venta)
+        detalles_venta = DetalleVenta.objects.filter(venta=venta)
 
     return render(request, 'venta_form.html', {
         'venta_form': venta_form,
         'productos': productos,
         'clientes': clientes,
-        'venta': venta
+        'detalles_venta': detalles_venta,
+        'edit_mode': True
     })
 
 @transaction.atomic

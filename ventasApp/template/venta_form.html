@@ -18,13 +18,13 @@
                 <h3 class="font-medium text-black dark:text-white">Venta</h3>
             </div>
             <div class="flex flex-col gap-5.5 p-6.5">
-                <!--{% if messages %}
+                {% if messages %}
                 <ul class="messages">
                     {% for message in messages %}
                     <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
                     {% endfor %}
                 </ul>
-                {% endif %}-->
+                {% endif %}
                 
                 <form method="POST" id="ventaForm">
                     {% csrf_token %}
@@ -116,12 +116,13 @@
                 <td class="border p-2 text-center"><input type="number" name="cantidad[]" value="1" min="1" required class="text-center"></td>
                 <td class="border p-2 text-center precio">0.00</td>
                 <td class="border p-2 text-center subtotal">0.00</td>
-                <td class="border p-2 text-center"><button type="button" class="eliminarFila bg-red-500 text-black-50    dark:text-white px-2 py-1 rounded">Eliminar</button></td>
+                <td class="border p-2 text-center"><button type="button" class="eliminarFila bg-red-500 text-black-50 dark:text-white px-2 py-1 rounded">Eliminar</button></td>
             `;
             detallesBody.appendChild(newRow);
             rowCount++;
             actualizarEventListeners();
             actualizarTotal();
+            actualizarDropdowns();
         });
 
         function actualizarEventListeners() {
@@ -130,8 +131,9 @@
                 const productoSelect = fila.querySelector('select[name="id_producto[]"]');
                 const cantidadInput = fila.querySelector('input[name="cantidad[]"]');
                 const eliminarBtn = fila.querySelector('.eliminarFila');
-
+    
                 productoSelect.addEventListener('change', actualizarPrecio);
+                productoSelect.addEventListener('change', actualizarDropdowns);
                 cantidadInput.addEventListener('input', actualizarSubtotal);
                 eliminarBtn.addEventListener('click', eliminarFila);
             });
@@ -160,6 +162,7 @@
             fila.remove();
             rowCount--;
             actualizarTotal();
+            actualizarDropdowns(); // Llamar para actualizar los selects después de eliminar una fila
         }
 
         function actualizarTotal() {
@@ -168,16 +171,78 @@
             subtotales.forEach(subtotal => {
                 total += parseFloat(subtotal.textContent);
             });
-            total=1.18*(total) 
+            total = 1.18 * (total);
             totalVentaSpan.textContent = total.toFixed(2);
             totalInput.value = total.toFixed(2);
         }
 
+        function actualizarDropdowns() {
+            // Obtener todos los valores seleccionados
+            const seleccionados = Array.from(document.querySelectorAll('select[name="id_producto[]"]')).map(select => select.value);
+        
+            // Iterar sobre cada select y deshabilitar las opciones ya seleccionadas
+            document.querySelectorAll('select[name="id_producto[]"]').forEach(select => {
+                const opciones = select.querySelectorAll('option');
+                opciones.forEach(opcion => {
+                    if (opcion.value !== "" && seleccionados.includes(opcion.value)) {
+                        // Si la opción ya está seleccionada en otro dropdown, deshabilitarla
+                        opcion.disabled = true;
+                    } else {
+                        // Si no está seleccionada, habilitarla
+                        opcion.disabled = false;
+                    }
+                });
+            });
+        }
+
+
         ventaForm.addEventListener('submit', function(event) {
+            event.preventDefault();
             if (rowCount === 0) {
-                event.preventDefault();
                 alert('Debe agregar al menos un producto a la venta.');
+                return;
             }
+    
+            const formData = new FormData(ventaForm);
+    
+            // Obtener todos los productos y cantidades
+            const productosSelects = detallesBody.querySelectorAll('select[name^="id_producto"]');
+            const cantidadesInputs = detallesBody.querySelectorAll('input[name^="cantidad"]');
+    
+            // Limpiar los datos antiguos
+            formData.delete('id_producto[]');
+            formData.delete('cantidad[]');
+    
+            // Agregar los productos y cantidades al FormData
+            productosSelects.forEach((select, index) => {
+                formData.append(`id_producto[]`, select.value);
+                formData.append(`cantidad[]`, cantidadesInputs[index].value);
+            });
+    
+            // Log de los datos del formulario antes de enviar
+            for (let [key, value] of formData.entries()) {
+                console.log(key, value);
+            }
+    
+            fetch(ventaForm.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = data.redirect_url;
+                } else {
+                    alert(data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Hubo un error al procesar la venta. Por favor, inténtelo de nuevo.');
+            });
         });
     });
     </script>
