@@ -1,8 +1,8 @@
 from django.shortcuts import render,redirect, get_object_or_404
-from ventasApp.models import Categoria,Cliente,Unidad
+from ventasApp.models import Categoria,Cliente,Unidad,Producto
 from django.contrib import messages
 from django.db.models import Q
-from .forms import CategoriaForm,ClienteForm,UnidadForm
+from .forms import CategoriaForm,ClienteForm,UnidadForm,ProductoForm
 # Create your views here.
 
 #CATEGORIAS
@@ -101,6 +101,47 @@ def eliminar_unidades(request, id):
 #FIN UNIDADES
 
 
+#PRODUCTOS
+def listar_productos(request):
+    productos = Producto.objects.all()
+    return render(request, 'listar_productos.html', {'productos': productos})
+
+def crear_producto(request):
+    if request.method == 'POST':
+        form = ProductoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_productos')
+    else:
+        form = ProductoForm()
+        form.fields['categoria'].queryset = Categoria.objects.filter(estado=True)
+        form.fields['unidad'].queryset = Unidad.objects.filter(estado=True)
+
+    return render(request, 'producto_form.html', {'form': form})
+
+def editar_producto(request, id):
+    producto = get_object_or_404(Producto, id=id)
+    if request.method == 'POST':
+        form = ProductoForm(request.POST, instance=producto)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Producto actualizado exitosamente.')
+            return redirect('listar_productos')
+        else:
+            print(form.errors)
+    else:
+        form = ProductoForm(instance=producto)
+    return render(request, 'editar_producto.html', {'form': form, 'producto': producto})
+
+def eliminar_producto(request, id):
+    producto = get_object_or_404(Producto, id=id)
+    producto.delete()
+    messages.success(request, f'El producto "{producto.descripcion}" ha sido eliminado.')
+    return redirect('listar_productos')
+
+
+#FIN PRODUCTOS
+
 
 #CLIENTES
 def listar_clientes(request):
@@ -116,7 +157,7 @@ def crear_cliente(request):
             return redirect('listar_clientes')
     else:
         form = ClienteForm()
-    return render(request, 'cli ente_form.html', {'form': form})
+    return render(request, 'cliente_form.html', {'form': form})
 
 def editar_cliente(request, id):
     cliente = get_object_or_404(Cliente, id=id)

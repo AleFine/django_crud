@@ -1,4 +1,10 @@
 # Byte-compiled / optimized / DLL files
+
+ventasApp/__pycache__/forms.cpython-312.pyc
+ventasApp/__pycache__/models.cpython-312.pyc
+ventasApp/__pycache__/urls.cpython-312.pyc
+ventasApp/__pycache__/views.cpython-312.pyc
+
 **/__pycache__/
 **.pyc
 *.pyc
