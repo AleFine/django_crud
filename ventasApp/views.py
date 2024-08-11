@@ -3,6 +3,8 @@ from ventasApp.models import Categoria
 from django.db.models import Q
 from .forms import CategoriaForm
 from django.contrib.auth.decorators import login_required
+from .utils import render_to_pdf
+from django.http import HttpResponse
 
 # Create your views here.
 @login_required
@@ -49,4 +51,23 @@ def eliminarcategoria(request,id):
     categoria=Categoria.objects.get(id=id) 
     categoria.estado=False
     categoria.save()
-    return redirect("listarcategoria") 
+    return redirect("listarcategoria")
+
+def reporte_pdf(request):
+    # Suponiendo que tienes una lista de categorías en tu contexto
+    categorias = Categoria.objects.all()
+    
+    context = {
+        'categoria': categorias,
+    }
+    
+    pdf = render_to_pdf('listarcategoria.html', context)
+    
+    if pdf:
+        response = HttpResponse(pdf, content_type='application/pdf')
+        response['Content-Disposition'] = 'inline; filename="reporte_categoria.pdf"'
+        return response
+    else:
+        return HttpResponse("Error al generar el PDF", status=400)
+
+
