@@ -3,7 +3,8 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from ventasApp.forms import LoginForm,RegistroForm  
+from ventasApp.forms import LoginForm,RegistroForm 
+from django.contrib.auth.decorators import login_required
 
 def ingresar_login(request):
     if request.method == 'POST':
@@ -38,6 +39,7 @@ def registrarse(request):
         form = RegistroForm()
     return render(request, 'register.html', {'form': form})
 
+@login_required
 def homePage(request):
     context = {}
     return render(request, "index.html", context)
