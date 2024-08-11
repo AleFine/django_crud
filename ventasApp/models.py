@@ -5,6 +5,10 @@ from django.core.exceptions import ValidationError
 class Categoria(models.Model):
     descripcion=models.CharField(max_length=30)
     estado=models.BooleanField()
+    
+class Unidad(models.Model):
+    descripcion=models.CharField(max_length=30)
+    estado=models.BooleanField()
 
 
 class Cliente(models.Model):
