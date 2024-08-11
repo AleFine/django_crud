@@ -101,18 +101,18 @@ DATABASES = {
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    #{
+     #   'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    #},
+    #{
+    ##    'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    #},
+    #{
+     #   'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    #},
+    #{
+     #   'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    #},
 ]
 
 
@@ -150,4 +150,7 @@ MESSAGE_TAGS={
     message_constants.SUCCESS:'success',
     message_constants.WARNING:'warning',
     message_constants.ERROR:'danger',
-} 
+}
+
+LOGIN_URL = '/logout/'
+LOGIN_REDIRECT_URL = '/home/'

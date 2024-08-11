@@ -2,7 +2,10 @@ from django.shortcuts import render,redirect
 from ventasApp.models import Categoria 
 from django.db.models import Q
 from .forms import CategoriaForm
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
+@login_required
 def listarcategoria(request):
     queryset = request.GET.get("buscar")
     categoria = Categoria.objects.filter(estado=True)
@@ -15,6 +18,7 @@ def listarcategoria(request):
         
     context = {'categoria': categoria}
     return render(request, "listarCategoria2.html", context)
+@login_required
 def agregarcategoria(request):
     if request.method == "POST":
         form = CategoriaForm(request.POST)
@@ -26,6 +30,7 @@ def agregarcategoria(request):
         
     context = {'form': form}
     return render(request, "agregar.html", context)
+@login_required
 def editarcategoria(request, id):
     categoria = Categoria.objects.get(id=id)
     if request.method == "POST":
@@ -38,6 +43,8 @@ def editarcategoria(request, id):
     
     context = {"form": form}
     return render(request, "editar.html", context)
+
+@login_required
 def eliminarcategoria(request,id):
     categoria=Categoria.objects.get(id=id) 
     categoria.estado=False
