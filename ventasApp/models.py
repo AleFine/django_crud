@@ -72,18 +72,11 @@ class DetalleVenta(models.Model):
 
     def save(self, *args, **kwargs):
         with transaction.atomic():
-            # Obtener el producto actual con un bloqueo de fila
             producto_actual = Producto.objects.select_for_update().get(pk=self.producto.pk)
-            
-            # Verificar que hay suficiente stock
             if producto_actual.stock < self.cantidad:
                 raise ValueError(f"No hay suficiente stock para {producto_actual.descripcion}. Stock disponible: {producto_actual.stock}, solicitado: {self.cantidad}")
-
-            # Actualizar el stock usando F()
             producto_actual.stock = F('stock') - self.cantidad
             producto_actual.save(update_fields=['stock'])
-
-            # Guardar el detalle de la venta
             super().save(*args, **kwargs)
 
     def __str__(self):
