@@ -46,7 +46,7 @@ def editarcategoria(request, id):
 
 def eliminarcategoria(request, id):
     categoria = get_object_or_404(Categoria, id=id)
-    categoria.estado = False  # Asumiendo que False representa el estado "eliminado"
+    categoria.estado = False 
     categoria.save()
     messages.success(request, f'La categoría "{categoria.descripcion}" ha sido eliminada.')
     return redirect('listarcategoria')
@@ -83,7 +83,7 @@ def agregar_unidades(request):
 def editar_unidades(request, id):
     unidad = get_object_or_404(Unidad, id=id)
     if request.method == 'POST':
-        form = UnidadForm(request.POST, instance=categoria)
+        form = UnidadForm(request.POST, instance=unidad)
         if form.is_valid():
             form.save()
             return redirect('listar_unidades')
@@ -94,10 +94,10 @@ def editar_unidades(request, id):
 
 def eliminar_unidades(request, id):
     unidad = get_object_or_404(Unidad, id=id)
-    unidad.estado = False  # Asumiendo que False representa el estado "eliminado"
+    unidad.estado = False 
     unidad.save()
-    messages.success(request, f'La categoría "{unidad.descripcion}" ha sido eliminada.')
-    return redirect('listarcategoria')
+    messages.success(request, f'La Unidad "{unidad.descripcion}" ha sido eliminada.')
+    return redirect('listar_unidades')
 #FIN UNIDADES
 
 
