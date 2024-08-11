@@ -130,10 +130,20 @@ ENV/
 env.bak/
 venv.bak/
 
-ventasApp/_pycache_/forms.cpython-312.pyc
-ventasApp/_pycache_/models.cpython-312.pyc
-ventasApp/_pycache_/urls.cpython-312.pyc
-ventasApp/_pycache_/views.cpython-312.pyc
+ventasApp/__pycache__/forms.cpython-312.pyc
+ventasApp/__pycache__/models.cpython-312.pyc
+ventasApp/__pycache__/urls.cpython-312.pyc
+ventasApp/__pycache__/views.cpython-312.pyc
+
+seguridadApp/__pycache__/forms.cpython-312.pyc
+seguridadApp/__pycache__/models.cpython-312.pyc
+seguridadApp/__pycache__/urls.cpython-312.pyc
+seguridadApp/__pycache__/views.cpython-312.pyc
+
+django_sisventas/__pycache__/forms.cpython-312.pyc
+django_sisventas/__pycache__/models.cpython-312.pyc
+django_sisventas/__pycache__/urls.cpython-312.pyc
+django_sisventas/__pycache__/views.cpython-312.pyc
 
 **/_pycache_/
 **.pyc
