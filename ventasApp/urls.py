@@ -4,9 +4,10 @@ from ventasApp.views import (
     listar_clientes, crear_cliente, editar_cliente, eliminar_cliente,
     listar_unidades, agregar_unidades, eliminar_unidades, editar_unidades,
     listar_productos, crear_producto, editar_producto, eliminar_producto,
-    listar_ventas, crear_venta, editar_venta, eliminar_venta, get_cliente_documento
+    listar_ventas, crear_venta, editar_venta, eliminar_venta, get_cliente_documento,reporte_pdf 
 )
 from django.contrib.auth import views
+
 urlpatterns = [ 
     path('listacategoria/',listarcategoria,name="listarcategoria"), 
     path('agregarcategoria/',agregarcategoria ,name="agregarcategoria"),
@@ -34,6 +35,9 @@ urlpatterns = [
     path('ventas/eliminar/<int:venta_id>/', eliminar_venta, name='eliminar_venta'),
     
     path('get-cliente-documento/<int:cliente_id>/', get_cliente_documento, name='get_cliente_documento'),
+    
+    
+    path('reportepdf/', reporte_pdf, name='reporte_pdf'),
     
     ]
 

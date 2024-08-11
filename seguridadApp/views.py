@@ -3,27 +3,43 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from django.views import generic
+from ventasApp.forms import LoginForm,RegistroForm 
+from django.contrib.auth.decorators import login_required
 
-def acceder(request):
-    if request.method == "POST":
-        form = AuthenticationForm(request, data=request.POST)
+def ingresar_login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
         if form.is_valid():
-            nombre_usuario = form.cleaned_data.get("username")
+            user = form.cleaned_data.get("username")
             password = form.cleaned_data.get("password")
-            usuario = authenticate(username=nombre_usuario, password=password)
+            usuario = authenticate(username= user, password=password)
             if usuario is not None:
                 login(request, usuario)
-                return redirect("homePage")
+                return redirect('homePage')  
             else:
                 messages.error(request, "Los datos son incorrectos")
         else:
-            messages.error(request, "Los datos son incorrectos")
+            messages.error(request, "Los datos son incorrectos") 
     else:
-        form = AuthenticationForm()
+        form = LoginForm()
+    return render(request, 'login.html', {"form": form})
 
-    return render(request, "login.html", {"form": form})
+def registrarse(request):
+    if request.method == 'POST':
+        form = RegistroForm(request.POST)
+        if form.is_valid():
+            usuario = form.save()
+            login(request, usuario)
+            messages.success(request, "Tu cuenta ha sido creada exitosamente")
+            return redirect('homePage') 
+        else:
+            print(form.errors)
+            messages.error(request, "Por favor corrige los errores")
+    else:
+        form = RegistroForm()
+    return render(request, 'register.html', {'form': form})
 
+@login_required
 def homePage(request):
     context = {}
     return render(request, "index.html", context)

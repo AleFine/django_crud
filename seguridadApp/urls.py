@@ -1,9 +1,9 @@
 from django.urls import path
-from seguridadApp.views import acceder, homePage, salir
-from django.contrib.auth import views
+from seguridadApp.views import homePage, salir,ingresar_login,registrarse
 
 urlpatterns = [
-    path('', acceder, name='login'),
+    path('', ingresar_login, name='login'),
+    path('registro/', registrarse, name='regis'),
     path('home/', homePage, name='homePage'),
-    path('logout/',salir,name="logout"), 
+    path('logout/',salir,name="logout"),
 ]

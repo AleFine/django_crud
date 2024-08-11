@@ -4,11 +4,17 @@ from django.contrib import messages
 from django.db import transaction
 from decimal import Decimal
 from django.db.models import Q
+from .forms import CategoriaForm
+from django.contrib.auth.decorators import login_required
+from .utils import render_to_pdf
+from django.http import HttpResponse
+from .forms import CategoriaForm,ClienteForm,UnidadForm,ProductoForm
 from .forms import CategoriaForm,ClienteForm,UnidadForm,ProductoForm,DetalleVentaForm,VentaForm
 from django.http import JsonResponse
 # Create your views here.
 
 #CATEGORIAS
+@login_required
 def listarcategoria(request):
     queryset = request.GET.get("buscar")
     categoria = Categoria.objects.filter(estado=True)
@@ -22,7 +28,7 @@ def listarcategoria(request):
     context = {'categoria': categoria}
     return render(request, "listarCategoria2.html", context)
 
-
+@login_required
 def agregarcategoria(request):
     if request.method == "POST":
         form = CategoriaForm(request.POST)
@@ -34,7 +40,7 @@ def agregarcategoria(request):
 
     context = {'form': form}
     return render(request, 'categoria_form.html', context)
-
+@login_required
 def editarcategoria(request, id):
     categoria = get_object_or_404(Categoria, id=id)
     if request.method == 'POST':
@@ -46,7 +52,7 @@ def editarcategoria(request, id):
         form = CategoriaForm(instance=categoria)
     return render(request, 'editar_categoria.html', {'form': form})
 
-
+@login_required
 def eliminarcategoria(request, id):
     categoria = get_object_or_404(Categoria, id=id)
     categoria.estado = False 
@@ -57,6 +63,7 @@ def eliminarcategoria(request, id):
 #FIN CATEGORIAS
 
 #UNIDADES
+@login_required
 def listar_unidades(request):
     queryset = request.GET.get("buscar")
     unidad = Unidad.objects.filter(estado=True)
@@ -70,7 +77,7 @@ def listar_unidades(request):
     context = {'unidad': unidad}
     return render(request, "listar_unidades.html", context)
 
-
+@login_required
 def agregar_unidades(request):
     if request.method == "POST":
         form = UnidadForm(request.POST)
@@ -82,7 +89,7 @@ def agregar_unidades(request):
 
     context = {'form': form}
     return render(request, 'unidad_form.html', context)
-
+@login_required
 def editar_unidades(request, id):
     unidad = get_object_or_404(Unidad, id=id)
     if request.method == 'POST':
@@ -94,7 +101,7 @@ def editar_unidades(request, id):
         form = UnidadForm(instance=unidad)
     return render(request, 'editar_unidades.html', {'form': form})
 
-
+@login_required
 def eliminar_unidades(request, id):
     unidad = get_object_or_404(Unidad, id=id)
     unidad.estado = False 
@@ -105,10 +112,11 @@ def eliminar_unidades(request, id):
 
 
 #PRODUCTOS
+@login_required
 def listar_productos(request):
     productos = Producto.objects.all()
     return render(request, 'listar_productos.html', {'productos': productos})
-
+@login_required
 def crear_producto(request):
     if request.method == 'POST':
         form = ProductoForm(request.POST)
@@ -121,7 +129,7 @@ def crear_producto(request):
         form.fields['unidad'].queryset = Unidad.objects.filter(estado=True)
 
     return render(request, 'producto_form.html', {'form': form})
-
+@login_required
 def editar_producto(request, id):
     producto = get_object_or_404(Producto, id=id)
     if request.method == 'POST':
@@ -135,7 +143,7 @@ def editar_producto(request, id):
     else:
         form = ProductoForm(instance=producto)
     return render(request, 'editar_producto.html', {'form': form, 'producto': producto})
-
+@login_required
 def eliminar_producto(request, id):
     producto = get_object_or_404(Producto, id=id)
     producto.delete()
@@ -147,6 +155,7 @@ def eliminar_producto(request, id):
 
 
 #CLIENTES
+@login_required
 def listar_clientes(request):
     clientes = Cliente.objects.all()
     return render(request, 'listar_clientes.html', {'clientes': clientes})
@@ -161,7 +170,7 @@ def crear_cliente(request):
     else:
         form = ClienteForm()
     return render(request, 'cliente_form.html', {'form': form})
-
+@login_required
 def editar_cliente(request, id):
     cliente = get_object_or_404(Cliente, id=id)
     if request.method == 'POST':
@@ -176,13 +185,31 @@ def editar_cliente(request, id):
         form = ClienteForm(instance=cliente)
     return render(request, 'editar_cliente.html', {'form': form, 'cliente': cliente})
 
-
+@login_required
 def eliminar_cliente(request, id):
     cliente = get_object_or_404(Cliente, id=id)
     cliente.delete()
     messages.success(request, f'El cliente "{cliente.nombre} {cliente.apellidos}" ha sido eliminado.')
     return redirect('listar_clientes')
 #FIN CLIENTES
+
+@login_required
+def reporte_pdf(request):
+    # Suponiendo que tienes una lista de categorías en tu contexto
+    categorias = Categoria.objects.all()
+    
+    context = {
+        'categoria': categorias,
+    }
+    
+    pdf = render_to_pdf('listarCategoria2.html', context)
+    
+    if pdf:
+        response = HttpResponse(pdf, content_type='application/pdf')
+        response['Content-Disposition'] = 'inline; filename="reporte_categoria.pdf"'
+        return response
+    else:
+        return HttpResponse("Error al generar el PDF", status=400)
 
 
 #INICIO VENTAS

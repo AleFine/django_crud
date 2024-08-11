@@ -628,17 +628,9 @@
                       <li>
                         <a
                           class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
-                          href="signin.html"
+                          href="{% url 'logout' %}"
                           :class="page === 'signin' && '!text-white'"
-                          >Sign In</a
-                        >
-                      </li>
-                      <li>
-                        <a
-                          class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
-                          href="signup.html"
-                          :class="page === 'signup' && '!text-white'"
-                          >Sign Up</a
+                          >Cerrar Sesión</a
                         >
                       </li>
                     </ul>
