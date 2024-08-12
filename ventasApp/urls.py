@@ -37,7 +37,7 @@ urlpatterns = [
     path('get-cliente-documento/<int:cliente_id>/', get_cliente_documento, name='get_cliente_documento'),
     
     
-    path('reportepdf/', reporte_pdf, name='reporte_pdf'),
+    path('reportepdf/<int:id>', reporte_pdf, name='reporte_pdf'),
     
     ]
 

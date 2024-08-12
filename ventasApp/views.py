@@ -11,6 +11,7 @@ from django.http import HttpResponse
 from .forms import CategoriaForm,ClienteForm,UnidadForm,ProductoForm
 from .forms import CategoriaForm,ClienteForm,UnidadForm,ProductoForm,DetalleVentaForm,VentaForm
 from django.http import JsonResponse
+from .productos import Product
 # Create your views here.
 
 #CATEGORIAS
@@ -194,15 +195,33 @@ def eliminar_cliente(request, id):
 #FIN CLIENTES
 
 @login_required
-def reporte_pdf(request):
-    # Suponiendo que tienes una lista de categorías en tu contexto
-    categorias = Categoria.objects.all()
+def reporte_pdf(request,id):
     
+    venta =get_object_or_404(Venta, id=id)
+    cliente = get_object_or_404(Cliente,id=venta.cliente_id)
+    detalles = DetalleVenta.objects.filter(venta_id=id)
+    productos = Producto.objects.all()
+    
+    lista = []
+    re_cate = ""
+    i=1
+    
+    for detalle in detalles:
+        for prod in productos:
+            if detalle.producto_id == prod.id:
+                re_cate = get_object_or_404(Categoria,id=prod.categoria_id).descripcion
+                nombre_producto = prod.descripcion
+        pro = Product(i,nombre_producto,re_cate,detalle.cantidad,detalle.precio,detalle.cantidad*detalle.precio)
+        lista.append(pro)
+        i = i + 1
+            
     context = {
-        'categoria': categorias,
+        'venta' : venta,
+        'cliente' : cliente,
+        'productos':lista,
     }
     
-    pdf = render_to_pdf('listarCategoria2.html', context)
+    pdf = render_to_pdf('reporte.html', context)
     
     if pdf:
         response = HttpResponse(pdf, content_type='application/pdf')
