@@ -206,7 +206,6 @@ def eliminar_cliente(request, id):
 
 @login_required
 def reporte_pdf(request):
-    # Suponiendo que tienes una lista de categorías en tu contexto
     categorias = Categoria.objects.all()
     
     context = {
@@ -272,7 +271,6 @@ def crear_venta(request):
                     venta.total = total_con_igv
                     venta.save()
 
-                    # Create sale details
                     for producto_id, cantidad in zip(productos_ids, cantidades):
                         producto = get_object_or_404(Producto, id=producto_id)
                         detalle = DetalleVenta(
@@ -283,7 +281,6 @@ def crear_venta(request):
                         )
                         detalle.save()
                         
-                        # Update stock
                         producto.stock = int(producto.stock or 0) - int(cantidad)
                         producto.save()
 
@@ -323,7 +320,6 @@ def editar_venta(request, venta_id):
                 if not productos_ids or not cantidades:
                     raise ValueError("No se han proporcionado productos o cantidades.")
 
-                # Eliminar detalles actuales
                 venta.detalles.all().delete()
 
                 for producto_id, cantidad in zip(productos_ids, cantidades):
@@ -345,7 +341,6 @@ def editar_venta(request, venta_id):
                     )
                     detalle.save()
 
-                    # Actualizar stock de manera segura
                     Producto.objects.filter(id=producto_id).update(stock=F('stock') - cantidad_solicitada)
 
                 venta.total = total * Decimal('1.18')
