@@ -50,3 +50,7 @@ class Product:
     @property
     def preciototal(self):
         return self._preciototal
+    
+    @preciototal.setter
+    def preciototal(self, valor):
+        self._preciototal = valor
