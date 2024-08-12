@@ -90,7 +90,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'dbventitas',
         'USER':'root',
-        'PASSWORD':'',
+        'PASSWORD':'root',
         'LOCALHOST':'localhost',
         'PORT':'3306'
     }

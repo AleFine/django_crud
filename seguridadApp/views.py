@@ -15,7 +15,7 @@ def ingresar_login(request):
             usuario = authenticate(username= user, password=password)
             if usuario is not None:
                 login(request, usuario)
-                return redirect('homePage')  
+                return redirect('homePage', username=user)  
             else:
                 messages.error(request, "Los datos son incorrectos")
         else:
@@ -31,7 +31,7 @@ def registrarse(request):
             usuario = form.save()
             login(request, usuario)
             messages.success(request, "Tu cuenta ha sido creada exitosamente")
-            return redirect('homePage') 
+            return redirect('homePage', username=usuario.username) 
         else:
             print(form.errors)
             messages.error(request, "Por favor corrige los errores")
@@ -40,8 +40,10 @@ def registrarse(request):
     return render(request, 'register.html', {'form': form})
 
 @login_required
-def homePage(request):
-    context = {}
+def homePage(request,username):
+    context = {
+        'username':username,
+    }
     return render(request, "index.html", context)
 def salir(request): 
     logout(request)
