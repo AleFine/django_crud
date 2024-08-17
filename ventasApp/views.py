@@ -332,39 +332,48 @@ def editar_venta(request, venta_id):
         venta_form = VentaForm(request.POST, instance=venta)
         if venta_form.is_valid():
             try:
-                venta = venta_form.save(commit=False)
-                total = Decimal('0.00')
-                productos_ids = request.POST.getlist('id_producto[]')
-                cantidades = request.POST.getlist('cantidad[]')
+                with transaction.atomic():
+                    venta = venta_form.save(commit=False)
+                    total = Decimal('0.00')
+                    productos_ids = request.POST.getlist('id_producto[]')
+                    cantidades = request.POST.getlist('cantidad[]')
+                    precios = request.POST.getlist('precio[]')
 
-                if not productos_ids or not cantidades:
-                    raise ValueError("No se han proporcionado productos o cantidades.")
+                    if not productos_ids or not cantidades or not precios:
+                        raise ValueError("No se han proporcionado productos, cantidades o precios.")
 
-                venta.detalles.all().delete()
+                    # Restaurar el stock de los productos de la venta original
+                    for detalle in venta.detalles.all():
+                        detalle.producto.stock += detalle.cantidad
+                        detalle.producto.save()
 
-                for producto_id, cantidad in zip(productos_ids, cantidades):
-                    producto = get_object_or_404(Producto, id=producto_id)
+                    # Eliminar los detalles antiguos
+                    venta.detalles.all().delete()
 
-                    stock_disponible = int(producto.stock or 0)
-                    cantidad_solicitada = int(cantidad)
+                    # Crear nuevos detalles
+                    for producto_id, cantidad, precio in zip(productos_ids, cantidades, precios):
+                        producto = get_object_or_404(Producto, id=producto_id)
+                        cantidad = int(cantidad)
+                        precio = Decimal(precio)
 
-                    if stock_disponible < cantidad_solicitada:
-                        raise ValueError(f"No hay suficiente stock para {producto.descripcion}. Stock disponible: {stock_disponible}, solicitado: {cantidad_solicitada}")
+                        if producto.stock < cantidad:
+                            raise ValueError(f"No hay suficiente stock para {producto.descripcion}. Stock disponible: {producto.stock}, solicitado: {cantidad}")
 
-                    total += producto.precio * Decimal(cantidad_solicitada)
+                        detalle = DetalleVenta(
+                            venta=venta,
+                            producto=producto,
+                            precio=precio,
+                            cantidad=cantidad
+                        )
+                        detalle.save()
 
-                    detalle = DetalleVenta(
-                        venta=venta,
-                        producto=producto,
-                        precio=producto.precio,
-                        cantidad=cantidad_solicitada
-                    )
-                    detalle.save()
+                        producto.stock -= cantidad
+                        producto.save()
 
-                    Producto.objects.filter(id=producto_id).update(stock=F('stock') - cantidad_solicitada)
+                        total += precio * Decimal(cantidad)
 
-                venta.total = total * Decimal('1.18')
-                venta.save()
+                    venta.total = total
+                    venta.save()
 
                 return JsonResponse({'success': True, 'redirect_url': reverse('listar_ventas')})
             except ValueError as e:
@@ -375,12 +384,14 @@ def editar_venta(request, venta_id):
             return JsonResponse({'success': False, 'error': 'Por favor, corrija los errores en el formulario.'})
     else:
         venta_form = VentaForm(instance=venta)
+        detalles = venta.detalles.all().select_related('producto')
 
     return render(request, 'editar_venta.html', {
         'venta_form': venta_form,
         'productos': productos,
         'clientes': clientes,
-        'venta': venta
+        'venta': venta,
+        'detalles': detalles
     })
 
 
