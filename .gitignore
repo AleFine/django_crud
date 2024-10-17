@@ -1,5 +1,6 @@
 # Byte-compiled / optimized / DLL files
-
+node_modules/
+**/node_modules/
 ventasApp/__pycache__/forms.cpython-312.pyc
 ventasApp/__pycache__/models.cpython-312.pyc
 ventasApp/__pycache__/urls.cpython-312.pyc
