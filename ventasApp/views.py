@@ -9,11 +9,12 @@ from django.contrib.auth.decorators import login_required
 from .utils import render_to_pdf
 from django.http import HttpResponse
 from .forms import CategoriaForm,ClienteForm,UnidadForm,ProductoForm
-from .forms import CategoriaForm,ClienteForm,UnidadForm,ProductoForm,DetalleVentaForm,VentaForm
+from .forms import CategoriaForm,ClienteForm,UnidadForm,ProductoForm,DetalleVentaForm,VentaForm,FactorCapitalizacionForm,FactorActualizacionForm
 from django.http import JsonResponse
 from django.urls import reverse
 from django.db.models import F
 from .productos import Product
+from . import formulas
 # Create your views here.
 
 #CATEGORIAS
@@ -420,25 +421,61 @@ def get_cliente_documento(request, cliente_id):
 
 #FIN VENTAS
 
+def factor_capi(request):
+    if request.method == 'POST':
+        form = FactorCapitalizacionForm(request.POST)
+        if form.is_valid():
+            tasa = form.cleaned_data['tasa']
+            tipo_tasa = form.cleaned_data['tipo_tasa']
+            tipo_capitalizacion = form.cleaned_data['tipo_capitalizacion']
+            stock_inicial = form.cleaned_data['stock_inicial']
+            periodos = form.cleaned_data['periodos']
+            tipo_periodo = form.cleaned_data['tipo_periodo']
+            
+            dias_capitalizacion = formulas.dias_equivalentes(tipo_capitalizacion)
+            dias_tasa = formulas.dias_equivalentes(tipo_tasa)
+            
+            tasa = formulas.calcular_tasa_equivalente(tasa,dias_capitalizacion,dias_tasa)
+            
+            periodos = formulas.periodo_equivalente(periodos,tipo_periodo,tipo_capitalizacion)
+            
+            resultado = formulas.calcular_stock_final(tasa,stock_inicial,periodos)
+            
+            resultado = round(resultado,2)
+            
+            return render(request, 'factor_capitalizacion.html', {'resultado': resultado})
+    else:
+        form = FactorCapitalizacionForm()
+    
+    return render(request, 'factor_capitalizacion.html', {'form': form})
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+def factor_actua(request):
+    if request.method == 'POST':
+        form = FactorActualizacionForm(request.POST)
+        if form.is_valid():
+            tasa = form.cleaned_data['tasa']
+            tipo_tasa = form.cleaned_data['tipo_tasa']
+            tipo_capitalizacion = form.cleaned_data['tipo_capitalizacion']
+            stock_final = form.cleaned_data['stock_final']
+            periodos = form.cleaned_data['periodos']
+            tipo_periodo = form.cleaned_data['tipo_periodo']
+            
+            dias_capitalizacion = formulas.dias_equivalentes(tipo_capitalizacion)
+            dias_tasa = formulas.dias_equivalentes(tipo_tasa)
+            
+            tasa = formulas.calcular_tasa_equivalente(tasa,dias_capitalizacion,dias_tasa)
+            
+            periodos = formulas.periodo_equivalente(periodos,tipo_periodo,tipo_capitalizacion)
+            
+            resultado = formulas.calcular_stock_inicial(tasa,stock_final,periodos)
+            
+            resultado = round(resultado,2)
+            
+            return render(request, 'factor_actualizacion.html', {'resultado': resultado})
+    else:
+        form = FactorActualizacionForm()
+    
+    return render(request, 'factor_actualizacion.html', {'form': form})
 
 
 

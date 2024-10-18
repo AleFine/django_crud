@@ -1,0 +1,76 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+    <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <h2 class="text-title-md2 font-bold text-black dark:text-white">
+            FACTOR SIMPLE DE ACTUALIZACION
+        </h2>
+    </div>
+
+    <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+        <div class="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+            <h3 class="font-medium text-black dark:text-white">STOCK Final - STOCK Inicial</h3>
+        </div>
+        <div class="flex flex-col gap-5.5 p-6.5">
+            <form method="POST" action="{% url 'factor_a' %}" id="calculoForm">
+                {% csrf_token %}
+
+                <div>
+                    <label class="mb-3 block text-sm font-medium text-black dark:text-white">
+                        Tasa de Interés (i)
+                    </label>
+                    {{ form.tasa }}
+                </div>
+            
+                <div class="mb-5">
+                    <label class="mb-3 block text-sm font-medium text-black dark:text-white">
+                        Tipo de Tasa
+                    </label>
+                    {{ form.tipo_tasa }}
+                </div>
+            
+                <div class="mb-5">
+                    <label class="mb-3 block text-sm font-medium text-black dark:text-white">
+                        Tipo de Capitalización
+                    </label>
+                    {{ form.tipo_capitalizacion }}
+                </div>
+            
+                <div class="mb-5">
+                    <label class="mb-3 block text-sm font-medium text-black dark:text-white" id="label_capital">
+                        Stock Final (S)
+                    </label>
+                    {{ form.stock_final }}
+                </div>
+            
+                <div class="mb-5">
+                    <label class="mb-3 block text-sm font-medium text-black dark:text-white">
+                        Número de Periodos (n)
+                    </label>
+                    {{ form.periodos }}
+                </div>
+            
+                <div class="mb-5">
+                    <label class="mb-3 block text-sm font-medium text-black dark:text-white">
+                        Tipo de Periodo
+                    </label>
+                    {{ form.tipo_periodo }}
+                </div>
+            
+                <button type="submit" class="mt-6 inline-flex items-center justify-center rounded-md bg-primary px-10 py-4 text-center font-medium text-white hover:bg-opacity-90">
+                    Calcular
+                </button>
+            </form>
+
+            {% if resultado %}
+            <div class="mt-4">
+                <h3 class="font-bold text-black dark:text-white">Stock Inicial:</h3>
+                <p class="text-lg">{{ resultado }}</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

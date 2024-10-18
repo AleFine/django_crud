@@ -4,6 +4,7 @@ from django.core.validators import MinValueValidator
 from decimal import Decimal
 from django.db import transaction
 from django.db.models import F
+from . import formulas
 
 # Create your models here.
 class Categoria(models.Model):
@@ -84,3 +85,26 @@ class DetalleVenta(models.Model):
 
     def __str__(self):
         return f'Detalle Venta {self.id} - {self.producto.descripcion}'
+    
+class FactorCapitalizacion(models.Model):
+    stock_inicial = models.DecimalField(max_digits=10, decimal_places=2)
+    tasa = models.DecimalField(max_digits=10, decimal_places = 2)
+    tipo_tasa = models.CharField(max_length=50)
+    tipo_periodo = models.CharField(max_length=50)
+    tipo_capitalizacion = models.CharField(max_length=50)
+    periodos = models.IntegerField()
+    
+    def __str__(self):
+        return self.stock_inicial
+        
+class FactorActualizacion(models.Model):
+    stock_final = models.DecimalField(max_digits=10, decimal_places=2)
+    tasa = models.DecimalField(max_digits=10, decimal_places = 2)
+    tipo_tasa = models.CharField(max_length=50)
+    tipo_periodo = models.CharField(max_length=50)
+    tipo_capitalizacion = models.CharField(max_length=50)
+    periodos = models.IntegerField()
+    
+    def __str__(self):
+        return self.stock_final
+    

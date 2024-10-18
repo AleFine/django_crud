@@ -30,7 +30,7 @@ def periodo_equivalente(periodos: float,actual:str, final: str):
         'DIARIA': 360
     }
     
-    if actual in periodos_totales or final not in periodos_totales:
+    if actual not in periodos_totales or final not in periodos_totales:
         raise ValueError("Formato de periodo no encontrado")
     
     periodo_anual = periodos / periodos_totales[actual] #sacamos todo a anual y luego lo convertimos a su equivalente
@@ -38,3 +38,23 @@ def periodo_equivalente(periodos: float,actual:str, final: str):
     periodo_final = periodo_anual * periodos_totales[final] 
     
     return periodo_final
+
+def dias_equivalentes(valor: str):
+    
+    valor = valor.upper()
+    
+    dias_totales = {
+        'ANUAL': 360,
+        'SEMESTRAL': 180,
+        'TRIMESTRAL': 90,
+        'BIMESTRAL': 60,
+        'MENSUAL': 30,
+        'SEMANAL': 7,
+        'DIARIA': 1
+    }
+    
+    if valor not in dias_totales:
+        raise ValueError("Formato de periodo no encontrado")
+    
+    cantidad_dias = dias_totales[valor]
+    return cantidad_dias

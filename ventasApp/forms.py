@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms import fields 
-from .models import Categoria, Cliente, Unidad,Producto,Venta,DetalleVenta
+from .models import Categoria, Cliente, Unidad,Producto,Venta,DetalleVenta,FactorCapitalizacion
 
 class CategoriaForm(forms.ModelForm):
   class Meta:
@@ -182,3 +182,143 @@ class DetalleVentaForm(forms.ModelForm):
                 'min': '1'
             }),
         }
+class FactorCapitalizacionForm(forms.Form):
+    tasa = forms.FloatField(
+        label="Tasa de Interés (i)",
+        widget=forms.NumberInput(attrs={
+            'class': 'w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+        })
+    )
+    
+    tipo_tasa = forms.ChoiceField(
+        label="Tipo de Tasa",
+        choices=[
+            ('Anual', 'Anual'),
+            ('Diaria', 'Diaria'),
+            ('Semanal', 'Semanal'),
+            ('Mensual', 'Mensual'),
+            ('Trimestral', 'Trimestral'),
+            ('Bimestral', 'Bimestral'),
+            ('Semestral', 'Semestral'),
+        ],
+        widget=forms.Select(attrs={
+            'class': 'relative z-20 w-full appearance-none rounded border-[1.5px] border-stroke bg-transparent py-3 pl-5 pr-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+        })
+    )
+
+    tipo_capitalizacion = forms.ChoiceField(
+        label="Tipo de Capitalización",
+        choices=[
+            ('Anual', 'Anual'),
+            ('Diaria', 'Diaria'),
+            ('Semanal', 'Semanal'),
+            ('Mensual', 'Mensual'),
+            ('Trimestral', 'Trimestral'),
+            ('Bimestral', 'Bimestral'),
+            ('Semestral', 'Semestral'),
+        ],
+        widget=forms.Select(attrs={
+            'class': 'relative z-20 w-full appearance-none rounded border-[1.5px] border-stroke bg-transparent py-3 pl-5 pr-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+        })
+    )
+
+    stock_inicial = forms.FloatField(
+        label="Stock Inicial (P)",
+        widget=forms.NumberInput(attrs={
+            'class': 'w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+        })
+    )
+
+    periodos = forms.IntegerField(
+        label="Número de Periodos (n)",
+        widget=forms.NumberInput(attrs={
+            'class': 'w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+        })
+    )
+
+    tipo_periodo = forms.ChoiceField(
+        label="Tipo de Periodo",
+        choices=[
+            ('Anual', 'Anual'),
+            ('Diaria', 'Diaria'),
+            ('Semanal', 'Semanal'),
+            ('Mensual', 'Mensual'),
+            ('Trimestral', 'Trimestral'),
+            ('Bimestral', 'Bimestral'),
+            ('Semestral', 'Semestral'),
+        ],
+        widget=forms.Select(attrs={
+            'class': 'relative z-20 w-full appearance-none rounded border-[1.5px] border-stroke bg-transparent py-3 pl-5 pr-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+        })
+    )
+
+
+class FactorActualizacionForm(forms.Form):
+    tasa = forms.FloatField(
+        label="Tasa de Interés (i)",
+        widget=forms.NumberInput(attrs={
+            'class': 'mb-3 w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+        })
+    )
+    
+    tipo_tasa = forms.ChoiceField(
+        label="Tipo de Tasa",
+        choices=[
+            ('Anual', 'Anual'),
+            ('Diaria', 'Diaria'),
+            ('Semanal', 'Semanal'),
+            ('Mensual', 'Mensual'),
+            ('Trimestral', 'Trimestral'),
+            ('Bimestral', 'Bimestral'),
+            ('Semestral', 'Semestral'),
+        ],
+        widget=forms.Select(attrs={
+            'class': 'relative z-20 w-full appearance-none rounded border-[1.5px] border-stroke bg-transparent py-3 pl-5 pr-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+        })
+    )
+
+    tipo_capitalizacion = forms.ChoiceField(
+        label="Tipo de Capitalización",
+        choices=[
+            ('Anual', 'Anual'),
+            ('Diaria', 'Diaria'),
+            ('Semanal', 'Semanal'),
+            ('Mensual', 'Mensual'),
+            ('Trimestral', 'Trimestral'),
+            ('Bimestral', 'Bimestral'),
+            ('Semestral', 'Semestral'),
+        ],
+        widget=forms.Select(attrs={
+            'class': 'relative z-20 w-full appearance-none rounded border-[1.5px] border-stroke bg-transparent py-3 pl-5 pr-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+        })
+    )
+
+    stock_final = forms.FloatField(
+        label="Stock Final (S)",
+        widget=forms.NumberInput(attrs={
+            'class': 'w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+        })
+    )
+
+    periodos = forms.IntegerField(
+        label="Número de Periodos (n)",
+        widget=forms.NumberInput(attrs={
+            'class': 'w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+        })
+    )
+
+    tipo_periodo = forms.ChoiceField(
+        label="Tipo de Periodo",
+        choices=[
+            ('Anual', 'Anual'),
+            ('Diaria', 'Diaria'),
+            ('Semanal', 'Semanal'),
+            ('Mensual', 'Mensual'),
+            ('Trimestral', 'Trimestral'),
+            ('Bimestral', 'Bimestral'),
+            ('Semestral', 'Semestral'),
+        ],
+        widget=forms.Select(attrs={
+            'class': 'relative z-20 w-full appearance-none rounded border-[1.5px] border-stroke bg-transparent py-3 pl-5 pr-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+        })
+    )
