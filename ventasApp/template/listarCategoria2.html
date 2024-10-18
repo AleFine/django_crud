@@ -4,7 +4,7 @@
 <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
     <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <h2 class="text-title-md2 font-bold text-black dark:text-white">
-            Categorias
+            CÁLCULO RACIONAL
         </h2>
 
         <nav>
@@ -17,88 +17,937 @@
         </nav>
     </div>
 
-
-    <div class="flex justify-between ">
-        <form action="{% url 'listarcategoria' %}" method="GET" class="flex items-center bg-white shadow-md rounded-md overflow-hidden dark:bg-gray-800 max-w-md">
-            <input 
-                type="text" 
-                name="search" 
-                class="form-input px-4 py-2 w-full text-black dark:text-black dark:bg-gray-700 focus:ring-2 focus:ring-blue-600 focus:border-transparent rounded-none" 
-                placeholder="Buscar categoria" 
-                value="{{ request.GET.search }}"> 
-            <button 
-                type="submit" 
-                class="px-4 py-2 transition duration-200 ease-in-out">
-                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 12 12">
-                    <path fill="currentColor" d="M5 1a4 4 0 1 0 2.248 7.31l2.472 2.47a.75.75 0 1 0 1.06-1.06L8.31 7.248A4 4 0 0 0 5 1M2.5 5a2.5 2.5 0 1 1 5 0a2.5 2.5 0 0 1-5 0"/>
-                </svg>
-            </button>
-        </form>
-        <a href="{% url 'agregarcategoria' %}" class="px-4 py-2 bg-blue-600 text-black rounded hover:bg-blue-700">Añadir</a>
+    <div class="my-6 mb-10 p-4 bg-black rounded-md text-center">
+        <p class="text-lg font-semibold text-white dark:text-white">
+            FACTOR DE CAPITALIZACIÓN DE LA SERIE
+        </p>
     </div>
-    <div class="p-2"></div>
-    <div class="flex flex-col gap-64">
-        <div class="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-            <table class="w-full table-auto">
-                <thead>
-                    <tr class="bg-gray-2 text-left dark:bg-meta-4">
-                        <th class="min-w-[220px] px-4 py-4 font-medium text-black dark:text-white xl:pl-11">
-                            CÓDIGO  
-                        </th>
-                        <th class="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
-                            DESCRIPCIONN
-                        </th>
-                        <th class="min-w-[120px] px-2 py-4 font-medium text-black dark:text-white">
-                            OPCIONES
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% if categoria %}
-                        {% for itemcategoria in categoria %}
-                            <tr>
-                                <td class="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
-                                    <h5 class="font-medium text-black dark:text-white">{{ itemcategoria.id }}</h5>
-                                </td>
-                                <td class="border-b border-[#eee] px-10 py-5 dark:border-strokedark">
-                                    <p class="text-black dark:text-white">{{ itemcategoria.descripcion }}</p>
-                                </td>
-                                <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                                    <div class="flex items-center space-x-3.5">
-                                        <a href="{% url 'editarcategoria' itemcategoria.id %}">
-                                            <button title="Editar" class="hover:text-primary">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24">
-                                                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
-                                                </svg>
-                                            </button>
-                                        </a>
-                                        
-                                        <a href="{% url 'eliminarcategoria' itemcategoria.id %}" onclick="return confirm('¿Estás seguro de que quieres eliminar esta categoría?');">
-                                            <button title="Eliminar" class="hover:text-primary">
-                                                <svg class="fill-current" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M13.7535 2.47502H11.5879V1.9969C11.5879 1.15315 10.9129 0.478149 10.0691 0.478149H7.90352C7.05977 0.478149 6.38477 1.15315 6.38477 1.9969V2.47502H4.21914C3.40352 2.47502 2.72852 3.15002 2.72852 3.96565V4.8094C2.72852 5.42815 3.09414 5.9344 3.62852 6.1594L4.07852 15.4688C4.13477 16.6219 5.09102 17.5219 6.24414 17.5219H11.7004C12.8535 17.5219 13.8098 16.6219 13.866 15.4688L14.3441 6.13127C14.8785 5.90627 15.2441 5.3719 15.2441 4.78127V3.93752C15.2441 3.15002 14.5691 2.47502 13.7535 2.47502ZM7.67852 1.9969C7.67852 1.85627 7.79102 1.74377 7.93164 1.74377H10.0973C10.2379 1.74377 10.3504 1.85627 10.3504 1.9969V2.47502H7.70664V1.9969H7.67852ZM4.02227 3.96565C4.02227 3.85315 4.10664 3.74065 4.24727 3.74065H13.7535C13.866 3.74065 13.9785 3.82502 13.9785 3.96565V4.8094C13.9785 4.9219 13.8941 5.0344 13.7535 5.0344H4.24727C4.13477 5.0344 4.02227 4.95002 4.02227 4.8094V3.96565ZM11.7285 16.2563H6.27227C5.79414 16.2563 5.40039 15.8906 5.37227 15.3844L4.95039 6.2719H13.0785L12.6566 15.3844C12.6004 15.8625 12.2066 16.2563 11.7285 16.2563Z" fill=""/>
-                                                    <path d="M9.00039 9.11255C8.66289 9.11255 8.35352 9.3938 8.35352 9.75942V13.3313C8.35352 13.6688 8.63477 13.9782 9.00039 13.9782C9.33789 13.9782 9.64727 13.6969 9.64727 13.3313V9.75942C9.64727 9.3938 9.33789 9.11255 9.00039 9.11255Z" fill=""/>
-                                                    <path d="M11.2502 9.67504C10.8846 9.64692 10.6033 9.90004 10.5752 10.2657L10.4064 12.7407C10.3783 13.0782 10.6314 13.3875 10.9971 13.4157C11.0252 13.4157 11.0252 13.4157 11.0533 13.4157C11.3908 13.4157 11.6721 13.1625 11.6721 12.825L11.8408 10.35C11.8408 9.98442 11.5877 9.70317 11.2502 9.67504Z" fill=""/>
-                                                    <path d="M6.72245 9.67504C6.38495 9.70317 6.1037 10.0125 6.13182 10.35L6.3287 12.825C6.35683 13.1625 6.63808 13.4157 6.94745 13.4157C6.97558 13.4157 6.97558 13.4157 7.0037 13.4157C7.3412 13.3875 7.62245 13.0782 7.59433 12.7407L7.39745 10.2657C7.39745 9.90004 7.08808 9.64692 6.72245 9.67504Z" fill=""/>
-                                                </svg>
-                                            </button>
-                                        </a>
-                                        
-                                    </div>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    {% else %}
-                        <tr style="text-align: center;">
-                            <td colspan="3">
-                                <p>No hay Registros</p>
-                            </td>
-                        </tr>
-                    {% endif %}
-                </tbody>
-            </table>
+
+    <div class="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-2 mb-10">
+        
+        <!--R-->
+        <div>
+            <label for="campo1" class="block text-sm font-medium text-gray-700">Pago periódico</label>
+            <input type="text" id="campo1" class="mt-1 block w-full h-10 rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+        </div>
+
+        <!--PERIODO-->
+        <div>
+            <label for="campo2" class="block text-sm font-medium text-gray-700">Periodo</label>
+            <div class="flex items-center gap-2">
+            
+                <div class="flex-1">
+                    <input type="text" id="campo2" class="block w-full h-10 rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                </div>
+            
+                <!-- Select -->
+                <div class="flex-1">
+                    <label for="tiempo" class="sr-only">Opciones</label> 
+                    <select id="tiempo" class="block w-full h-10 rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                        <option>--Selecciona--</option>
+                        <option>Dias</option>
+                        <option>Años</option>
+                        <option>Meses</option>
+                    </select>
+                </div>
+            </div>
+        </div>        
+
+        <!--TASA-->
+        <div>
+            <label for="campo3" class="block text-sm font-medium text-gray-700">Tasa de interés</label>
+            <div class="flex items-center justify-center gap-2">
+                <!-- Campo de texto -->
+                <div class="flex-1">
+                    <input type="text" id="campo3" class="block w-full h-10 rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                </div>
+                <!-- Select -->
+                <div class="flex-1">
+                    <label for="campo4" class="block text-sm font-medium text-gray-700 "></label>
+                    <select id="campo4" class="block w-full h-10 rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                        <option>--Selecciona tipo--</option>
+                        <option>Mensual</option>
+                        <option>Anual</option>
+                        <option>Semestral</option>
+                        <option>Trimestral</option>
+                        <option>Semanal</option>
+                        <option>Diaria</option>
+                    </select>
+                </div>
+                <!-- Select -->
+                <div class="flex-1">
+                    <label for="capitalizacion" class="block text-sm font-medium text-gray-700 "></label>
+                    <select id="capitalizacion" class="block w-full h-10 rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                        <option>--Selecciona capitalizacion--</option>
+                        <option>Mensual</option>
+                        <option>Anual</option>
+                        <option>Semestral</option>
+                        <option>Trimestral</option>
+                        <option>Semanal</option>
+                        <option>Diaria</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!--CALCULO-->
+        <div class="flex items-center gap-4 mt-4">
+            <label for="campo5" class="block text-lg font-semibold text-gray-700">Valor Futuro</label>
+
+            <!-- respuesta -->
+            <input type="text" id="respuesta" class="block w-20 h-10 rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary" placeholder=" Resultado" readonly>
+        </div>
+
+        <div class="flex items-end gap-4 mt-4">
+            <!-- Botón Calcular -->
+            <button id="calcular" class="bg-black hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
+                Calcular
+            </button>
+
+            <button id="borrar" class="bg-black hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
+                Borrar
+            </button>
         </div>
     </div>
-</div>
+
+    <div class="my-6 mb-10 p-4 bg-black rounded-md text-center">
+        <p class="text-lg font-semibold text-white dark:text-white">
+            FACTOR DE DEPÓSITO DEL FONDO DE AMORTIZACIÓN
+        </p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-2 mb-10">
+        
+        <!--R-->
+        <div>
+            <label for="campo6" class="block text-sm font-medium text-gray-700">VALOR FUTURO</label>
+            <input type="text" id="campo6" class="mt-1 block w-full h-10 rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+        </div>
+
+        <!--PERIODO-->
+        <div>
+            <label for="campo7" class="block text-sm font-medium text-gray-700">Periodo</label>
+            <div class="flex items-center gap-2">
+                
+                <div class="flex-1">
+                    <input type="text" id="campo7" class="block w-full h-10 rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                </div>
+            
+                <!-- Select -->
+                <div class="flex-1">
+                    <label for="campo8" class="sr-only">Opciones</label> 
+                    <select id="campo8" class="block w-full h-10 rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                        <option>--Selecciona--</option>
+                        <option>Días</option>
+                        <option>Años</option>
+                        <option>Meses</option>
+                    </select>
+                </div>
+            </div>
+        </div>        
+
+        <!--TASA-->
+        <div>
+            <label for="campo9" class="block text-sm font-medium text-gray-700">Tasa de interés</label>
+            <div class="flex items-center justify-center gap-2">
+                <!-- Campo de texto -->
+                <div class="flex-1">
+                    <input type="text" id="campo9" class="block w-full h-10 rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                </div>
+                <!-- Select -->
+                <div class="flex-1">
+                    <label for="campo10" class="block text-sm font-medium text-gray-700 "></label>
+                    <select id="campo10" class="block w-full h-10 rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                        <option>--Selecciona tipo--</option>
+                        <option>Mensual</option>
+                        <option>Anual</option>
+                        <option>Semestral</option>
+                        <option>Trimestral</option>
+                        <option>Semanal</option>
+                        <option>Diaria</option>
+                    </select>
+                </div>
+                <!-- Select -->
+                <div class="flex-1">
+                    <label for="capitalizacion2" class="block text-sm font-medium text-gray-700 "></label>
+                    <select id="capitalizacion2" class="block w-full h-10 rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                        <option>--Selecciona capitalizacion--</option>
+                        <option>Mensual</option>
+                        <option>Anual</option>
+                        <option>Semestral</option>
+                        <option>Trimestral</option>
+                        <option>Semanal</option>
+                        <option>Diaria</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!--CALCULO-->
+        <div class="flex items-center gap-4 mt-4">
+            <label for="campo11" class="block text-lg font-semibold text-gray-700">PAGO PERIODICO</label>
+
+            <!-- Caja de respuesta -->
+            <input type="text" id="respuesta2" class="block w-20 h-10 rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary" placeholder=" Resultado" readonly>
+        </div>
+
+        <div class="flex items-end gap-4 mt-4">
+            <!-- Botón Calcular -->
+            <button id="calcular2" class="bg-black hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
+                Calcular
+            </button>
+
+            <button id="borrar2" class="bg-black hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
+                Borrar
+            </button>
+        </div>
+    </div>
+
+<script>
+    document.getElementById('calcular').addEventListener('click', function() {
+        // Obtener los valores de los campos
+        const R = parseFloat(document.getElementById('campo1').value);
+        const n = parseFloat(document.getElementById('campo2').value);
+        const i = parseFloat(document.getElementById('campo3').value) / 100; // orcentaje a decimal
+
+        const capitalizacion = document.getElementById('capitalizacion').value;
+        const tipo = document.getElementById('campo4').value;
+        const tiempo = document.getElementById('tiempo').value;
+
+        // Validar que los campos tengan valores válidos
+        if (isNaN(R) || isNaN(n) || isNaN(i)) {
+            alert("Por favor, ingrese valores válidos en todos los campos.");
+            return;
+        }
+
+
+        let tasaInteres;
+        let periodo = n;
+
+        //CONVERSIONES
+        //ANUAL A MENSUAL
+        if (tipo==='Anual' && capitalizacion === 'Mensual') {
+            const ief = i; // La tasa anual como "tasa efectiva"
+            tasaInteres = (Math.pow((1 + ief), (30 / 360)) - 1);
+            if (tiempo === 'Meses') {
+                periodo = n; // Mantenemos el periodo tal cual si está en meses
+            } else if (tiempo === 'Años') {
+                periodo = n * 12; // Convertimos años a meses
+            } else if (tiempo === 'Días') {
+                periodo = n / 30; // Convertimos días a meses
+            }
+        }
+
+        // ANUAL A SEMESTRAL
+        if (tipo==='Anual' && capitalizacion === 'Semestral') {
+            const ief = i; // La tasa anual como "tasa efectiva"
+            tasaInteres = (Math.pow((1 + ief), (180 / 360)) - 1); // 180 días
+            if (tiempo === 'Meses') {
+                periodo = n / 6; // Convertimos meses a semestres
+            } else if (tiempo === 'Años') {
+                periodo = n * 2; // Convertimos años a semestres
+            } else if (tiempo === 'Días') {
+                periodo = n / 180; // Convertimos días a semestres
+            }
+        }
+
+        // ANUAL A TRIMESTRAL
+        if (tipo==='Anual' && capitalizacion === 'Trimestral') {
+            const ief = i; // La tasa anual como "tasa efectiva"
+            tasaInteres = (Math.pow((1 + ief), (90 / 360)) - 1); // 90 días
+            if (tiempo === 'Meses') {
+                periodo = n / 3; // Convertimos meses a trimestres
+            } else if (tiempo === 'Años') {
+                periodo = n * 4; // Convertimos años a trimestres
+            } else if (tiempo === 'Días') {
+                periodo = n / 90; // Convertimos días a trimestres
+            }
+        }
+
+        // ANUAL A SEMANAL
+        if (tipo==='Anual' && capitalizacion === 'Semanal') {
+            const ief = i; // La tasa anual como "tasa efectiva"
+            tasaInteres = (Math.pow((1 + ief), (7 / 360)) - 1); // 7 días
+            if (tiempo === 'Meses') {
+                periodo = n * 4.345; // Convertimos meses a semanas (aproximadamente)
+            } else if (tiempo === 'Años') {
+                periodo = n * 52; // Convertimos años a semanas
+            } else if (tiempo === 'Días') {
+                periodo = n2 / 7; // Convertimos días a semanas
+            }
+        }
+
+        // ANUAL A DIARIA
+        if (tipo==='Anual' && capitalizacion === 'Diaria') {
+            const ief = i; // La tasa anual como "tasa efectiva"
+            tasaInteres = (Math.pow((1 + ief), (1 / 360)) - 1); // 1 día
+            if (tiempo === 'Meses') {
+                periodo = n * 30; // Convertimos meses a días
+            } else if (tiempo === 'Años') {
+                periodo = n * 360; // Convertimos años a días
+            } else if (tiempo === 'Días') {
+                periodo = n; // Mantenemos el periodo tal cual si está en días
+            }
+        }
+
+            // MENSUAL A ANUAL
+            if (tipo === 'Mensual' && capitalizacion === 'Anual') {
+                const ief = i; // La tasa mensual como "tasa efectiva"
+                
+                // Convertimos la tasa mensual a tasa anual
+                tasaInteres = (Math.pow((1 + ief), 12) - 1); // 12 meses en un año
+
+                // Ajustamos el periodo según la unidad de tiempo
+                if (tiempo === 'Meses') {
+                    periodo = n2 / 12; // Convertimos meses a años
+                } else if (tiempo === 'Años') {
+                    periodo = n2; // Ya está en años
+                } else if (tiempo === 'Días') {
+                    periodo = n2 / 360; // Convertimos días a años
+                }
+            }
+
+            // MENSUAL A SEMESTRAL
+            if (tipo === 'Mensual' && capitalizacion === 'Semestral') {
+                const ief = i; // La tasa mensual como "tasa efectiva"
+                
+                // Convertimos la tasa mensual a tasa semestral
+                tasaInteres = (Math.pow((1 + ief), 6) - 1); // 6 meses en un semestre
+
+                // Ajustamos el periodo según la unidad de tiempo
+                if (tiempo === 'Meses') {
+                    periodo = n2 / 6; // Convertimos meses a semestres
+                } else if (tiempo === 'Años') {
+                    periodo = n2 * 2; // Convertimos años a semestres
+                } else if (tiempo === 'Días') {
+                    periodo = n2 / 180; // Convertimos días a semestres (aproximadamente)
+                }
+            }
+
+            // MENSUAL A TRIMESTRAL
+            if (tipo === 'Mensual' && capitalizacion === 'Trimestral') {
+                const ief = i; // La tasa mensual como "tasa efectiva"
+                
+                // Convertimos la tasa mensual a tasa trimestral
+                tasaInteres = (Math.pow((1 + ief), 3) - 1); // 3 meses en un trimestre
+
+                // Ajustamos el periodo según la unidad de tiempo
+                if (tiempo === 'Meses') {
+                    periodo = n2 / 3; // Convertimos meses a trimestres
+                } else if (tiempo === 'Años') {
+                    periodo = n2 * 4; // Convertimos años a trimestres (1 año = 4 trimestres)
+                } else if (tiempo === 'Días') {
+                    periodo = n2 / 90; // Convertimos días a trimestres (aproximadamente 90 días en un trimestre)
+                }
+            }
+
+            // MENSUAL A DIARIA
+            if (tipo === 'Mensual' && capitalizacion === 'Diaria') {
+                const ief = i; // La tasa mensual como "tasa efectiva"
+                
+                // Convertimos la tasa mensual a tasa diaria
+                tasaInteres = (Math.pow((1 + ief), (1 / 30)) - 1); // Aproximado a 30 días en un mes
+
+                // Ajustamos el periodo según la unidad de tiempo
+                if (tiempo === 'Meses') {
+                    periodo = n2 * 30; // Convertimos meses a días
+                } else if (tiempo === 'Años') {
+                    periodo = n2 * 365; // Convertimos años a días
+                }
+            }
+
+            // MENSUAL A SEMANAL
+            if (tipo === 'Mensual' && capitalizacion === 'Semanal') {
+                const ief = i; // La tasa mensual como "tasa efectiva"
+                
+                // Convertimos la tasa mensual a tasa semanal
+                tasaInteres = (Math.pow((1 + ief), (1 / 4.345)) - 1); // Aproximado a 4.345 semanas en un mes
+
+                // Ajustamos el periodo según la unidad de tiempo
+                if (tiempo === 'Meses') {
+                    periodo = n2 * 4.345; // Convertimos meses a semanas
+                } else if (tiempo === 'Años') {
+                    periodo = n2 * 52; // Convertimos años a semanas
+                } else if (tiempo === 'Días') {
+                    periodo = n2 / 7; // Convertimos días a semanas
+                }
+            }
+            // SEMESTRAL A ANUAL
+            if (tipo === 'Semestral' && capitalizacion === 'Anual') {
+                const ief = i; // La tasa semestral como "tasa efectiva"
+                
+                // Convertimos la tasa semestral a tasa anual
+                tasaInteres = (Math.pow((1 + ief), 2) - 1); // 2 semestres en un año
+
+                // Ajustamos el periodo según la unidad de tiempo
+                if (tiempo === 'Semestres') {
+                    periodo = n2 / 2; // Convertimos semestres a años
+                } else if (tiempo === 'Años') {
+                    periodo = n2; // Ya está en años
+                } else if (tiempo === 'Meses') {
+                    periodo = n2 / 12; // Convertimos meses a años
+                }
+            }
+
+            // SEMESTRAL A MENSUAL
+            if (tipo === 'Semestral' && capitalizacion === 'Mensual') {
+                const ief = i; // La tasa semestral como "tasa efectiva"
+                
+                // Convertimos la tasa semestral a tasa mensual
+                tasaInteres = (Math.pow((1 + ief), (1 / 6)) - 1); // 6 meses en un semestre
+
+                // Ajustamos el periodo según la unidad de tiempo
+                if (tiempo === 'Semestres') {
+                    periodo = n2 * 6; // Convertimos semestres a meses
+                } else if (tiempo === 'Años') {
+                    periodo = n2 * 12; // Convertimos años a meses
+                } else if (tiempo === 'Meses') {
+                    periodo = n2; // Ya está en meses
+                }
+            }
+
+            // SEMESTRAL A TRIMESTRAL
+            if (tipo === 'Semestral' && capitalizacion === 'Trimestral') {
+                const ief = i; // La tasa semestral como "tasa efectiva"
+                
+                // Convertimos la tasa semestral a tasa trimestral
+                tasaInteres = (Math.pow((1 + ief), (1 / 2)) - 1); // 2 trimestres en un semestre
+
+                // Ajustamos el periodo según la unidad de tiempo
+                if (tiempo === 'Semestres') {
+                    periodo = n2 * 2; // Convertimos semestres a trimestres
+                } else if (tiempo === 'Años') {
+                    periodo = n2 * 4; // Convertimos años a trimestres
+                } else if (tiempo === 'Meses') {
+                    periodo = n2 / 3; // Convertimos meses a trimestres
+                }
+            }
+
+            // SEMESTRAL A DIARIO
+            if (tipo === 'Semestral' && capitalizacion === 'Diaria') {
+                const ief = i; // La tasa semestral como "tasa efectiva"
+                
+                // Convertimos la tasa semestral a tasa diaria
+                tasaInteres = (Math.pow((1 + ief), (1 / 180)) - 1); // Aproximadamente 180 días en un semestre
+
+                // Ajustamos el periodo según la unidad de tiempo
+                if (tiempo === 'Semestres') {
+                    periodo = n2 * 180; // Convertimos semestres a días
+                } else if (tiempo === 'Años') {
+                    periodo = n2 * 365; // Convertimos años a días
+                } else if (tiempo === 'Meses') {
+                    periodo = n2 * 30; // Convertimos meses a días
+                }
+            }
+
+            // SEMESTRAL A SEMANAL
+            if (tipo === 'Semestral' && capitalizacion === 'Semanal') {
+                const ief = i; // La tasa semestral como "tasa efectiva"
+                
+                // Convertimos la tasa semestral a tasa semanal
+                tasaInteres = (Math.pow((1 + ief), (1 / 26)) - 1); // Aproximadamente 26 semanas en un semestre
+
+                // Ajustamos el periodo según la unidad de tiempo
+                if (tiempo === 'Semestres') {
+                    periodo = n2 * 26; // Convertimos semestres a semanas
+                } else if (tiempo === 'Años') {
+                    periodo = n2 * 52; // Convertimos años a semanas
+                } else if (tiempo === 'Meses') {
+                    periodo = n2 * 4.345; // Convertimos meses a semanas
+                }
+            }
+
+            // TRIMESTRAL A ANUAL
+            if (tipo === 'Trimestral' && capitalizacion === 'Anual') {
+                const ief = i; // La tasa trimestral como "tasa efectiva"
+                
+                // Convertimos la tasa trimestral a tasa anual
+                tasaInteres = (Math.pow((1 + ief), 4) - 1); // 4 trimestres en un año
+
+                // Ajustamos el periodo según la unidad de tiempo
+                if (tiempo === 'Trimestres') {
+                    periodo = n2 / 4; // Convertimos trimestres a años
+                } else if (tiempo === 'Años') {
+                    periodo = n2; // Ya está en años
+                } else if (tiempo === 'Meses') {
+                    periodo = n2 / 12; // Convertimos meses a años
+                }
+            }            
+
+            // TRIMESTRAL A MENSUAL
+            if (tipo === 'Trimestral' && capitalizacion === 'Mensual') {
+                const ief = i; // La tasa trimestral como "tasa efectiva"
+                
+                // Convertimos la tasa trimestral a tasa mensual
+                tasaInteres = (Math.pow((1 + ief), (1 / 3)) - 1); // 3 meses en un trimestre
+
+                // Ajustamos el periodo según la unidad de tiempo
+                if (tiempo === 'Trimestres') {
+                    periodo = n2 * 3; // Convertimos trimestres a meses
+                } else if (tiempo === 'Años') {
+                    periodo = n2 * 12; // Convertimos años a meses
+                } else if (tiempo === 'Meses') {
+                    periodo = n2; // Ya está en meses
+                }
+            }
+
+            if (tipo === 'Trimestral' && capitalizacion === 'Semestral') {
+                const ief = i; // La tasa trimestral como "tasa efectiva"
+                
+                // Convertimos la tasa trimestral a tasa semestral
+                tasaInteres = (Math.pow((1 + ief), 2) - 1); // 2 trimestres en un semestre
+
+                // Ajustamos el periodo según la unidad de tiempo
+                if (tiempo === 'Trimestres') {
+                    periodo = n2 / 2; // Convertimos trimestres a semestres
+                } else if (tiempo === 'Años') {
+                    periodo = n2 * 2; // Convertimos años a semestres
+                } else if (tiempo === 'Meses') {
+                    periodo = n2 / 6; // Convertimos meses a semestres
+                }
+            }
+
+            // TRIMESTRAL A DIARIO
+            if (tipo === 'Trimestral' && capitalizacion === 'Diaria') {
+                const ief = i; // La tasa trimestral como "tasa efectiva"
+                
+                // Convertimos la tasa trimestral a tasa diaria
+                tasaInteres = (Math.pow((1 + ief), (1 / 90)) - 1); // Aproximadamente 90 días en un trimestre
+
+                // Ajustamos el periodo según la unidad de tiempo
+                if (tiempo === 'Trimestres') {
+                    periodo = n2 * 90; // Convertimos trimestres a días
+                } else if (tiempo === 'Años') {
+                    periodo = n2 * 365; // Convertimos años a días
+                } else if (tiempo === 'Meses') {
+                    periodo = n2 * 30; // Convertimos meses a días
+                }
+            }
+
+            // TRIMESTRAL A SEMANAL
+            if (tipo === 'Trimestral' && capitalizacion === 'Semanal') {
+                const ief = i; // La tasa trimestral como "tasa efectiva"
+                
+                // Convertimos la tasa trimestral a tasa semanal
+                tasaInteres = (Math.pow((1 + ief), (1 / 13)) - 1); // Aproximadamente 13 semanas en un trimestre
+
+                // Ajustamos el periodo según la unidad de tiempo
+                if (tiempo === 'Trimestres') {
+                    periodo = n2 * 13; // Convertimos trimestres a semanas
+                } else if (tiempo === 'Años') {
+                    periodo = n2 * 52; // Convertimos años a semanas
+                } else if (tiempo === 'Meses') {
+                    periodo = n2 * 4.345; // Convertimos meses a semanas
+                }
+            }
+
+            // SEMANAL A DIARIA
+            if (tipo === 'Semanal' && capitalizacion === 'Diaria') {
+                const ief = i; // La tasa semanal como "tasa efectiva"
+                
+                // Convertimos la tasa semanal a tasa diaria
+                tasaInteres = (Math.pow((1 + ief), (1 / 7)) - 1); // 7 días en una semana
+
+                // Ajustamos el periodo según la unidad de tiempo
+                if (tiempo === 'Semanas') {
+                    periodo = n2 * 7; // Convertimos semanas a días
+                } else if (tiempo === 'Años') {
+                    periodo = n2 * 365; // Convertimos años a días
+                } else if (tiempo === 'Meses') {
+                    periodo = n2 * 30; // Convertimos meses a días
+                } else if (tiempo === 'Días') {
+                    periodo = n2; // Ya está en días
+                }
+            }
+
+            // Cálculo de S (Valor Futuro)
+            const S = R * (((1 + tasaInteres) ** periodo - 1) / tasaInteres);
+
+            // Mostrar el resultado en el campo de respuesta
+            document.getElementById('respuesta').value = S.toFixed(2); // Limitar a 2 decimales
+        });
+
+        // Limpiar los campos cuando se presiona el botón Borrar
+        document.getElementById('borrar').addEventListener('click', function() {
+            document.getElementById('campo1').value = '';
+            document.getElementById('campo2').value = '';
+            document.getElementById('campo3').value = '';
+            document.getElementById('respuesta').value = '';
+        });
+
+        //--------------------------------------------------------------------------
+
+        document.getElementById('calcular2').addEventListener('click', function() {
+            // Obtener los valores de los campos
+            const Sf = parseFloat(document.getElementById('campo6').value);
+            const n2 = parseFloat(document.getElementById('campo7').value);
+            const i = parseFloat(document.getElementById('campo9').value) / 100; //  porcentaje a decimal
+
+            const capitalizacion2 = document.getElementById('capitalizacion2').value;
+            const tiempo = document.getElementById('campo8').value;
+            const tipo2 = document.getElementById('campo10').value;
+
+            // Validar que los campos tengan valores válidos
+            if (isNaN(Sf) || isNaN(n2) || isNaN(i)) {
+                alert("Por favor, ingrese valores válidos en todos los campos.");
+                return;
+            }
+
+            //Convertimos la tasa de interés y el período
+            let tasaInteres;
+            let periodo = n2;
+
+            //CONVERSIONES
+            //ANUAL A MENSUAL
+            if (tipo2==='Anual' && capitalizacion2 === 'Mensual') {
+                const ief = i; // La tasa anual como "tasa efectiva"
+                tasaInteres = (Math.pow((1 + ief), (30 / 360)) - 1);
+                if (tiempo === 'Meses') {
+                    periodo = n2; // Mantenemos el periodo tal cual si está en meses
+                } else if (tiempo === 'Años') {
+                    periodo = n2 * 12; // Convertimos años a meses
+                } else if (tiempo === 'Días') {
+                    periodo = n2 / 30; // Convertimos días a meses
+                }
+            }
+
+            // ANUAL A SEMESTRAL
+            if (tipo2==='Anual' && capitalizacion2 === 'Semestral') {
+                const ief = i; // La tasa anual como "tasa efectiva"
+                tasaInteres = (Math.pow((1 + ief), (180 / 360)) - 1); // 180 días
+                if (tiempo === 'Meses') {
+                    periodo = n2 / 6; // Convertimos meses a semestres
+                } else if (tiempo === 'Años') {
+                    periodo = n2 * 2; // Convertimos años a semestres
+                } else if (tiempo === 'Días') {
+                    periodo = n2 / 180; // Convertimos días a semestres
+                }
+            }
+
+            // ANUAL A TRIMESTRAL
+            if (tipo2==='Anual' && capitalizacion2 === 'Trimestral') {
+                const ief = i; // La tasa anual como "tasa efectiva"
+                tasaInteres = (Math.pow((1 + ief), (90 / 360)) - 1); // 90 días
+                if (tiempo === 'Meses') {
+                    periodo = n2 / 3; // Convertimos meses a trimestres
+                } else if (tiempo === 'Años') {
+                    periodo = n2 * 4; // Convertimos años a trimestres
+                } else if (tiempo === 'Días') {
+                    periodo = n2 / 90; // Convertimos días a trimestres
+                }
+            }
+
+            // ANUAL A SEMANAL
+            if (tipo2==='Anual' && capitalizacion2 === 'Semanal') {
+                const ief = i; // La tasa anual como "tasa efectiva"
+                tasaInteres = (Math.pow((1 + ief), (7 / 360)) - 1); // 7 días
+                if (tiempo === 'Meses') {
+                    periodo = n2 * 4.345; // Convertimos meses a semanas
+                } else if (tiempo === 'Años') {
+                    periodo = n2 * 52; // Convertimos años a semanas
+                } else if (tiempo === 'Días') {
+                    periodo = n2 / 7; // Convertimos días a semanas
+                }
+            }
+
+            // ANUAL A DIARIA
+            if (tipo2==='Anual' && capitalizacion2 === 'Diaria') {
+                const ief = i; // La tasa anual como "tasa efectiva"
+                tasaInteres = (Math.pow((1 + ief), (1 / 360)) - 1); // 1 día
+                if (tiempo === 'Meses') {
+                    periodo = n2 * 30; // Convertimos meses a días
+                } else if (tiempo === 'Años') {
+                    periodo = n2 * 360; // Convertimos años a días
+                } else if (tiempo === 'Días') {
+                    periodo = n2; // Mantenemos el periodo 
+                }
+            }
+
+            // MENSUAL A ANUAL
+            if (tipo2 === 'Mensual' && capitalizacion2 === 'Anual') {
+                const ief = i; // La tasa mensual como "tasa efectiva"
+                
+                // Convertimos la tasa mensual a tasa anual
+                tasaInteres = (Math.pow((1 + ief), 12) - 1); // 12 meses en un año
+
+                // Ajustamos el periodo según la unidad de tiempo
+                if (tiempo === 'Meses') {
+                    periodo = n2 / 12; // Convertimos meses a años
+                } else if (tiempo === 'Años') {
+                    periodo = n2; // Ya está en años
+                } else if (tiempo === 'Días') {
+                    periodo = n2 / 360; // Convertimos días a años
+                }
+            }
+
+            // MENSUAL A SEMESTRAL
+            if (tipo2 === 'Mensual' && capitalizacion2 === 'Semestral') {
+                const ief = i; // La tasa mensual como "tasa efectiva"
+                
+                // Convertimos la tasa mensual a tasa semestral
+                tasaInteres = (Math.pow((1 + ief), 6) - 1); // 6 meses en un semestre
+
+                // Ajustamos el periodo según la unidad de tiempo
+                if (tiempo === 'Meses') {
+                    periodo = n2 / 6; // Convertimos meses a semestres
+                } else if (tiempo === 'Años') {
+                    periodo = n2 * 2; // Convertimos años a semestres
+                } else if (tiempo === 'Días') {
+                    periodo = n2 / 180; // Convertimos días a semestres (aproximadamente)
+                }
+            }
+
+            // MENSUAL A TRIMESTRAL
+            if (tipo2 === 'Mensual' && capitalizacion2 === 'Trimestral') {
+                const ief = i; // La tasa mensual como "tasa efectiva"
+                
+                // Convertimos la tasa mensual a tasa trimestral
+                tasaInteres = (Math.pow((1 + ief), 3) - 1); // 3 meses en un trimestre
+
+                // Ajustamos el periodo según la unidad de tiempo
+                if (tiempo === 'Meses') {
+                    periodo = n2 / 3; // Convertimos meses a trimestres
+                } else if (tiempo === 'Años') {
+                    periodo = n2 * 4; // Convertimos años a trimestres (1 año = 4 trimestres)
+                } else if (tiempo === 'Días') {
+                    periodo = n2 / 90; // Convertimos días a trimestres (aproximadamente 90 días en un trimestre)
+                }
+            }
+
+            // MENSUAL A DIARIA
+            if (tipo2 === 'Mensual' && capitalizacion2 === 'Diaria') {
+                const ief = i; // La tasa mensual como "tasa efectiva"
+                
+                // Convertimos la tasa mensual a tasa diaria
+                tasaInteres = (Math.pow((1 + ief), (1 / 30)) - 1); // Aproximado a 30 días en un mes
+
+                // Ajustamos el periodo según la unidad de tiempo
+                if (tiempo === 'Meses') {
+                    periodo = n2 * 30; // Convertimos meses a días
+                } else if (tiempo === 'Años') {
+                    periodo = n2 * 365; // Convertimos años a días
+                }
+            }
+
+            // MENSUAL A SEMANAL
+            if (tipo2 === 'Mensual' && capitalizacion2 === 'Semanal') {
+                const ief = i; // La tasa mensual como "tasa efectiva"
+                
+                // Convertimos la tasa mensual a tasa semanal
+                tasaInteres = (Math.pow((1 + ief), (1 / 4.345)) - 1); // Aproximado a 4.345 semanas en un mes
+
+                // Ajustamos el periodo según la unidad de tiempo
+                if (tiempo === 'Meses') {
+                    periodo = n2 * 4.345; // Convertimos meses a semanas
+                } else if (tiempo === 'Años') {
+                    periodo = n2 * 52; // Convertimos años a semanas
+                } else if (tiempo === 'Días') {
+                    periodo = n2 / 7; // Convertimos días a semanas
+                }
+            }
+
+            // SEMESTRAL A ANUAL
+            if (tipo2 === 'Semestral' && capitalizacion2 === 'Anual') {
+                const ief = i; // La tasa semestral como "tasa efectiva"
+                
+                // Convertimos la tasa semestral a tasa anual
+                tasaInteres = (Math.pow((1 + ief), 2) - 1); // 2 semestres en un año
+
+                // Ajustamos el periodo según la unidad de tiempo
+                if (tiempo === 'Semestres') {
+                    periodo = n2 / 2; // Convertimos semestres a años
+                } else if (tiempo === 'Años') {
+                    periodo = n2; // Ya está en años
+                } else if (tiempo === 'Meses') {
+                    periodo = n2 / 12; // Convertimos meses a años
+                }
+            }
+
+            // SEMESTRAL A MENSUAL
+            if (tipo2 === 'Semestral' && capitalizacion2 === 'Mensual') {
+                const ief = i; // La tasa semestral como "tasa efectiva"
+                
+                // Convertimos la tasa semestral a tasa mensual
+                tasaInteres = (Math.pow((1 + ief), (1 / 6)) - 1); // 6 meses en un semestre
+
+                // Ajustamos el periodo según la unidad de tiempo
+                if (tiempo === 'Semestres') {
+                    periodo = n2 * 6; // Convertimos semestres a meses
+                } else if (tiempo === 'Años') {
+                    periodo = n2 * 12; // Convertimos años a meses
+                } else if (tiempo === 'Meses') {
+                    periodo = n2; // Ya está en meses
+                }
+            }
+
+            // SEMESTRAL A TRIMESTRAL
+            if (tipo2 === 'Semestral' && capitalizacion2 === 'Trimestral') {
+                const ief = i; // La tasa semestral como "tasa efectiva"
+                
+                // Convertimos la tasa semestral a tasa trimestral
+                tasaInteres = (Math.pow((1 + ief), (1 / 2)) - 1); // 2 trimestres en un semestre
+
+                // Ajustamos el periodo según la unidad de tiempo
+                if (tiempo === 'Semestres') {
+                    periodo = n2 * 2; // Convertimos semestres a trimestres
+                } else if (tiempo === 'Años') {
+                    periodo = n2 * 4; // Convertimos años a trimestres
+                } else if (tiempo === 'Meses') {
+                    periodo = n2 / 3; // Convertimos meses a trimestres
+                }
+            }
+
+            // SEMESTRAL A DIARIO
+            if (tipo2 === 'Semestral' && capitalizacion2 === 'Diaria') {
+                const ief = i; // La tasa semestral como "tasa efectiva"
+                
+                // Convertimos la tasa semestral a tasa diaria
+                tasaInteres = (Math.pow((1 + ief), (1 / 180)) - 1); // Aproximadamente 180 días en un semestre
+
+                // Ajustamos el periodo según la unidad de tiempo
+                if (tiempo === 'Semestres') {
+                    periodo = n2 * 180; // Convertimos semestres a días
+                } else if (tiempo === 'Años') {
+                    periodo = n2 * 365; // Convertimos años a días
+                } else if (tiempo === 'Meses') {
+                    periodo = n2 * 30; // Convertimos meses a días
+                }
+            }
+
+            // SEMESTRAL A SEMANAL
+            if (tipo2 === 'Semestral' && capitalizacion2 === 'Semanal') {
+                const ief = i; // La tasa semestral como "tasa efectiva"
+                
+                // Convertimos la tasa semestral a tasa semanal
+                tasaInteres = (Math.pow((1 + ief), (1 / 26)) - 1); // Aproximadamente 26 semanas en un semestre
+
+                // Ajustamos el periodo según la unidad de tiempo
+                if (tiempo === 'Semestres') {
+                    periodo = n2 * 26; // Convertimos semestres a semanas
+                } else if (tiempo === 'Años') {
+                    periodo = n2 * 52; // Convertimos años a semanas
+                } else if (tiempo === 'Meses') {
+                    periodo = n2 * 4.345; // Convertimos meses a semanas
+                }
+            }
+
+            // TRIMESTRAL A ANUAL
+            if (tipo2 === 'Trimestral' && capitalizacion2 === 'Anual') {
+                const ief = i; // La tasa trimestral como "tasa efectiva"
+                
+                // Convertimos la tasa trimestral a tasa anual
+                tasaInteres = (Math.pow((1 + ief), 4) - 1); // 4 trimestres en un año
+
+                // Ajustamos el periodo según la unidad de tiempo
+                if (tiempo === 'Trimestres') {
+                    periodo = n2 / 4; // Convertimos trimestres a años
+                } else if (tiempo === 'Años') {
+                    periodo = n2; // Ya está en años
+                } else if (tiempo === 'Meses') {
+                    periodo = n2 / 12; // Convertimos meses a años
+                }
+            }            
+
+            // TRIMESTRAL A MENSUAL
+            if (tipo2 === 'Trimestral' && capitalizacion2 === 'Mensual') {
+                const ief = i; // La tasa trimestral como "tasa efectiva"
+                
+                // Convertimos la tasa trimestral a tasa mensual
+                tasaInteres = (Math.pow((1 + ief), (1 / 3)) - 1); // 3 meses en un trimestre
+
+                // Ajustamos el periodo según la unidad de tiempo
+                if (tiempo === 'Trimestres') {
+                    periodo = n2 * 3; // Convertimos trimestres a meses
+                } else if (tiempo === 'Años') {
+                    periodo = n2 * 12; // Convertimos años a meses
+                } else if (tiempo === 'Meses') {
+                    periodo = n2; // Ya está en meses
+                }
+            }
+
+            if (tipo2 === 'Trimestral' && capitalizacion2 === 'Semestral') {
+                const ief = i; // La tasa trimestral como "tasa efectiva"
+                
+                // Convertimos la tasa trimestral a tasa semestral
+                tasaInteres = (Math.pow((1 + ief), 2) - 1); // 2 trimestres en un semestre
+
+                // Ajustamos el periodo según la unidad de tiempo
+                if (tiempo === 'Trimestres') {
+                    periodo = n2 / 2; // Convertimos trimestres a semestres
+                } else if (tiempo === 'Años') {
+                    periodo = n2 * 2; // Convertimos años a semestres
+                } else if (tiempo === 'Meses') {
+                    periodo = n2 / 6; // Convertimos meses a semestres
+                }
+            }
+
+            // TRIMESTRAL A DIARIO
+            if (tipo2 === 'Trimestral' && capitalizacion2 === 'Diaria') {
+                const ief = i; // La tasa trimestral como "tasa efectiva"
+                
+                // Convertimos la tasa trimestral a tasa diaria
+                tasaInteres = (Math.pow((1 + ief), (1 / 90)) - 1); // Aproximadamente 90 días en un trimestre
+
+                // Ajustamos el periodo según la unidad de tiempo
+                if (tiempo === 'Trimestres') {
+                    periodo = n2 * 90; // Convertimos trimestres a días
+                } else if (tiempo === 'Años') {
+                    periodo = n2 * 365; // Convertimos años a días
+                } else if (tiempo === 'Meses') {
+                    periodo = n2 * 30; // Convertimos meses a días
+                }
+            }
+
+            // TRIMESTRAL A SEMANAL
+            if (tipo2 === 'Trimestral' && capitalizacion2 === 'Semanal') {
+                const ief = i; // La tasa trimestral como "tasa efectiva"
+                
+                // Convertimos la tasa trimestral a tasa semanal
+                tasaInteres = (Math.pow((1 + ief), (1 / 13)) - 1); // Aproximadamente 13 semanas en un trimestre
+
+                // Ajustamos el periodo según la unidad de tiempo
+                if (tiempo === 'Trimestres') {
+                    periodo = n2 * 13; // Convertimos trimestres a semanas
+                } else if (tiempo === 'Años') {
+                    periodo = n2 * 52; // Convertimos años a semanas
+                } else if (tiempo === 'Meses') {
+                    periodo = n2 * 4.345; // Convertimos meses a semanas
+                }
+            }
+
+            // SEMANAL A DIARIA
+            if (tipo2 === 'Semanal' && capitalizacion2 === 'Diaria') {
+                const ief = i; // La tasa semanal como "tasa efectiva"
+                
+                // Convertimos la tasa semanal a tasa diaria
+                tasaInteres = (Math.pow((1 + ief), (1 / 7)) - 1); // 7 días en una semana
+
+                // Ajustamos el periodo según la unidad de tiempo
+                if (tiempo === 'Semanas') {
+                    periodo = n2 * 7; // Convertimos semanas a días
+                } else if (tiempo === 'Años') {
+                    periodo = n2 * 365; // Convertimos años a días
+                } else if (tiempo === 'Meses') {
+                    periodo = n2 * 30; // Convertimos meses a días
+                } else if (tiempo === 'Días') {
+                    periodo = n2; // Ya está en días
+                }
+            }
+
+            // Cálculo de S (Valor Futuro)
+            const R2 = Sf * (tasaInteres/((1 + tasaInteres) ** periodo - 1));
+
+            // Mostrar el resultado en el campo de respuesta
+            document.getElementById('respuesta2').value = R2.toFixed(2); // Limitar a 2 decimales
+    });
+
+
+    document.getElementById('borrar2').addEventListener('click', function() {
+        document.getElementById('campo6').value = '';
+        document.getElementById('campo7').value = '';
+        document.getElementById('campo9').value = '';
+        document.getElementById('respuesta2').value = '';
+    });
+</script>
 
 {% endblock %}
