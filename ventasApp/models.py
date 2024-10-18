@@ -15,10 +15,19 @@ class Categoria(models.Model):
         return self.descripcion
 
 class Unidad(models.Model):
-    descripcion=models.CharField(max_length=30)
-    estado=models.BooleanField()
+    ratio = models.CharField(max_length=30)
+    formula = models.CharField(max_length=50)
+
     def __str__(self):
-        return self.descripcion
+        return f'{self.ratio} - {self.formula}'
+    
+class Unidad2(models.Model):
+    ratio = models.CharField(max_length=30)
+    formula = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f'{self.ratio} - {self.formula}'
+
 
 class Cliente(models.Model):
     nombre = models.CharField(max_length=100)

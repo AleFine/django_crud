@@ -1,19 +1,9 @@
 # Byte-compiled / optimized / DLL files
-**\django_sisventas\ventasApp\__pycache__
-node_modules/
-**/_pycache_/
-**/node_modules/
-ventasApp/_pycache_/forms.cpython-312.pyc
-ventasApp/_pycache_/models.cpython-312.pyc
-ventasApp/_pycache_/urls.cpython-312.pyc
-ventasApp/_pycache_/views.cpython-312.pyc
 
-pycache/
-django_sisventas/pycache/
-seguridadApp/pycache/
-seguridadApp/migrations/pycache/
-ventasApp/pycache/
-ventasApp/migrations/pycache/
+ventasApp/__pycache__/forms.cpython-312.pyc
+ventasApp/__pycache__/models.cpython-312.pyc
+ventasApp/__pycache__/urls.cpython-312.pyc
+ventasApp/__pycache__/views.cpython-312.pyc
 
 **/pycache/
 **.pyc
@@ -131,7 +121,7 @@ ipython_config.py
 .pdm-build/
 
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
-__pypackages__/
+pypackages/
 
 # Celery stuff
 celerybeat-schedule
@@ -205,3 +195,21 @@ ventasApp/__pycache__/forms.cpython-312.pyc
 ventasApp/__pycache__/models.cpython-312.pyc
 ventasApp/__pycache__/urls.cpython-312.pyc
 ventasApp/__pycache__/views.cpython-312.pyc
+
+pycache/
+django_sisventas/pycache/
+seguridadApp/pycache/
+seguridadApp/migrations/pycache/
+ventasApp/pycache/
+ventasApp/migrations/pycache/
+
+**/pycache/
+**.pyc
+*.pyc
+pycache/
+*.py[cod]
+*$py.class
+
+ventasApp/pycache/views.cpython-312.pyc
+ventasApp/pycache/views.cpython-312.pyc
+ventasApp/pycache/views.cpython-312.pyc

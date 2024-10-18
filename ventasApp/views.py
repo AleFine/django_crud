@@ -4,11 +4,19 @@ from django.contrib import messages
 from django.db import transaction
 from decimal import Decimal
 from django.db.models import Q
+from .forms import CategoriaForm,ClienteForm,UnidadForm,ProductoForm
+=======
 from .forms import CategoriaForm
 from django.contrib.auth.decorators import login_required
 from .utils import render_to_pdf
 from django.http import HttpResponse
-from .forms import CategoriaForm,ClienteForm,UnidadForm,ProductoForm
+from .forms import CategoriaForm,ClienteForm,ProductoForm
+from .forms import CategoriaForm,ClienteForm,ProductoForm,DetalleVentaForm,VentaForm
+from django.http import JsonResponse
+from django.urls import reverse
+from django.db.models import F
+from .productos import Product
+>>>>>>> Stashed changes
 from .forms import CategoriaForm,ClienteForm,UnidadForm,ProductoForm,DetalleVentaForm,VentaForm,FactorCapitalizacionForm,FactorActualizacionForm
 from django.http import JsonResponse
 from django.urls import reverse
@@ -71,6 +79,7 @@ def eliminarcategoria(request, id):
 #UNIDADES
 @login_required
 def listar_unidades(request):
+<<<<<<< Updated upstream
     queryset = request.GET.get("search",'').strip().lower()
     unidad = Unidad.objects.filter(estado=True)
     
@@ -117,6 +126,12 @@ def eliminar_unidades(request, id):
 #FIN UNIDADES
 
 
+=======
+    unidades = Unidad.objects.all() 
+    context = {'unidad': unidades}  
+    return render(request, "listar_unidades.html", context)
+
+>>>>>>> Stashed changes
 #PRODUCTOS
 @login_required
 def listar_productos(request):

@@ -2,10 +2,16 @@ from django.urls import path,include
 from ventasApp.views import (
     listarcategoria, agregarcategoria, editarcategoria, eliminarcategoria,
     listar_clientes, crear_cliente, editar_cliente, eliminar_cliente,
+<<<<<<< Updated upstream
     listar_unidades, agregar_unidades, eliminar_unidades, editar_unidades,
     listar_productos, crear_producto, editar_producto, eliminar_producto,
     listar_ventas, crear_venta, editar_venta, eliminar_venta, get_cliente_documento,reporte_pdf,
     calcular_factores, factor_actua, factor_capi
+=======
+    listar_unidades,
+    listar_productos, crear_producto, editar_producto, eliminar_producto,
+    listar_ventas, crear_venta, editar_venta, eliminar_venta, get_cliente_documento,reporte_pdf 
+>>>>>>> Stashed changes
 )
 from django.contrib.auth import views
 
@@ -16,9 +22,7 @@ urlpatterns = [
     path('eliminarcategoria/<int:id>/',eliminarcategoria,name="eliminarcategoria"), 
     
     path('listar_unidades/',listar_unidades,name="listar_unidades"), 
-    path('agregar_unidades/',agregar_unidades,name="agregar_unidades"),
-    path('editar_unidades/<int:id>/',editar_unidades,name="editar_unidades"),
-    path('eliminar_unidades/<int:id>/',eliminar_unidades,name="eliminar_unidades"),  
+
     
     path('clientes/', listar_clientes, name='listar_clientes'),
     path('clientes/crear/', crear_cliente, name='crear_cliente'),
