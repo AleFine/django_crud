@@ -473,6 +473,7 @@ def convertir_tasa(tasa, frecuencia_origen, frecuencia_destino):
 
 def calcular_factores(request):
     resultado = None
+    resultado_None = None
     if request.method == 'POST':
         form = CalculoFinancieroForm(request.POST)
         if form.is_valid():
@@ -492,11 +493,15 @@ def calcular_factores(request):
                 resultado = calcular_factor_recuperacion(capital, tasa_convertida, periodos_convertidos)
             elif tipo_calculo == 'fas': 
                 resultado = calcular_factor_actualizacion(pago_periodico, tasa_convertida, periodos_convertidos)
-
+                
     else:
         form = CalculoFinancieroForm()
 
-    return render(request, 'producto_form.html', {'form': form, 'resultado': resultado})
+    return render(request, 'producto_form.html', {
+        'form': form,
+        'resultado': resultado,
+        'resultado_None': resultado_None
+    })
 
 
 def calcular_factor_recuperacion(P, i, n):

@@ -197,6 +197,12 @@ FRECUENCIA_CHOICES = [
     ('anual', 'Anual'),
 ]
 
+TIPO_PERIODO_CHOICES = [
+    ('dias', 'Días'),
+    ('meses', 'Meses'),
+    ('años', 'Años'),
+]
+
 class CalculoFinancieroForm(forms.Form):
     tipo_calculo = forms.ChoiceField(
         choices=TIPO_CALCULO_CHOICES,
@@ -228,6 +234,14 @@ class CalculoFinancieroForm(forms.Form):
             'x-data': '{ isOptionSelected: false }',
             '@change': 'isOptionSelected = true',
             ':class': 'isOptionSelected && "text-black dark:text-white"'
+        })
+    )
+    
+    tipo_periodo = forms.ChoiceField(
+        choices=TIPO_PERIODO_CHOICES,
+        label="Tipo de Periodo",
+        widget=forms.Select(attrs={
+            'class': 'relative z-20 w-full appearance-none rounded border-[1.5px] border-stroke bg-transparent py-3 pl-5 pr-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary',
         })
     )
     
