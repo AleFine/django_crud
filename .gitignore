@@ -1,5 +1,6 @@
 # Byte-compiled / optimized / DLL files
 node_modules/
+**/_pycache_/
 **/node_modules/
 ventasApp/__pycache__/forms.cpython-312.pyc
 ventasApp/__pycache__/models.cpython-312.pyc
@@ -192,3 +193,5 @@ _pycache_/
 *.py[cod]
 *$py.class
 
+ventasApp/__pycache__/views.cpython-312.pyc
+ventasApp/__pycache__/views.cpython-312.pyc

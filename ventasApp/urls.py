@@ -4,7 +4,8 @@ from ventasApp.views import (
     listar_clientes, crear_cliente, editar_cliente, eliminar_cliente,
     listar_unidades, agregar_unidades, eliminar_unidades, editar_unidades,
     listar_productos, crear_producto, editar_producto, eliminar_producto,
-    listar_ventas, crear_venta, editar_venta, eliminar_venta, get_cliente_documento,reporte_pdf 
+    listar_ventas, crear_venta, editar_venta, eliminar_venta, get_cliente_documento,reporte_pdf,
+    calcular_factores
 )
 from django.contrib.auth import views
 
@@ -25,7 +26,7 @@ urlpatterns = [
     path('clientes/eliminar/<int:id>/', eliminar_cliente, name='eliminar_cliente'),
     
     path('productos/', listar_productos, name='listar_productos'),
-    path('productos/crear/', crear_producto, name='crear_producto'),
+    path('productos/crear/', calcular_factores, name='crear_producto'),
     path('productos/editar/<int:id>/', editar_producto, name='editar_producto'),
     path('productos/eliminar/<int:id>/', eliminar_producto, name='eliminar_producto'),
     
@@ -38,6 +39,7 @@ urlpatterns = [
     
     
     path('reportepdf/<int:id>', reporte_pdf, name='reporte_pdf'),
+    path('calcular-factores/', calcular_factores, name='calcular_factores')
     
     ]
 

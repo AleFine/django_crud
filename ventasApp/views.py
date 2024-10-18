@@ -14,6 +14,8 @@ from django.http import JsonResponse
 from django.urls import reverse
 from django.db.models import F
 from .productos import Product
+from .forms import CalculoFinancieroForm
+
 # Create your views here.
 
 #CATEGORIAS
@@ -341,16 +343,12 @@ def editar_venta(request, venta_id):
 
                     if not productos_ids or not cantidades or not precios:
                         raise ValueError("No se han proporcionado productos, cantidades o precios.")
-
-                    # Restaurar el stock de los productos de la venta original
+                    
                     for detalle in venta.detalles.all():
                         detalle.producto.stock += detalle.cantidad
                         detalle.producto.save()
 
-                    # Eliminar los detalles antiguos
                     venta.detalles.all().delete()
-
-                    # Crear nuevos detalles
                     for producto_id, cantidad, precio in zip(productos_ids, cantidades, precios):
                         producto = get_object_or_404(Producto, id=producto_id)
                         cantidad = int(cantidad)
@@ -430,3 +428,62 @@ def get_cliente_documento(request, cliente_id):
         return JsonResponse({'error': 'Cliente no encontrado'}, status=404)
 
 #FIN VENTAS
+def convertir_tasa(tasa, frecuencia_origen, frecuencia_destino):
+    periodos_por_frecuencia = {
+        'diaria': 365,
+        'semanal': 52,
+        'mensual': 12,
+        'trimestral': 4,
+        'semestral': 2,
+        'anual': 1
+    }
+
+    if frecuencia_origen == frecuencia_destino:
+        return tasa
+    
+    if frecuencia_origen != 'anual':
+        periodos_origen = periodos_por_frecuencia[frecuencia_origen]
+        tasa_anual = (1 + tasa) ** periodos_origen - 1
+    else:
+        tasa_anual = tasa
+    
+    periodos_destino = periodos_por_frecuencia[frecuencia_destino]
+    tasa_convertida = (1 + tasa_anual) ** (1 / periodos_destino) - 1
+    
+    return tasa_convertida
+
+def calcular_factores(request):
+    resultado = None
+    if request.method == 'POST':
+        form = CalculoFinancieroForm(request.POST)
+        if form.is_valid():
+            tipo_calculo = form.cleaned_data['tipo_calculo']
+            capital = form.cleaned_data['capital']
+            pago_periodico = form.cleaned_data['pago_periodico']
+            tasa = form.cleaned_data['tasa'] / 100 
+            periodos = form.cleaned_data['periodos']
+
+            tipo_tasa = form.cleaned_data['tipo_tasa']
+            tipo_capitalizacion = form.cleaned_data['tipo_capitalizacion']
+
+            tasa_convertida = convertir_tasa(tasa, tipo_tasa, tipo_capitalizacion)
+
+            if tipo_calculo == 'frc': 
+                resultado = calcular_factor_recuperacion(capital, tasa_convertida, periodos)
+            elif tipo_calculo == 'fas': 
+                resultado = calcular_factor_actualizacion(pago_periodico, tasa_convertida, periodos)
+
+    else:
+        form = CalculoFinancieroForm()
+
+    return render(request, 'producto_form.html', {'form': form, 'resultado': resultado})
+
+
+def calcular_factor_recuperacion(P, i, n):
+    R = P * (i * (1 + i) ** n) / ((1 + i) ** n - 1)
+    return R
+
+
+def calcular_factor_actualizacion(R, i, n):
+    P = R * ((1 + i) ** n - 1) / (i * (1 + i) ** n)
+    return P

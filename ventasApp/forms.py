@@ -182,3 +182,81 @@ class DetalleVentaForm(forms.ModelForm):
                 'min': '1'
             }),
         }
+        
+TIPO_CALCULO_CHOICES = [
+    ('frc', 'Factor de Recuperación de Capital'),
+    ('fas', 'Factor de Actualización de la Serie'),
+]
+
+FRECUENCIA_CHOICES = [
+    ('diaria', 'Diaria'),
+    ('semanal', 'Semanal'),
+    ('mensual', 'Mensual'),
+    ('trimestral', 'Trimestral'),
+    ('semestral', 'Semestral'),
+    ('anual', 'Anual'),
+]
+
+class CalculoFinancieroForm(forms.Form):
+    tipo_calculo = forms.ChoiceField(
+        choices=TIPO_CALCULO_CHOICES,
+        label="Tipo de Cálculo",
+        widget=forms.Select(attrs={
+            'class': 'relative z-20 w-full appearance-none rounded border-[1.5px] border-stroke bg-transparent py-3 pl-5 pr-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary',
+            'x-data': '{ isOptionSelected: false }',
+            '@change': 'isOptionSelected = true',
+            ':class': 'isOptionSelected && "text-black dark:text-white"'
+        })
+    )
+    
+    tipo_tasa = forms.ChoiceField(
+        choices=FRECUENCIA_CHOICES,
+        label="Tipo de Tasa",
+        widget=forms.Select(attrs={
+            'class': 'relative z-20 w-full appearance-none rounded border-[1.5px] border-stroke bg-transparent py-3 pl-5 pr-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary',
+            'x-data': '{ isOptionSelected: false }',
+            '@change': 'isOptionSelected = true',
+            ':class': 'isOptionSelected && "text-black dark:text-white"'
+        })
+    )
+    
+    tipo_capitalizacion = forms.ChoiceField(
+        choices=FRECUENCIA_CHOICES,
+        label="Tipo de Capitalización",
+        widget=forms.Select(attrs={
+            'class': 'relative z-20 w-full appearance-none rounded border-[1.5px] border-stroke bg-transparent py-3 pl-5 pr-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary',
+            'x-data': '{ isOptionSelected: false }',
+            '@change': 'isOptionSelected = true',
+            ':class': 'isOptionSelected && "text-black dark:text-white"'
+        })
+    )
+    
+    capital = forms.FloatField(
+        required=False,
+        label="Capital (P)",
+        widget=forms.NumberInput(attrs={
+            'class': 'w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+        })
+    )
+    
+    pago_periodico = forms.FloatField(
+        required=False,
+        label="Pago Periódico (R)",
+        widget=forms.NumberInput(attrs={
+            'class': 'w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+        })
+    )
+    
+    tasa = forms.FloatField(
+        label="Tasa de Interés (%)",
+        widget=forms.NumberInput(attrs={
+            'class': 'w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+        })
+    )
+    
+    periodos = forms.IntegerField(
+        label="Número de Periodos (n)",
+        widget=forms.NumberInput(attrs={
+            'class': 'w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+        })
+    )

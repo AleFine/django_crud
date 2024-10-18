@@ -4,81 +4,122 @@
 <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
     <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <h2 class="text-title-md2 font-bold text-black dark:text-white">
-            Agregar Producto
+            Calculadora Financiera
         </h2>
-        <nav>
-            <ol class="flex items-center gap-2">
-                <li class="font-medium text-primary"><a href="{% url 'listar_productos' %}">Volver</a></li>
-            </ol>
-        </nav>
     </div>
 
     <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div class="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-            <h3 class="font-medium text-black dark:text-white">Agregar Producto</h3>
+            <h3 class="font-medium text-black dark:text-white">Cálculo de Factores Financieros</h3>
         </div>
         <div class="flex flex-col gap-5.5 p-6.5">
-            <form method="POST" action="{% url 'crear_producto' %}">
+            <form method="POST" action="{% url 'calcular_factores' %}" id="calculoForm">
                 {% csrf_token %}
-                
+
                 <div>
-                    <label class="mb-3 block text-sm font-medium text-black dark:text-white" for="{{ form.descripcion.id_for_label }}">
-                        Descripción
+                    <label class="mb-3 block text-sm font-medium text-black dark:text-white">
+                        Tipo de Cálculo
                     </label>
-                    {{ form.descripcion }}
-                </div>
-                
-                <div>
-                    <label class="mb-3 block text-sm font-medium text-black dark:text-white" for="{{ form.categoria.id_for_label }}">
-                        Categoría
-                    </label>
-                    <div x-data="{ isOptionSelected: false }" class="relative z-20 bg-white dark:bg-form-input">
-                        {{ form.categoria }}
-                        <span class="absolute right-4 top-1/2 z-10 -translate-y-1/2">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <g opacity="0.8">
-                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M5.29289 8.29289C5.68342 7.90237 6.31658 7.90237 6.70711 8.29289L12 13.5858L17.2929 8.29289C17.6834 7.90237 18.3166 7.90237 18.7071 8.29289C19.0976 8.68342 19.0976 9.31658 18.7071 9.70711L12.7071 15.7071C12.3166 16.0976 11.6834 16.0976 11.2929 15.7071L5.29289 9.70711C4.90237 9.31658 4.90237 8.68342 5.29289 8.29289Z" fill="#637381"></path>
-                                </g>
-                            </svg>
-                        </span>
-                    </div>
+                    <select id="tipo_calculo" name="tipo_calculo" class="relative z-20 w-full appearance-none rounded border-[1.5px] border-stroke bg-transparent py-3 pl-5 pr-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary">
+                        <option value="frc">Factor de Recuperación de Capital</option>
+                        <option value="fas">Factor de Actualización de la Serie</option>
+                    </select>
                 </div>
 
                 <div>
-                    <label class="mb-3 block text-sm font-medium text-black dark:text-white" for="{{ form.unidad.id_for_label }}">
-                        Unidad
+                    <label class="mb-3 block text-sm font-medium text-black dark:text-white">
+                        Tipo de Tasa
                     </label>
-                    <div x-data="{ isOptionSelected: false }" class="relative z-20 bg-white dark:bg-form-input">
-                        {{ form.unidad }}
-                        <span class="absolute right-4 top-1/2 z-10 -translate-y-1/2">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <g opacity="0.8">
-                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M5.29289 8.29289C5.68342 7.90237 6.31658 7.90237 6.70711 8.29289L12 13.5858L17.2929 8.29289C17.6834 7.90237 18.3166 7.90237 18.7071 8.29289C19.0976 8.68342 19.0976 9.31658 18.7071 9.70711L12.7071 15.7071C12.3166 16.0976 11.6834 16.0976 11.2929 15.7071L5.29289 9.70711C4.90237 9.31658 4.90237 8.68342 5.29289 8.29289Z" fill="#637381"></path>
-                                </g>
-                            </svg>
-                        </span>
-                    </div>
+                    <select id="tipo_tasa" name="tipo_tasa" class="relative z-20 w-full appearance-none rounded border-[1.5px] border-stroke bg-transparent py-3 pl-5 pr-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary">
+                        <option value="diaria">Diaria</option>
+                        <option value="semanal">Semanal</option>
+                        <option value="mensual">Mensual</option>
+                        <option value="trimestral">Trimestral</option>
+                        <option value="semestral">Semestral</option>
+                        <option value="anual">Anual</option>
+                    </select>
                 </div>
 
                 <div>
-                    <label class="mb-3 block text-sm font-medium text-black dark:text-white" for="{{ form.stock.id_for_label }}">
-                        Stock
+                    <label class="mb-3 block text-sm font-medium text-black dark:text-white">
+                        Tipo de Capitalización
                     </label>
-                    {{ form.stock }}
+                    <select id="tipo_capitalizacion" name="tipo_capitalizacion" class="relative z-20 w-full appearance-none rounded border-[1.5px] border-stroke bg-transparent py-3 pl-5 pr-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary">
+                        <option value="diaria">Diaria</option>
+                        <option value="semanal">Semanal</option>
+                        <option value="mensual">Mensual</option>
+                        <option value="trimestral">Trimestral</option>
+                        <option value="semestral">Semestral</option>
+                        <option value="anual">Anual</option>
+                    </select>
                 </div>
 
                 <div>
-                    <label class="mb-3 block text-sm font-medium text-black dark:text-white" for="{{ form.precio.id_for_label }}">
-                        Precio
+                    <label class="mb-3 block text-sm font-medium text-black dark:text-white" id="label_capital">
+                        Capital (P)
                     </label>
-                    {{ form.precio }}
+                    <input type="number" name="capital" id="capital" class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary">
                 </div>
 
-                <button type="submit" class="mt-6 inline-flex items-center justify-center rounded-md bg-primary px-10 py-4 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10">
-                    Añadir
+                <div>
+                    <label class="mb-3 block text-sm font-medium text-black dark:text-white" id="label_pago_periodico">
+                        Pago Periódico (R)
+                    </label>
+                    <input type="number" name="pago_periodico" id="pago_periodico" class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary">
+                </div>
+
+                <div>
+                    <label class="mb-3 block text-sm font-medium text-black dark:text-white">
+                        Tasa de Interés (i)
+                    </label>
+                    <input type="number" name="tasa" class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary">
+                </div>
+
+                <div>
+                    <label class="mb-3 block text-sm font-medium text-black dark:text-white">
+                        Número de Periodos (n)
+                    </label>
+                    <input type="number" name="periodos" class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary">
+                </div>
+
+                <button type="submit" class="mt-6 inline-flex items-center justify-center rounded-md bg-primary px-10 py-4 text-center font-medium text-white hover:bg-opacity-90">
+                    Calcular
                 </button>
             </form>
+
+            {% if resultado %}
+            <div class="mt-4">
+                <h3 class="font-bold text-black dark:text-white">Resultado:</h3>
+                <p class="text-lg">{{ resultado }}</p>
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById('tipo_calculo').addEventListener('change', function() {
+        const tipoCalculo = this.value;
+
+        const labelCapital = document.getElementById('label_capital');
+        const labelPagoPeriodico = document.getElementById('label_pago_periodico');
+        const inputCapital = document.getElementById('capital');
+        const inputPagoPeriodico = document.getElementById('pago_periodico');
+
+        if (tipoCalculo === 'frc') {
+            labelCapital.innerText = "Capital (P)";
+            labelPagoPeriodico.innerText = "Pago Periódico (R)";
+            inputCapital.disabled = false;
+            inputPagoPeriodico.disabled = true;
+        } else if (tipoCalculo === 'fas') {
+            labelCapital.innerText = "Resultado (P)";
+            labelPagoPeriodico.innerText = "Pago Periódico (R)";
+            inputCapital.disabled = true;
+            inputPagoPeriodico.disabled = false;
+        }
+    });
+
+    document.getElementById('tipo_calculo').dispatchEvent(new Event('change'));
+</script>
+
 {% endblock content %}
