@@ -192,3 +192,5 @@ _pycache_/
 *.py[cod]
 *$py.class
 
+node_modules
+
