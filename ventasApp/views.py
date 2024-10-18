@@ -2,7 +2,20 @@ from django.shortcuts import render,redirect, get_object_or_404
 from ventasApp.models import Categoria,Cliente,Unidad,Producto
 from django.contrib import messages
 from django.db.models import Q
+<<<<<<< Updated upstream
 from .forms import CategoriaForm,ClienteForm,UnidadForm,ProductoForm
+=======
+from .forms import CategoriaForm
+from django.contrib.auth.decorators import login_required
+from .utils import render_to_pdf
+from django.http import HttpResponse
+from .forms import CategoriaForm,ClienteForm,ProductoForm
+from .forms import CategoriaForm,ClienteForm,ProductoForm,DetalleVentaForm,VentaForm
+from django.http import JsonResponse
+from django.urls import reverse
+from django.db.models import F
+from .productos import Product
+>>>>>>> Stashed changes
 # Create your views here.
 
 #CATEGORIAS
@@ -55,6 +68,7 @@ def eliminarcategoria(request, id):
 
 #UNIDADES
 def listar_unidades(request):
+<<<<<<< Updated upstream
     queryset = request.GET.get("buscar")
     unidad = Unidad.objects.filter(estado=True)
     
@@ -101,6 +115,12 @@ def eliminar_unidades(request, id):
 #FIN UNIDADES
 
 
+=======
+    unidades = Unidad.objects.all() 
+    context = {'unidad': unidades}  
+    return render(request, "listar_unidades.html", context)
+
+>>>>>>> Stashed changes
 #PRODUCTOS
 def listar_productos(request):
     productos = Producto.objects.all()

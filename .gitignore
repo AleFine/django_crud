@@ -1,23 +1,32 @@
 # Byte-compiled / optimized / DLL files
+node_modules/
+**/pycache/
+**/node_modules/
+ventasApp/pycache/forms.cpython-312.pyc
+ventasApp/pycache/models.cpython-312.pyc
+ventasApp/pycache/urls.cpython-312.pyc
+ventasApp/pycache/views.cpython-312.pyc
 
-ventasApp/__pycache__/forms.cpython-312.pyc
-ventasApp/__pycache__/models.cpython-312.pyc
-ventasApp/__pycache__/urls.cpython-312.pyc
-ventasApp/__pycache__/views.cpython-312.pyc
+pycache/
+django_sisventas/pycache/
+seguridadApp/pycache/
+seguridadApp/migrations/pycache/
+ventasApp/pycache/
+ventasApp/migrations/pycache/
 
-**/__pycache__/
+**/pycache/
 **.pyc
 *.pyc
-__pycache__/
+pycache/
 *.py[cod]
 *$py.class
+
 
 # C extensions
 *.so
 
 # Distribution / packaging
 .Python
-build/
 develop-eggs/
 dist/
 downloads/
@@ -121,7 +130,7 @@ ipython_config.py
 .pdm-build/
 
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
-__pypackages__/
+pypackages/
 
 # Celery stuff
 celerybeat-schedule
@@ -169,3 +178,21 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+
+pycache/
+django_sisventas/pycache/
+seguridadApp/pycache/
+seguridadApp/migrations/pycache/
+ventasApp/pycache/
+ventasApp/migrations/pycache/
+
+**/pycache/
+**.pyc
+*.pyc
+pycache/
+*.py[cod]
+*$py.class
+
+ventasApp/pycache/views.cpython-312.pyc
+ventasApp/pycache/views.cpython-312.pyc
+ventasApp/pycache/views.cpython-312.pyc
