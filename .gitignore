@@ -1,4 +1,5 @@
 # Byte-compiled / optimized / DLL files
+**\django_sisventas\ventasApp\__pycache__
 node_modules/
 **/_pycache_/
 **/node_modules/
@@ -198,3 +199,9 @@ ventasApp/__pycache__/views.cpython-312.pyc
 ventasApp/__pycache__/views.cpython-312.pyc
 
 django_sisventas/static/settings.py
+node_modules
+
+ventasApp/__pycache__/forms.cpython-312.pyc
+ventasApp/__pycache__/models.cpython-312.pyc
+ventasApp/__pycache__/urls.cpython-312.pyc
+ventasApp/__pycache__/views.cpython-312.pyc

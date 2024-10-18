@@ -43,8 +43,6 @@ INSTALLED_APPS = [
     'django_sisventas',
     'seguridadApp',
     'ventasApp',
-     'crispy_forms',
-     'crispy_bootstrap4',
 ]
 
 MIDDLEWARE = [
@@ -88,9 +86,9 @@ WSGI_APPLICATION = 'django_sisventas.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'dbventitas',
+        'NAME': 'djventas',
         'USER':'root',
-        'PASSWORD':'',
+        'PASSWORD':'root',
         'LOCALHOST':'localhost',
         'PORT':'3306'
     }
