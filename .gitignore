@@ -2,17 +2,17 @@
 node_modules/
 **/_pycache_/
 **/node_modules/
-ventasApp/__pycache__/forms.cpython-312.pyc
-ventasApp/__pycache__/models.cpython-312.pyc
-ventasApp/__pycache__/urls.cpython-312.pyc
-ventasApp/__pycache__/views.cpython-312.pyc
+ventasApp/_pycache_/forms.cpython-312.pyc
+ventasApp/_pycache_/models.cpython-312.pyc
+ventasApp/_pycache_/urls.cpython-312.pyc
+ventasApp/_pycache_/views.cpython-312.pyc
 
-_pycache_/
-django_sisventas/_pycache_/
-seguridadApp/_pycache_/
-seguridadApp/migrations/_pycache_/
-ventasApp/_pycache_/
-ventasApp/migrations/_pycache_/
+pycache/
+django_sisventas/pycache/
+seguridadApp/pycache/
+seguridadApp/migrations/pycache/
+ventasApp/pycache/
+ventasApp/migrations/pycache/
 
 **/pycache/
 **.pyc
