@@ -428,6 +428,25 @@ def get_cliente_documento(request, cliente_id):
         return JsonResponse({'error': 'Cliente no encontrado'}, status=404)
 
 #FIN VENTAS
+def convertir_periodo(periodos, tipo_periodo, tipo_cap):
+    conversion_frecuencias = {
+        'dias': 1 / 360,     
+        'meses': 1 / 12,     
+        'años': 1,            
+    }
+    cap_años = {
+        'diaria': 360,
+        'semanal': 52,
+        'mensual': 12,
+        'trimestral': 4,
+        'semestral': 2,
+        'anual': 1,
+    }
+    periodos_en_anios = periodos * conversion_frecuencias[tipo_periodo]
+    periodos_convertidos = periodos_en_anios * cap_años[tipo_cap]
+    return periodos_convertidos
+
+
 def convertir_tasa(tasa, frecuencia_origen, frecuencia_destino):
     periodos_por_frecuencia = {
         'diaria': 360,
@@ -460,17 +479,19 @@ def calcular_factores(request):
             tipo_calculo = form.cleaned_data['tipo_calculo']
             capital = form.cleaned_data['capital']
             pago_periodico = form.cleaned_data['pago_periodico']
-            tasa = form.cleaned_data['tasa'] / 100 
+            tasa = form.cleaned_data['tasa'] / 100  
             periodos = form.cleaned_data['periodos']
             tipo_tasa = form.cleaned_data['tipo_tasa']
             tipo_capitalizacion = form.cleaned_data['tipo_capitalizacion']
+            tipo_periodo = form.cleaned_data['tipo_periodo']
 
             tasa_convertida = convertir_tasa(tasa, tipo_tasa, tipo_capitalizacion)
+            periodos_convertidos = convertir_periodo(periodos, tipo_periodo, tipo_capitalizacion)
 
-            if tipo_calculo == 'frc': 
-                resultado = calcular_factor_recuperacion(capital, tasa_convertida, periodos)
+            if tipo_calculo == 'frc':  
+                resultado = calcular_factor_recuperacion(capital, tasa_convertida, periodos_convertidos)
             elif tipo_calculo == 'fas': 
-                resultado = calcular_factor_actualizacion(pago_periodico, tasa_convertida, periodos)
+                resultado = calcular_factor_actualizacion(pago_periodico, tasa_convertida, periodos_convertidos)
 
     else:
         form = CalculoFinancieroForm()

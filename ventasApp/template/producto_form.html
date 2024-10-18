@@ -16,6 +16,7 @@
             <form method="POST" action="{% url 'calcular_factores' %}" id="calculoForm">
                 {% csrf_token %}
 
+                <!-- Tipo de Cálculo -->
                 <div>
                     <label class="mb-3 block text-sm font-medium text-black dark:text-white">
                         Tipo de Cálculo
@@ -26,6 +27,7 @@
                     </select>
                 </div>
 
+                <!-- Select: Tipo de Tasa -->
                 <div>
                     <label class="mb-3 block text-sm font-medium text-black dark:text-white">
                         Tipo de Tasa
@@ -40,6 +42,7 @@
                     </select>
                 </div>
 
+                <!-- Select: Tipo de Capitalización -->
                 <div>
                     <label class="mb-3 block text-sm font-medium text-black dark:text-white">
                         Tipo de Capitalización
@@ -54,6 +57,7 @@
                     </select>
                 </div>
 
+                <!-- Campo de Capital (P) -->
                 <div>
                     <label class="mb-3 block text-sm font-medium text-black dark:text-white" id="label_capital">
                         Capital (P)
@@ -61,6 +65,7 @@
                     <input type="number" name="capital" id="capital" class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary">
                 </div>
 
+                <!-- Campo de Pago Periódico (R) -->
                 <div>
                     <label class="mb-3 block text-sm font-medium text-black dark:text-white" id="label_pago_periodico">
                         Pago Periódico (R)
@@ -68,18 +73,24 @@
                     <input type="number" name="pago_periodico" id="pago_periodico" class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary">
                 </div>
 
-                <div>
-                    <label class="mb-3 block text-sm font-medium text-black dark:text-white">
-                        Tasa de Interés (i)
-                    </label>
-                    <input type="number" name="tasa" class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary">
-                </div>
-
-                <div>
-                    <label class="mb-3 block text-sm font-medium text-black dark:text-white">
-                        Número de Periodos (n)
-                    </label>
-                    <input type="number" name="periodos" class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary">
+                <!-- Campo de Periodos (n) y selector de tipo de periodo -->
+                <div class="flex items-center space-x-3">
+                    <div>
+                        <label class="mb-3 block text-sm font-medium text-black dark:text-white">
+                            Número de Periodos (n)
+                        </label>
+                        <input type="number" name="periodos" id="periodos" class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary">
+                    </div>
+                    <div>
+                        <label class="mb-3 block text-sm font-medium text-black dark:text-white">
+                            Tipo de Periodo
+                        </label>
+                        <select id="tipo_periodo" name="tipo_periodo" class="relative z-20 w-full appearance-none rounded border-[1.5px] border-stroke bg-transparent py-3 pl-5 pr-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary">
+                            <option value="dias">Días</option>
+                            <option value="meses">Meses</option>
+                            <option value="años">Años</option>
+                        </select>
+                    </div>
                 </div>
 
                 <button type="submit" class="mt-6 inline-flex items-center justify-center rounded-md bg-primary px-10 py-4 text-center font-medium text-white hover:bg-opacity-90">
