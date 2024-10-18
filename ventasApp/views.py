@@ -430,8 +430,8 @@ def get_cliente_documento(request, cliente_id):
 #FIN VENTAS
 def convertir_tasa(tasa, frecuencia_origen, frecuencia_destino):
     periodos_por_frecuencia = {
-        'diaria': 365,
-        'semanal': 52,
+        'diaria': 360,
+        'semanal': 48,
         'mensual': 12,
         'trimestral': 4,
         'semestral': 2,
@@ -462,7 +462,6 @@ def calcular_factores(request):
             pago_periodico = form.cleaned_data['pago_periodico']
             tasa = form.cleaned_data['tasa'] / 100 
             periodos = form.cleaned_data['periodos']
-
             tipo_tasa = form.cleaned_data['tipo_tasa']
             tipo_capitalizacion = form.cleaned_data['tipo_capitalizacion']
 
