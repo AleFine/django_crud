@@ -745,6 +745,7 @@ def calcular_ratios(request):
             acciones = form.cleaned_data['acciones']
             dividendos = form.cleaned_data['dividendos']
             crecimiento_utilidad = form.cleaned_data['crecimiento_utilidad']
+            costo_capital = form.cleaned_data['costo_capital']
 
             activos_corrientes1 = efectivo1 + ccobrar1 + existencias1
             activos_corrientes2 = efectivo2 + ccobrar2 + existencias2
@@ -764,7 +765,7 @@ def calcular_ratios(request):
             utilidad2 = ventas2 - costo2
 
             ebitda = calcular_ebitda(ventas1, costo1)
-            eva = calcular_eva(ebitda, 10, total_pasivos1 + patrimonio1) 
+            eva = calcular_eva(ebitda, costo_capital, total_pasivos1 + patrimonio1) 
             ratios = calcular_ratios_financieros(utilidad1, ventas1, total_pasivos1, patrimonio1, acciones, dividendos, crecimiento_utilidad)
             interpretaciones = {key: interpretar_ratio(key, value) for key, value in ratios.items()}
 

@@ -2,6 +2,8 @@ def calcular_ebitda(ingresos, costos):
     return ingresos - costos
 
 
+
+
 def calcular_eva(ebitda, costo_capital, capital_empleado):
     return ebitda - (costo_capital / 100) * capital_empleado
 

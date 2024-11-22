@@ -627,3 +627,11 @@ class ExtendedNofForm(NofForm):
             'style': 'width: 140px;'
         })
     )
+    costo_capital = forms.FloatField(
+        initial=10.0,
+        label="Costo de Capital (%)",
+        widget=forms.NumberInput(attrs={
+            'class': 'rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary',
+            'style': 'width: 140px;'
+        })
+    )
