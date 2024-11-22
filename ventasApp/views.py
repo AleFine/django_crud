@@ -15,7 +15,7 @@ from django.urls import reverse
 from django.db.models import F
 from .productos import Product
 from .forms import CalculoFinancieroForm
-
+from . import formulas_wacc
 from . import formulas
 # Create your views here.
 
@@ -571,6 +571,37 @@ def factor_actua(request):
     
     return render(request, 'factor_actualizacion.html', {'form': form})
 
+
+def calcular_wacc(request):
+    if request.method == 'POST':
+        form = WaccCalculoForm(request.POST)
+        if form.is_valid():
+            pasivo1 = form.cleaned_data['pasivo1']
+            pasivo2 = form.cleaned_data['pasivo2']
+            tasa_impuesto = form.cleaned_data['tasa_impuesto']
+            tem = form.cleaned_data['tem']
+            tea = form.cleaned_data['tea']
+            activo = form.cleaned_data['activo']
+            prima_riesgo = form.cleaned_data['prima_riesgo']
+            tasa_libre_riesgo = form.cleaned_data['tasa_libre_riesgo']
+            tasa_mercado = form.cleaned_data['tasa_mercado']
+            beta_d = form.cleaned_data['beta_desepalancado']
+
+            pasivo_total = pasivo1 + pasivo2
+            patrimonio_total = activo - pasivo_total
+            wd_pasivo , we_patrimonio = formulas_wacc.estructura_capital(pasivo_total,patrimonio_total)
+            tasa_efectiva = formulas_wacc.convertir_tea(tem)
+            tasa_ponderada = formulas_wacc.tasa_ponderada_pasivo(tea,tasa_efectiva)
+
+            beta_apalancado = formulas_wacc.beta_apalancado(beta_d,tasa_impuesto,wd_pasivo)
+            capm = formulas_wacc.calcular_capm(beta_apalancado,tasa_libre_riesgo,tasa_mercado,prima_riesgo)
+            wacc = formulas_wacc.determinar_wacc(tasa_ponderada,prima_riesgo,wd_pasivo,we_patrimonio,capm)
+
+            return render(request, 'wacc_calculo.html', {'wacc': wacc})
+    else:
+        form = WaccCalculoForm()
+
+    return render(request, 'wacc_calculo.html', {'form': form})
 
 
 
