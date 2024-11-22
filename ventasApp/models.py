@@ -107,4 +107,18 @@ class FactorActualizacion(models.Model):
     
     def __str__(self):
         return self.stock_final
-    
+
+class WaccCalculo(models.Model):
+    pasivo1 = models.DecimalField(max_digits=10, decimal_places=2)
+    pasivo2 = models.DecimalField(max_digits=10, decimal_places=2)
+    tasa_impuesto = models.DecimalField(max_digits=10, decimal_places=2)
+    tem = models.DecimalField(max_digits=10, decimal_places=2)
+    tea = models.DecimalField(max_digits=10, decimal_places=2)
+    activo = models.DecimalField(max_digits=10, decimal_places=2)
+    prima_riesgo = models.DecimalField(max_digits=10, decimal_places=2)
+    tasa_libre_riesgo = models.DecimalField(max_digits=10, decimal_places=2)
+    tasa_mercado = models.DecimalField(max_digits=10, decimal_places=2)
+    beta_desapalancado = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return self.pasivo1
