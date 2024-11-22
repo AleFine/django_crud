@@ -415,6 +415,226 @@ class FactorActualizacionForm(forms.Form):
         })
     )
 
+class NofForm(forms.Form):
+    #ACTIVOS CORRIENTES
+    efectivo1 = forms.FloatField(
+        initial=2820.0,  
+        widget=forms.NumberInput(attrs={
+            'class': 'rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+            ,'style': 'width: 140px;'
+        })
+    )
+    efectivo2 = forms.FloatField(
+        initial=8107.0,  
+        widget=forms.NumberInput(attrs={
+            'class': 'rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+            ,'style': 'width: 140px;'
+        })
+    )
+
+    ccobrar1 = forms.FloatField(
+        initial=64406.0, 
+        widget=forms.NumberInput(attrs={
+            'class': 'rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+            ,'style': 'width: 140px;'
+        })
+    )
+    ccobrar2 = forms.FloatField(
+        initial=54380.0, 
+        widget=forms.NumberInput(attrs={
+            'class': 'rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+            ,'style': 'width: 140px;'
+        })
+    )
+
+    existencias1 = forms.FloatField(
+        initial=28855.0, 
+        widget=forms.NumberInput(attrs={
+            'class': 'rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+            ,'style': 'width: 140px;'
+        })
+    )
+    existencias2 = forms.FloatField(
+        initial=37878.0, 
+        widget=forms.NumberInput(attrs={
+            'class': 'rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+             ,'style': 'width: 140px;'
+        })
+    )
+
+    #ACTIVO NO CORRIENTE
+    inmueble1 = forms.FloatField(
+        initial=188220.0, 
+        widget=forms.NumberInput(attrs={
+            'class': 'rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+             ,'style': 'width: 140px;'
+        })
+    )
+    inmueble2 = forms.FloatField(
+        initial=248240.0, 
+        widget=forms.NumberInput(attrs={
+            'class': 'rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+             ,'style': 'width: 140px;'
+        })
+    )
+
+    aIntangibles1 = forms.FloatField(
+        initial=13262.0, 
+        widget=forms.NumberInput(attrs={
+            'class': 'rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+             ,'style': 'width: 140px;'
+        })
+    )
+    aIntangibles2 = forms.FloatField(
+        initial=49572.0, 
+        widget=forms.NumberInput(attrs={
+            'class': 'rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+             ,'style': 'width: 140px;'
+        })
+    )
+
+    #PASIVO CORRIENTE
+    cpagar1 = forms.FloatField(
+        initial=43405.0, 
+        widget=forms.NumberInput(attrs={
+            'class': 'rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+             ,'style': 'width: 140px;'
+        })
+    )
+    cpagar2 = forms.FloatField(
+        initial=32014.0, 
+        widget=forms.NumberInput(attrs={
+            'class': 'rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+             ,'style': 'width: 140px;'
+        })
+    )
+
+    obligaciones1 = forms.FloatField(
+        initial=35946.0, 
+        widget=forms.NumberInput(attrs={
+            'class': 'rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+             ,'style': 'width: 140px;'
+        })
+    )
+    obligaciones2 = forms.FloatField(
+        initial=30317.0, 
+        widget=forms.NumberInput(attrs={
+            'class': 'rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+             ,'style': 'width: 140px;'
+        })
+    )
+
+    #PASIVO NO CORRIENTE
+    obligacionesF1 = forms.FloatField(
+        initial=98159.0, 
+        widget=forms.NumberInput(attrs={
+            'class': 'rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+             ,'style': 'width: 140px;'
+        })
+    )
+    obligacionesF2 = forms.FloatField(
+        initial=174882.0, 
+        widget=forms.NumberInput(attrs={
+            'class': 'rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+             ,'style': 'width: 140px;'
+        })
+    )
+
+    #PATRIMONIO
+    capital1 = forms.FloatField(
+        initial=113238.0, 
+        widget=forms.NumberInput(attrs={
+            'class': 'rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+             ,'style': 'width: 140px;'
+        })
+    )
+    capital2 = forms.FloatField(
+        initial=160356.0, 
+        widget=forms.NumberInput(attrs={
+            'class': 'rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+             ,'style': 'width: 140px;'
+        })
+    )
+    
+    resultadosA1 = forms.FloatField(
+        initial=6815.0, 
+        widget=forms.NumberInput(attrs={
+            'class': 'rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+             ,'style': 'width: 140px;'
+        })
+    )
+    resultadosA2 = forms.FloatField(
+        initial=608.0, 
+        widget=forms.NumberInput(attrs={
+            'class': 'rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+             ,'style': 'width: 140px;'
+        })
+    )
+
+    #ESTADO DE RESULTADOS
+    ventas1 = forms.FloatField(
+        initial=178842.0, 
+        widget=forms.NumberInput(attrs={
+            'class': 'rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+             ,'style': 'width: 150px;'
+        })
+    )
+    ventas2 = forms.FloatField(
+        initial=198954.0, 
+        widget=forms.NumberInput(attrs={
+            'class': 'rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+             ,'style': 'width: 150px;'
+        })
+    )
+
+    costo1 = forms.FloatField(
+        initial=134189.0, 
+        widget=forms.NumberInput(attrs={
+            'class': 'rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+             ,'style': 'width: 150px;'
+        })
+    )
+    costo2 = forms.FloatField(
+        initial=154533.0, 
+        widget=forms.NumberInput(attrs={
+            'class': 'rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+             ,'style': 'width: 150px;'
+        })
+    )
+
+class ExtendedNofForm(NofForm):
+    crecimiento_utilidad = forms.FloatField(
+        initial=5.0,
+        label="Crecimiento de Utilidad (%)",
+        widget=forms.NumberInput(attrs={
+            'class': 'rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary',
+            'style': 'width: 140px;'
+        })
+    )
+    dividendos = forms.FloatField(
+        initial=10000.0,
+        label="Dividendos",
+        widget=forms.NumberInput(attrs={
+            'class': 'rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary',
+            'style': 'width: 140px;'
+        })
+    )
+    acciones = forms.FloatField(
+        initial=100000.0,
+        label="Número de Acciones",
+        widget=forms.NumberInput(attrs={
+            'class': 'rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary',
+            'style': 'width: 140px;'
+        })
+    )
+    costo_capital = forms.FloatField(
+        initial=10.0,
+        label="Costo de Capital (%)",
+        widget=forms.NumberInput(attrs={
+            'class': 'rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary',
+            'style': 'width: 140px;'
+        })
+    )
 class WaccCalculoForm(forms.Form):
     pasivo1 = forms.FloatField(
         label="Pasivo C/P",
@@ -505,3 +725,10 @@ class WaccCalculoForm(forms.Form):
 
 
 
+
+
+class BonoForm(forms.Form):
+    monto_bono = forms.DecimalField(label='Monto del Bono', max_digits=10, decimal_places=2)
+    tasa_interes = forms.DecimalField(label='Tasa de Interés Anual', max_digits=5, decimal_places=4)
+    numero_anos = forms.IntegerField(label='Número de Años')
+    
