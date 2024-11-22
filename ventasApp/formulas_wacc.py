@@ -13,8 +13,8 @@ def convertir_tea(tasa:float):
     return tasa_efectiva * 100
 
 def estructura_capital(pasivo:float, patrimonio:float):
-    wd_pasivo = pasivo/(pasivo+patrimonio)
-    we_patrimonio = patrimonio/(pasivo+patrimonio)
+    wd_pasivo = (pasivo/(pasivo+patrimonio)) * 100
+    we_patrimonio = (patrimonio/(pasivo+patrimonio)) * 100
     return wd_pasivo, we_patrimonio
 
 def tasa_ponderada_pasivo(tasa1:float,tasa_efectiva:float):
@@ -23,8 +23,8 @@ def tasa_ponderada_pasivo(tasa1:float,tasa_efectiva:float):
     tasa_ponderada = tasa1 + tasa2
     return tasa_ponderada * 100
 
-def determinar_wacc(tasa_ponderada:float,prima_riesgo:float,wd_pasivo:float,we_patrimonio:float,capm:float):
-    wacc = (tasa_ponderada/100) * (1-(prima_riesgo/100)) * (wd_pasivo/100) + (capm/100) * (we_patrimonio/100)
+def determinar_wacc(tasa_ponderada:float,wd_pasivo:float,we_patrimonio:float,capm:float,tasa_impuesto:float):
+    wacc = (tasa_ponderada/100) * (1-(tasa_impuesto/100)) * (wd_pasivo/100) + (capm/100) * (we_patrimonio/100)
     return wacc * 100
 
 

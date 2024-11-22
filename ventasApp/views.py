@@ -592,11 +592,10 @@ def calcular_wacc(request):
             wd_pasivo , we_patrimonio = formulas_wacc.estructura_capital(pasivo_total,patrimonio_total)
             tasa_efectiva = formulas_wacc.convertir_tea(tem)
             tasa_ponderada = formulas_wacc.tasa_ponderada_pasivo(tea,tasa_efectiva)
-
             beta_apalancado = formulas_wacc.beta_apalancado(beta_d,tasa_impuesto,wd_pasivo)
             capm = formulas_wacc.calcular_capm(beta_apalancado,tasa_libre_riesgo,tasa_mercado,prima_riesgo)
-            wacc = formulas_wacc.determinar_wacc(tasa_ponderada,prima_riesgo,wd_pasivo,we_patrimonio,capm)
-
+            wacc = formulas_wacc.determinar_wacc(tasa_ponderada,prima_riesgo,wd_pasivo,we_patrimonio,capm,tasa_impuesto)
+            wacc = round(wacc,2)
             return render(request, 'wacc_calculo.html', {'wacc': wacc})
     else:
         form = WaccCalculoForm()
