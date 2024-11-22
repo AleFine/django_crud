@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from .utils import render_to_pdf
 from django.http import HttpResponse
 from .forms import CategoriaForm,ClienteForm,UnidadForm,ProductoForm
-from .forms import CategoriaForm,ClienteForm,UnidadForm,ProductoForm,DetalleVentaForm,VentaForm,FactorCapitalizacionForm,FactorActualizacionForm
+from .forms import CategoriaForm,ClienteForm,UnidadForm,ProductoForm,DetalleVentaForm,VentaForm,FactorCapitalizacionForm,FactorActualizacionForm, NofForm
 from django.http import JsonResponse
 from django.urls import reverse
 from django.db.models import F
@@ -570,6 +570,75 @@ def factor_actua(request):
         form = FactorActualizacionForm()
     
     return render(request, 'factor_actualizacion.html', {'form': form})
+
+def calcular_nof(request):
+    if request.method == 'POST':
+        form = NofForm(request.POST)
+        if form.is_valid():
+            efectivo1 = form.cleaned_data['efectivo1']
+            efectivo2 = form.cleaned_data['efectivo2']
+            ccobrar1 = form.cleaned_data['ccobrar1']
+            ccobrar2 = form.cleaned_data['ccobrar2']
+            existencias1 = form.cleaned_data['existencias1']
+            existencias2 = form.cleaned_data['existencias2']
+            inmueble1 = form.cleaned_data['inmueble1']
+            inmueble2 = form.cleaned_data['inmueble2']
+            aIntangibles1 = form.cleaned_data['aIntangibles1']
+            aIntangibles2 = form.cleaned_data['aIntangibles2']
+            cpagar1 = form.cleaned_data['cpagar1']
+            cpagar2 = form.cleaned_data['cpagar2']
+            obligaciones1 = form.cleaned_data['obligaciones1']
+            obligaciones2 = form.cleaned_data['obligaciones2']
+            obligacionesF1 = form.cleaned_data['obligacionesF1']
+            obligacionesF2 = form.cleaned_data['obligacionesF2']
+            capital1 = form.cleaned_data['capital1']
+            capital2 = form.cleaned_data['capital2']
+            resultadosA1 = form.cleaned_data['resultadosA1']
+            resultadosA2 = form.cleaned_data['resultadosA2']
+            ventas1 = form.cleaned_data['ventas1']
+            ventas2 = form.cleaned_data['ventas2']
+            costo1 = form.cleaned_data['costo1']
+            costo2 = form.cleaned_data['costo2']
+
+            activos_corrientes1=formulas.total_activos_corrientes(efectivo1,ccobrar1,existencias1)
+            activos_corrientes2=formulas.total_activos_corrientes(efectivo2,ccobrar2,existencias2)
+
+            activos_no_corrientes1=formulas.total_activos_no_corrientes(inmueble1,aIntangibles1)
+            activos_no_corrientes2=formulas.total_activos_no_corrientes(inmueble2,aIntangibles2)
+
+            pasivos_corrientes1=formulas.total_pasivos_corrientes(cpagar1,obligaciones1)
+            pasivos_corrientes2=formulas.total_pasivos_corrientes(cpagar2,obligaciones2)
+
+            pasivos_no_corrientes1=obligacionesF1
+            pasivos_no_corrientes2=obligacionesF2
+
+            total_activos1 = activos_corrientes1+activos_no_corrientes1
+            total_activos2 =activos_corrientes2+activos_no_corrientes2
+
+            total_pasivos1 =pasivos_corrientes1+pasivos_no_corrientes1
+            total_pasivos2 =pasivos_corrientes2+pasivos_no_corrientes2
+
+            patrimonio1=formulas.total_patrimonio(capital1,resultadosA1)
+            patrimonio2=formulas.total_patrimonio(capital2,resultadosA2)
+
+            utilidad1=formulas.total_utilidad(ventas1,costo1)
+            utilidad2=formulas.total_utilidad(ventas2,costo2)
+
+            return render(request, 'ratios_nof.html', {
+                'total_activos1': total_activos1,
+                'total_activos2': total_activos2,
+                'total_pasivos1': total_pasivos1,
+                'total_pasivos2': total_pasivos2,
+                'patrimonio1': patrimonio1,
+                'patrimonio2': patrimonio2,
+                'utilidad1': utilidad1,
+                'utilidad2': utilidad2
+            })
+
+    else:
+        form = NofForm()
+
+    return render(request, 'ratios_nof.html', {'form': form})
 
 
 

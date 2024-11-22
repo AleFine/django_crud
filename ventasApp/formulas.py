@@ -58,3 +58,23 @@ def dias_equivalentes(valor: str):
     
     cantidad_dias = dias_totales[valor]
     return cantidad_dias
+
+def total_activos_corrientes(efectivo,ccobrar,existencias):
+    tactivos_corrientes = efectivo+ccobrar+existencias
+    return tactivos_corrientes
+
+def total_activos_no_corrientes(inmueble,aIntangible):
+    tactivos_no_corrientes = inmueble+aIntangible
+    return tactivos_no_corrientes
+
+def total_pasivos_corrientes(cpagar,obligaciones):
+    tpasivos_corrientes = cpagar+obligaciones
+    return tpasivos_corrientes
+
+def total_patrimonio(capital,resultadosA):
+    patrimonio = capital+resultadosA
+    return patrimonio
+
+def total_utilidad(ventas,costo):
+    patrimonio = ventas+costo
+    return patrimonio
