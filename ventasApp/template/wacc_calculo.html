@@ -13,60 +13,81 @@
             <h3 class="font-medium text-black dark:text-white">WACC O CPPC</h3>
         </div>
         <div class="flex flex-col gap-5.5 p-6.5">
-            <form method="POST" action="{% url 'factor_a' %}" id="calculoForm">
+            <form method="POST" action="{% url 'calcular_wacc' %}" id="calculoForm">
                 {% csrf_token %}
-
                 <div>
                     <label class="mb-3 block text-sm font-medium text-black dark:text-white">
-                        Tasa de Interés (i)
+                        Pasivo C/P
                     </label>
-                    {{ form.tasa }}
+                    {{ form.pasivo1 }}
+                    <label class="mb-3 block text-sm font-medium text-black dark:text-white">
+                        TEM
+                    </label>
+                    {{ form.tem }}
+                </div>
+            
+                <div>
+                    <label class="mb-3 block text-sm font-medium text-black dark:text-white">
+                        Pasivo L/P
+                    </label>
+                    {{ form.pasivo2 }}
+                    <label class="mb-3 block text-sm font-medium text-black dark:text-white">
+                        TEA
+                    </label>
+                    {{ form.tea }}
                 </div>
             
                 <div class="mb-5">
                     <label class="mb-3 block text-sm font-medium text-black dark:text-white">
-                        Tipo de Tasa
+                        Total de Activo
                     </label>
-                    {{ form.tipo_tasa }}
+                    {{ form.activo }}
                 </div>
             
                 <div class="mb-5">
                     <label class="mb-3 block text-sm font-medium text-black dark:text-white">
-                        Tipo de Capitalización
+                        Tasa Libre de Riesgo (Rf)
                     </label>
-                    {{ form.tipo_capitalizacion }}
-                </div>
-            
-                <div class="mb-5">
-                    <label class="mb-3 block text-sm font-medium text-black dark:text-white" id="label_capital">
-                        Stock Final (S)
-                    </label>
-                    {{ form.stock_final }}
+                    {{ form.tasa_libre_riesgo }}
                 </div>
             
                 <div class="mb-5">
                     <label class="mb-3 block text-sm font-medium text-black dark:text-white">
-                        Número de Periodos (n)
+                        Beta de Desapalancamiento (Bd)
                     </label>
-                    {{ form.periodos }}
+                    {{ form.beta_desapalancado }}
                 </div>
-            
+
                 <div class="mb-5">
                     <label class="mb-3 block text-sm font-medium text-black dark:text-white">
-                        Tipo de Periodo
+                        Tasa de Mercado (Rm)
                     </label>
-                    {{ form.tipo_periodo }}
+                    {{ form.tasa_mercado }}
                 </div>
-            
+
+                <div class="mb-5">
+                    <label class="mb-3 block text-sm font-medium text-black dark:text-white">
+                        Riesgo Pais (Rp)
+                    </label>
+                    {{ form.prima_riesgo }}
+                </div>
+
                 <button type="submit" class="mt-6 inline-flex items-center justify-center rounded-md bg-primary px-10 py-4 text-center font-medium text-white hover:bg-opacity-90">
                     Calcular
                 </button>
             </form>
+            {% if wacc %}
+            <div>
+                <div class="mt-4">
+                    <h3 class="font-bold text-black dark:text-white">WACC:</h3>
+                    <p class="text-lg">{{ wacc }}</p>
+                </div>
 
-            {% if resultado %}
-            <div class="mt-4">
-                <h3 class="font-bold text-black dark:text-white">Stock Inicial:</h3>
-                <p class="text-lg">{{ resultado }}</p>
+                <div class="mt-4">
+                    <h3 class="font-bold text-black dark:text-white">Interpretación:</h3>
+                    <p class="text-lg">- El costo promedio de financiar los activos de la empresa son de {{ wacc }}% anual </p>
+                    <p class="text-lg">- La tasa minima del proyecto para ser rentable es de {{ wacc }}% </p>
+                </div>
             </div>
             {% endif %}
         </div>

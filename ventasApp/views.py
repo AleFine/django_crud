@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from .utils import render_to_pdf
 from django.http import HttpResponse
 from .forms import CategoriaForm,ClienteForm,UnidadForm,ProductoForm
-from .forms import CategoriaForm,ClienteForm,UnidadForm,ProductoForm,DetalleVentaForm,VentaForm,FactorCapitalizacionForm,FactorActualizacionForm
+from .forms import CategoriaForm,ClienteForm,UnidadForm,ProductoForm,DetalleVentaForm,VentaForm,FactorCapitalizacionForm,FactorActualizacionForm,WaccCalculoForm
 from django.http import JsonResponse
 from django.urls import reverse
 from django.db.models import F
@@ -585,7 +585,7 @@ def calcular_wacc(request):
             prima_riesgo = form.cleaned_data['prima_riesgo']
             tasa_libre_riesgo = form.cleaned_data['tasa_libre_riesgo']
             tasa_mercado = form.cleaned_data['tasa_mercado']
-            beta_d = form.cleaned_data['beta_desepalancado']
+            beta_d = form.cleaned_data['beta_desapalancado']
 
             pasivo_total = pasivo1 + pasivo2
             patrimonio_total = activo - pasivo_total
