@@ -572,6 +572,9 @@ def factor_actua(request):
     return render(request, 'factor_actualizacion.html', {'form': form})
 
 
+def bono1_view(request):
+    return render(request, 'bono1.html')
+
 
 
 

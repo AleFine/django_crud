@@ -414,3 +414,9 @@ class FactorActualizacionForm(forms.Form):
             'class': 'relative z-20 w-full appearance-none rounded border-[1.5px] border-stroke bg-transparent py-3 pl-5 pr-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
         })
     )
+
+class BonoForm(forms.Form):
+    monto_bono = forms.DecimalField(label='Monto del Bono', max_digits=10, decimal_places=2)
+    tasa_interes = forms.DecimalField(label='Tasa de Interés Anual', max_digits=5, decimal_places=4)
+    numero_anos = forms.IntegerField(label='Número de Años')
+    
