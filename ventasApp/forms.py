@@ -418,6 +418,7 @@ class FactorActualizacionForm(forms.Form):
 class WaccCalculoForm(forms.Form):
     pasivo1 = forms.FloatField(
         label="Pasivo C/P",
+        initial=2500000,
         widget=forms.NumberInput(attrs={
             'class': 'mb-3 w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
         })
@@ -425,6 +426,7 @@ class WaccCalculoForm(forms.Form):
 
     tem = forms.FloatField(
         label="TEM",
+        initial=1.5,
         widget=forms.NumberInput(attrs={
             'class': 'mb-3 w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
         })
@@ -432,6 +434,7 @@ class WaccCalculoForm(forms.Form):
 
     pasivo2 = forms.FloatField(
         label="Pasivo L/P",
+        initial = 3000000,
         widget=forms.NumberInput(attrs={
             'class': 'mb-3 w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
         })
@@ -439,6 +442,7 @@ class WaccCalculoForm(forms.Form):
 
     tea = forms.FloatField(
         label="TEA",
+        initial = 54.55,
         widget=forms.NumberInput(attrs={
             'class': 'mb-3 w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
         })
@@ -446,6 +450,7 @@ class WaccCalculoForm(forms.Form):
 
     activo = forms.FloatField(
         label="Total de Activo",
+        initial=17000000,
         widget=forms.NumberInput(attrs={
             'class': 'mb-3 w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
         })
@@ -453,6 +458,7 @@ class WaccCalculoForm(forms.Form):
 
     tasa_libre_riesgo = forms.FloatField(
         label="Tasa Libre de Riesgo (Rf)",
+        initial=0.2,
         widget=forms.NumberInput(attrs={
             'class': 'mb-3 w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
         })
@@ -460,6 +466,7 @@ class WaccCalculoForm(forms.Form):
 
     beta_desapalancado = forms.FloatField(
         label="Beta de Desapalancamiento (Bd)",
+        initial=0.92,
         widget=forms.NumberInput(attrs={
             'class': 'mb-3 w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
         })
@@ -467,6 +474,7 @@ class WaccCalculoForm(forms.Form):
 
     tasa_mercado = forms.FloatField(
         label="Tasa de Mercado (Rm)",
+        initial = 5,
         widget=forms.NumberInput(attrs={
             'class': 'mb-3 w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
         })
@@ -474,6 +482,7 @@ class WaccCalculoForm(forms.Form):
 
     prima_riesgo = forms.FloatField(
         label="Riesgo Pais (Rp)",
+        initial=1.8,
         widget=forms.NumberInput(attrs={
             'class': 'mb-3 w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
         })
@@ -481,6 +490,7 @@ class WaccCalculoForm(forms.Form):
 
     tasa_impuesto = forms.FloatField(
         label="Tasa de Impuesto a la Renta (R)",
+        initial = 29.5,
         widget=forms.NumberInput(attrs={
             'class': 'mb-3 w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
         })
