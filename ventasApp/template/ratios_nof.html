@@ -176,14 +176,63 @@
             </form>
             
             <div style="min-height: 200px; max-height: 400px; overflow-y: auto;" >
-            {% if total_activos1 and total_activos2 and total_pasivos1 and total_pasivos2 and patrimonio1 and patrimonio2 and utilidad1 and utilidad2 %}
-                <div class="">
+                {% if nof1 and fm1 and nof2 and fm2 and exc1 and exc2 and total_activos1 and total_activos2 and total_pasivos1 and total_pasivos2 and patrimonio1 and patrimonio2 and utilidad1 and utilidad2 %}
+                <div class="border-b py-4">
                     <h3 class="font-bold text-black dark:text-white">TOTALES:</h3>
-                    <h3 class="font-bold text-black dark:text-white text-right">Total activos: {{ total_activos1 }}  {{ total_activos2 }} </h3>
-                    <h3 class="font-bold text-black dark:text-white text-right">Total pasivos: {{ total_pasivos1 }}  {{ total_pasivos2 }}</h3>
-                    <h3 class="font-bold text-black dark:text-white text-right">Patrimonio Neto:  {{ patrimonio1 }}  {{ patrimonio2 }}</h3>
-                    <h3 class="font-bold text-black dark:text-white text-right">Utilidad Bruta:     {{ utilidad1 }}  {{ utilidad2 }}</h3>
+                    <h3 class="font-bold text-black dark:text-white text-right"><span class="mr-4">Total activos: {{ total_activos1 }}</span> {{ total_activos2 }} </h3>
+                    <h3 class="font-bold text-black dark:text-white text-right"><span class="mr-4">Total pasivos{{ total_pasivos1 }}</span>{{ total_pasivos2 }}</h3>
+                    <h3 class="font-bold text-black dark:text-white text-right"><span class="mr-4">Patrimonio Neto: {{ patrimonio1 }}</span>{{ patrimonio2 }}</h3>
+                    <h3 class="font-bold text-black dark:text-white text-right"><span class="mr-4">Utilidad Bruta: {{ utilidad1 }}</span>{{ utilidad2 }}</h3>
                 </div>
+                <div class="border-b py-2 bg-black">
+                    <label class="mb-3 block text-white text-lg font-bold dark:text-white text-center">
+                    FM Y NOF      
+                    </label>
+                </div>
+                <div class="flex items-center py-2 gap-4" style="gap:90px;">
+                    <label class="mb-3 block text-sm font-medium text-black dark:text-white">
+                        AÑO ANTERIOR: 
+                    </label>
+                    <div class="flex items-center py-2 gap-8">
+                        <h4>NOF: </h4>
+                        <input type="number" name="nof1" value="{{ nof1 }}" class="rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary" style="width: 140px;" readonly>
+                        <h4>FM: </h4>
+                        <input type="number" name="fm1" value="{{ fm1 }}" class="rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary" style="width: 140px;" readonly>
+                        <h4>Diferencia: </h4>
+                        <input type="number" name="exc1" value="{{ exc1 }}" class="rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary" style="width: 140px;" readonly>
+                    </div>
+                </div>
+
+                <div class="flex items-center py-2 gap-4" style="gap:90px;">
+                    <label class="mb-3 block text-sm font-medium text-black dark:text-white">
+                        AÑO POSTERIOR: 
+                    </label>
+                    <div class="flex items-center py-2 gap-8">
+                        <h4>NOF: </h4>
+                        <input type="number" name="nof2" value="{{ nof2 }}" class="rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary" style="width: 140px;" readonly>
+                        <h4>FM: </h4>
+                        <input type="number" name="fm2" value="{{ fm2 }}" class="rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary" style="width: 140px;" readonly>
+                        <h4>Diferencia: </h4>
+                        <input type="number" name="exc2" value="{{ exc2 }}" class="rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary" style="width: 140px;" readonly>
+                    </div>
+                </div> 
+                
+                <div>
+                    <label class="mb-3 block font-bold text-lg text-black dark:text-white">
+                        INTERPRETACIONES 
+                    </label>
+                </div>
+
+                <div class="w-full flex">
+                    <h4>Respecto al año anterior:</h4>
+                    <input class="w-full" type="text" name="mensaje1" value="{{ mensaje1 }}">
+                </div>
+                <br>
+                <div class="w-full flex">
+                    <h4>Respecto al año posterior: </h4>
+                    <input class="w-full" type="text" name="mensaje2" value="{{ mensaje2 }}">
+                </div>
+
             {% endif %}
             </div>
         </div>

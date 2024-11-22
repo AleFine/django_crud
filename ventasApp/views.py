@@ -624,7 +624,70 @@ def calcular_nof(request):
             utilidad1=formulas.total_utilidad(ventas1,costo1)
             utilidad2=formulas.total_utilidad(ventas2,costo2)
 
+            #FM 
+
+            fm1=activos_corrientes1-pasivos_corrientes1
+            fm2=activos_corrientes2-pasivos_corrientes2
+
+            #NOF
+            #MADURACION CXC
+            rotcxc1=ventas1/ccobrar1
+            rotcxc2=ventas2/ccobrar2
+
+            cxcdiarias1=ccobrar1/360
+            cxcdiarias2=ccobrar2/360
+
+            periodocobro1=360/rotcxc1
+            periodocobro2=360/rotcxc2
+
+            saldo_nof_cxc_1=formulas.saldo_nof(cxcdiarias1,periodocobro1)
+            saldo_nof_cxc_2=formulas.saldo_nof(cxcdiarias2,periodocobro2)
+
+            #MADURACION X EXISTENCIAS
+            rot_inventario1=costo1/existencias1
+            rot_inventario2=costo2/existencias2
+
+            inventario1=existencias1/360
+            inventario2=existencias2/360
+
+            periodo_inventario1=360/rot_inventario1
+            periodo_inventario2=360/rot_inventario2
+
+            saldo_nof_existencias_1=formulas.saldo_nof(inventario1,periodo_inventario1)
+            saldo_nof_existencias_2=formulas.saldo_nof(inventario2,periodo_inventario2)
+            
+            #MADURACION CXP
+            rot_cxp1=costo1/cpagar1
+            rot_cxp2=costo2/cpagar2
+
+            cxpdiarias1=cpagar1/360
+            cxpdiarias2=cpagar2/360
+
+            promedio_pago1=360/rot_cxp1
+            promedio_pago2=360/rot_cxp2
+
+            saldo_nof_cxp_1=formulas.saldo_nof(cxpdiarias1,promedio_pago1)
+            saldo_nof_cxp_2=formulas.saldo_nof(cxpdiarias2,promedio_pago2)
+
+            #NOF TOTAL
+            nof1=saldo_nof_cxc_1+saldo_nof_existencias_1-saldo_nof_cxp_1
+            nof2=saldo_nof_cxc_2+saldo_nof_existencias_2-saldo_nof_cxp_2
+
+            #EXCEDENTE
+            exc1=fm1-nof1
+            exc2=fm2-nof2
+
+            #INTERPRETACION
+            mensaje1 = "La empresa puede afrontar imprevistos o aprovechar oportunidades sin problemas de liquidez." if fm1 > nof1 else "La empresa no tiene suficientes recursos líquidos para cubrir sus necesidades operativas. Puede ser necesario recurrir a financiación externa"
+            mensaje2 = "La empresa tiene más recursos disponibles que los necesarios para cubrir sus necesidades operativas " if fm2 > nof2 else "La empresa no tiene suficientes recursos líquidos para cubrir sus necesidades operativas. Puede ser necesario recurrir a financiación externa"
+
             return render(request, 'ratios_nof.html', {
+                'exc1':exc1,
+                'exc2':exc2,
+                'nof1':nof1,
+                'nof2':nof2,
+                'mensaje1':mensaje1,
+                'mensaje2':mensaje2,
                 'total_activos1': total_activos1,
                 'total_activos2': total_activos2,
                 'total_pasivos1': total_pasivos1,
@@ -632,7 +695,9 @@ def calcular_nof(request):
                 'patrimonio1': patrimonio1,
                 'patrimonio2': patrimonio2,
                 'utilidad1': utilidad1,
-                'utilidad2': utilidad2
+                'utilidad2': utilidad2,
+                'fm1': fm1,
+                'fm2': fm2
             })
 
     else:
@@ -820,11 +885,6 @@ def calcular_wacc(request):
         form = WaccCalculoForm()
 
     return render(request, 'wacc_calculo.html', {'form': form})
-
-
-
-
-
 
 
 
