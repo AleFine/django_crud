@@ -76,5 +76,9 @@ def total_patrimonio(capital,resultadosA):
     return patrimonio
 
 def total_utilidad(ventas,costo):
-    patrimonio = ventas+costo
-    return patrimonio
+    u = ventas-costo
+    return u
+
+def saldo_nof(a,b):
+    saldo_nof = a*b
+    return saldo_nof
