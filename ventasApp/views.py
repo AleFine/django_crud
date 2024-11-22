@@ -571,6 +571,7 @@ def factor_actua(request):
     
     return render(request, 'factor_actualizacion.html', {'form': form})
 
+<<<<<<< HEAD
 def calcular_nof(request):
     if request.method == 'POST':
         form = NofForm(request.POST)
@@ -885,6 +886,16 @@ def calcular_wacc(request):
         form = WaccCalculoForm()
 
     return render(request, 'wacc_calculo.html', {'form': form})
+=======
+
+def bono1_view(request):
+    return render(request, 'bono1.html')
+
+
+
+
+
+>>>>>>> origin/Pamelaa
 
 
 
