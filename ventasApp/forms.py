@@ -415,8 +415,6 @@ class FactorActualizacionForm(forms.Form):
         })
     )
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 class NofForm(forms.Form):
     #ACTIVOS CORRIENTES
     efectivo1 = forms.FloatField(
@@ -637,7 +635,6 @@ class ExtendedNofForm(NofForm):
             'style': 'width: 140px;'
         })
     )
-=======
 class WaccCalculoForm(forms.Form):
     pasivo1 = forms.FloatField(
         label="Pasivo C/P",
@@ -718,11 +715,10 @@ class WaccCalculoForm(forms.Form):
 
 
 
->>>>>>> rama_joseluis_2
-=======
+
+
 class BonoForm(forms.Form):
     monto_bono = forms.DecimalField(label='Monto del Bono', max_digits=10, decimal_places=2)
     tasa_interes = forms.DecimalField(label='Tasa de Interés Anual', max_digits=5, decimal_places=4)
     numero_anos = forms.IntegerField(label='Número de Años')
     
->>>>>>> origin/Pamelaa
