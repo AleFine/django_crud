@@ -479,6 +479,13 @@ class WaccCalculoForm(forms.Form):
         })
     )
 
+    tasa_impuesto = forms.FloatField(
+        label="Tasa de Impuesto a la Renta (R)",
+        widget=forms.NumberInput(attrs={
+            'class': 'mb-3 w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+        })
+    )
+
 
 
 
