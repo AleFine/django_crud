@@ -602,3 +602,28 @@ class NofForm(forms.Form):
         })
     )
 
+class ExtendedNofForm(NofForm):
+    crecimiento_utilidad = forms.FloatField(
+        initial=5.0,
+        label="Crecimiento de Utilidad (%)",
+        widget=forms.NumberInput(attrs={
+            'class': 'rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary',
+            'style': 'width: 140px;'
+        })
+    )
+    dividendos = forms.FloatField(
+        initial=10000.0,
+        label="Dividendos",
+        widget=forms.NumberInput(attrs={
+            'class': 'rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary',
+            'style': 'width: 140px;'
+        })
+    )
+    acciones = forms.FloatField(
+        initial=100000.0,
+        label="Número de Acciones",
+        widget=forms.NumberInput(attrs={
+            'class': 'rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary',
+            'style': 'width: 140px;'
+        })
+    )

@@ -10,183 +10,223 @@
 
     <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div class="border-b border-stroke px-6.5 py-4 dark:border-strokedark bg-black">
-            <h3 class="font-medium text-white dark:text-white ">ANALISIS DE SITUACION FINANCIERA Y ESTADO DE RESULTADOS</h3>
+            <h3 class="font-medium text-white dark:text-white">ANÁLISIS DE SITUACIÓN FINANCIERA Y ESTADO DE RESULTADOS</h3>
         </div>
         <div class="flex flex-col gap-5.5 p-6.5">
-            <form method="POST" action="{% url 'calcular_nof' %}" id="calculoForm">
+            <form method="POST" action="{% url 'calcular_ratios' %}" id="calculoForm">
                 {% csrf_token %}
                 <div class="flex items-center py-2 gap-8">
                     <div>
+                        <!-- Activos corrientes -->
                         <div class="border-b">
                             <label class="mb-3 block text-graydark text-lg font-bold dark:text-white text-center">
-                            ACTIVOS CORRIENTES      
+                                ACTIVOS CORRIENTES      
                             </label>
                         </div>
                         <div class="flex items-center py-2 gap-2">
                             <label class="mb-3 block text-sm font-medium text-black dark:text-white">
                                 Efectivo y equivalente de efectivo: 
                             </label>
-                            <input type="number" name="efectivo1" value="{{ form.efectivo1.value }}" class="rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary" style="width: 140px;">
-                            <input type="number" name="efectivo2" value="{{ form.efectivo2.value }}" class="rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary" style="width: 140px;">
+                            {{ form.efectivo1 }}
+                            {{ form.efectivo2 }}
                         </div>
-
                         <div class="flex items-center gap-3 py-2">
                             <label class="mb-3 block text-sm font-medium text-black dark:text-white">
                                 Cuentas por cobrar comerciales: 
                             </label>
-                            <input type="number" name="ccobrar1" value="{{ form.ccobrar1.value }}" class="rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary" style="width: 140px;">
-                            <input type="number" name="ccobrar2" value="{{ form.ccobrar2.value }}" class="rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary" style="width: 140px;">
+                            {{ form.ccobrar1 }}
+                            {{ form.ccobrar2 }}
                         </div>
-                    
-                        <div class="flex items-center py-2 gap-3" style="gap:160px;">
+                        <div class="flex items-center py-2 gap-3">
                             <label class="mb-3 block text-sm font-medium text-black dark:text-white">
                                 Existencias: 
                             </label>
-                            <div class="flex items-center py-2 gap-3">
-                                <input type="number" name="existencias1" value="{{ form.existencias1.value }}" class="rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary" style="width: 140px;">
-                            <input type="number" name="existencias2" value="{{ form.existencias2.value }}" class="rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary" style="width: 140px;">
-                            </div>
+                            {{ form.existencias1 }}
+                            {{ form.existencias2 }}
                         </div>
 
+                        <!-- Activos no corrientes -->
                         <div class="border-b">
                             <label class="mb-3 block font-bold text-graydark text-lg dark:text-white text-center">
-                            ACTIVOS NO CORRIENTES      
+                                ACTIVOS NO CORRIENTES      
                             </label>
                         </div>
-                        
-                        <div class="flex items-center gap-4 py-2">
+                        <div class="flex items-center py-2 gap-4">
                             <label class="mb-3 block text-sm font-medium text-black dark:text-white">
                                 Inmueble, maquinaria y equipo: 
                             </label>
-                            <input type="number" name="inmueble1" value="{{ form.inmueble1.value }}" class="rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary" style="width: 140px;">
-                            <input type="number" name="inmueble2" value="{{ form.inmueble2.value }}" class="rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary" style="width: 140px;">
+                            {{ form.inmueble1 }}
+                            {{ form.inmueble2 }}
                         </div>
-                    
-                        <div class="flex items-center py-2 gap-3" style="gap:110px;">
+                        <div class="flex items-center py-2 gap-3">
                             <label class="mb-3 block text-sm font-medium text-black dark:text-white">
-                                Activos intangible: 
+                                Activos intangibles: 
                             </label>
-                            <div class="flex items-center py-2 gap-3">
-                                <input type="number" name="aIntangibles1" value="{{ form.aIntangibles1.value }}" class="rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary" style="width: 140px;">
-                                <input type="number" name="aIntangibles2" value="{{ form.aIntangibles2.value }}" class="rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary" style="width: 140px;">
-                            </div>
+                            {{ form.aIntangibles1 }}
+                            {{ form.aIntangibles2 }}
                         </div>
-                        <br><br><br>
                     </div>
+
                     <div>
+                        <!-- Pasivos corrientes -->
                         <div class="border-b">
                             <label class="mb-3 block text-graydark text-lg font-bold dark:text-white text-center">
-                            PASIVOS CORRIENTES      
+                                PASIVOS CORRIENTES      
                             </label>
                         </div>
                         <div class="flex items-center py-2 gap-3">
                             <label class="mb-3 block text-sm font-medium text-black dark:text-white">
                                 Cuentas por pagar comerciales: 
                             </label>
-                            <input type="number" name="cpagar1" value="{{ form.cpagar1.value }}" class="rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary" style="width: 140px;">
-                            <input type="number" name="cpagar2" value="{{ form.cpagar2.value }}" class="rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary" style="width: 140px;">
+                            {{ form.cpagar1 }}
+                            {{ form.cpagar2 }}
                         </div>
-
-                        <div class="flex items-center gap-4 py-2" style="gap:60px;">
+                        <div class="flex items-center gap-4 py-2">
                             <label class="mb-3 block text-sm font-medium text-black dark:text-white">
-                                Obligaciones Financieras: 
+                                Obligaciones financieras: 
                             </label>
-                            <div class="flex items-center gap-4 py-2">
-                                <input type="number" name="obligaciones1" value="{{ form.obligaciones1.value }}" class="rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary" style="width: 140px;">
-                            <input type="number" name="obligaciones2" value="{{ form.obligaciones2.value }}" class="rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary" style="width: 140px;">
-                            </div>
-                        </div>
-                        
-                        <div class="border-b">
-                            <label class="mb-3 block text-graydark text-lg font-bold  dark:text-white text-center">
-                            PASIVOS NO CORRIENTES      
-                            </label>
+                            {{ form.obligaciones1 }}
+                            {{ form.obligaciones2 }}
                         </div>
 
-                        <div class="flex items-center py-2 gap-3" style="gap:60px;">
+                        <!-- Pasivos no corrientes -->
+                        <div class="border-b">
+                            <label class="mb-3 block text-graydark text-lg font-bold dark:text-white text-center">
+                                PASIVOS NO CORRIENTES      
+                            </label>
+                        </div>
+                        <div class="flex items-center py-2 gap-3">
                             <label class="mb-3 block text-sm font-medium text-black dark:text-white">
-                                Obligaciones Financieras: 
+                                Obligaciones financieras: 
                             </label>
-                            <div class="flex items-center py-2 gap-3">
-                                <input type="number" name="obligacionesF1" value="{{ form.obligacionesF1.value }}" class="rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary" style="width: 140px;">
-                            <input type="number" name="obligacionesF2" value="{{ form.obligacionesF2.value }}" class="rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary" style="width: 140px;">
-                            </div>
+                            {{ form.obligacionesF1 }}
+                            {{ form.obligacionesF2 }}
                         </div>
 
-
+                        <!-- Patrimonio -->
                         <div class="border-b">
-                            <label class="mb-3 block  font-bold text-graydark text-lg dark:text-white text-center">
-                            PATRIMONIO     
+                            <label class="mb-3 block font-bold text-graydark text-lg dark:text-white text-center">
+                                PATRIMONIO     
                             </label>
                         </div>
-                        
-                        <div class="flex items-center py-2 gap-4" style="gap:180px;">
+                        <div class="flex items-center py-2 gap-4">
                             <label class="mb-3 block text-sm font-medium text-black dark:text-white">
                                 Capital: 
                             </label>
-                            <div class="flex items-center py-2 gap-4">
-                                <input type="number" name="capital1" value="{{ form.capital1.value }}" class="rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary" style="width: 140px;">
-                            <input type="number" name="capital2" value="{{ form.capital2.value }}" class="rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary" style="width: 140px;">
-                            </div>
+                            {{ form.capital1 }}
+                            {{ form.capital2 }}
                         </div>
-
-                        <div class="flex items-center py-2 gap-3" style="gap:80.5px;">
+                        <div class="flex items-center py-2 gap-3">
                             <label class="mb-3 block text-sm font-medium text-black dark:text-white">
-                                Resultados Acumulados: 
+                                Resultados acumulados: 
                             </label>
-                            <div class="flex items-center py-2 gap-3">
-                                <input type="number" name="resultadosA1" value="{{ form.resultadosA1.value }}" class="rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary" style="width: 140px;">
-                            <input type="number" name="resultadosA2" value="{{ form.resultadosA2.value }}" class="rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary" style="width: 140px;">
-                            </div>
+                            {{ form.resultadosA1 }}
+                            {{ form.resultadosA2 }}
                         </div>
-
-                        
                     </div>
                 </div>
 
+                <!-- Estado de resultados -->
                 <div class="border-b">
                     <label class="mb-3 block text-graydark text-lg font-bold dark:text-white text-center">
-                    ESTADO DE RESULTADOS      
+                        ESTADO DE RESULTADOS      
                     </label>
                 </div>
-
-                <div class="flex items-center py-2 gap-4" style="gap:160px;">
+                <div class="flex items-center py-2 gap-4">
                     <label class="mb-3 block text-sm font-medium text-black dark:text-white">
                         Ventas: 
                     </label>
-                    <div class="flex items-center py-2 gap-4">
-                        <input type="number" name="ventas1" value="{{ form.ventas1.value }}" class="rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary" style="width: 140px;">
-                        <input type="number" name="ventas2" value="{{ form.ventas2.value }}" class="rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary" style="width: 140px;">
-                    </div>
+                    {{ form.ventas1 }}
+                    {{ form.ventas2 }}
                 </div>
-
-                <div class="flex items-center py-2 gap-4" style="gap:160px;">
+                <div class="flex items-center py-2 gap-4">
                     <label class="mb-3 block text-sm font-medium text-black dark:text-white">
                         Costos: 
                     </label>
-                    <div class="flex items-center py-2 gap-4">
-                        <input type="number" name="costo1" value="{{ form.costo1.value }}" class="rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary" style="width: 140px;">
-                            <input type="number" name="costo2" value="{{ form.costo2.value }}" class="rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary" style="width: 140px;">
-                    </div>
-                </div>    
-                <input type="hidden" id="mostrar_resultado" name="mostrar_resultado" value="False">
-                <button id="mostrar_resultado" type="submit" class="mt-6 inline-flex items-center justify-center rounded-md bg-primary px-10  text-center font-medium text-white hover:bg-opacity-90">
+                    {{ form.costo1 }}
+                    {{ form.costo2 }}
+                </div>
+
+                <!-- Campos adicionales para ratios -->
+                <div class="border-b">
+                    <label class="mb-3 block text-graydark text-lg font-bold dark:text-white text-center">
+                        RATIOS ADICIONALES      
+                    </label>
+                </div>
+                <div class="flex items-center py-2 gap-4">
+                    <label class="mb-3 block text-sm font-medium text-black dark:text-white">
+                        Número de acciones: 
+                    </label>
+                    {{ form.acciones }}
+                </div>
+                <div class="flex items-center py-2 gap-4">
+                    <label class="mb-3 block text-sm font-medium text-black dark:text-white">
+                        Dividendos: 
+                    </label>
+                    {{ form.dividendos }}
+                </div>
+                <div class="flex items-center py-2 gap-4">
+                    <label class="mb-3 block text-sm font-medium text-black dark:text-white">
+                        Crecimiento de utilidad (%): 
+                    </label>
+                    {{ form.crecimiento_utilidad }}
+                </div>
+
+                <button type="submit" class="mt-6 inline-flex items-center justify-center rounded-md bg-primary px-10 py-4 text-center font-medium text-white hover:bg-opacity-90">
                     Calcular
                 </button>
             </form>
-            
-            <div style="min-height: 200px; max-height: 400px; overflow-y: auto;" >
-            {% if total_activos1 and total_activos2 and total_pasivos1 and total_pasivos2 and patrimonio1 and patrimonio2 and utilidad1 and utilidad2 %}
-                <div class="">
-                    <h3 class="font-bold text-black dark:text-white">TOTALES:</h3>
-                    <h3 class="font-bold text-black dark:text-white text-right">Total activos: {{ total_activos1 }}  {{ total_activos2 }} </h3>
-                    <h3 class="font-bold text-black dark:text-white text-right">Total pasivos: {{ total_pasivos1 }}  {{ total_pasivos2 }}</h3>
-                    <h3 class="font-bold text-black dark:text-white text-right">Patrimonio Neto:  {{ patrimonio1 }}  {{ patrimonio2 }}</h3>
-                    <h3 class="font-bold text-black dark:text-white text-right">Utilidad Bruta:     {{ utilidad1 }}  {{ utilidad2 }}</h3>
+
+            {% if total_activos1 %}
+            <div class="mt-6">
+                <h3 class="font-bold text-black dark:text-white">Resultados:</h3>
+                <p><strong>Total Activos Año 1:</strong> {{ total_activos1 }}</p>
+                <p><strong>Total Activos Año 2:</strong> {{ total_activos2 }}</p>
+                <p><strong>Total Pasivos Año 1:</strong> {{ total_pasivos1 }}</p>
+                <p><strong>Total Pasivos Año 2:</strong> {{ total_pasivos2 }}</p>
+                <p><strong>EBITDA:</strong> {{ ebitda }}</p>
+                <p><strong>EVA:</strong> {{ eva }}</p>
+
+                {% if ratios %}
+                <div class="mt-6">
+                    <h3 class="font-bold text-black dark:text-white">Resultados de Ratios Financieros</h3>
+
+                    <label for="ratioSelect" class="block mb-2 text-sm font-medium text-black dark:text-white">
+                        Selecciona un Ratio:
+                    </label>
+                    <select id="ratioSelect" class="w-full mb-4 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-black dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+                        <option value="" selected>-- Selecciona --</option>
+                        {% for key, value in ratios.items %}
+                        <option value="{{ key }}">{{ key|capfirst }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <div id="ratioResultado" class="hidden">
+                        <p><strong>Resultado:</strong> <span id="resultadoValor"></span></p>
+                        <p><strong>Interpretación:</strong> <span id="resultadoInterpretacion"></span></p>
+                    </div>
                 </div>
-            {% endif %}
+                {% endif %}
             </div>
+            {% endif %}
         </div>
     </div>
 </div>
+<script>
+    document.getElementById("ratioSelect").addEventListener("change", function () {
+        const selectedRatio = this.value;
+        const ratioResultado = document.getElementById("ratioResultado");
+        if (selectedRatio) {
+            const ratios = {{ ratios|safe }};
+            const interpretaciones = {{ interpretaciones|safe }};
+
+            document.getElementById("resultadoValor").textContent = ratios[selectedRatio].toFixed(2);
+            document.getElementById("resultadoInterpretacion").textContent = interpretaciones[selectedRatio];
+            ratioResultado.classList.remove("hidden");
+        } else {
+            ratioResultado.classList.add("hidden");
+        }
+    });
+</script>
+
 {% endblock content %}

@@ -641,6 +641,155 @@ def calcular_nof(request):
     return render(request, 'ratios_nof.html', {'form': form})
 
 
+from .forms import ExtendedNofForm  
+from .ratios_formulas import calcular_ebitda, calcular_eva, calcular_ratios_financieros
+
+
+def interpretar_ratio(nombre, valor):
+    interpretaciones = {
+        "RATIO PER (PRECIO SOBRE BENEFICIOS)": lambda x: (
+            "📊 Excelente: Empresa potencialmente infravalorada, PER muy competitivo" if x < 10 else
+            "✅ Atractivo: PER bajo, sugiere valor potencial" if x < 15 else
+            "🔍 Neutro: PER dentro de rango de mercado" if x < 25 else
+            "⚠️ Precaución: Posible sobrevaloración, expectativas de crecimiento muy altas"
+        ),
+        "RATIO PRECIO SOBRE VENTAS (PV)": lambda x: (
+            "💡 Valor excepcional: Múltiplo de ventas muy bajo" if x < 0.5 else
+            "✅ Atractivo: Precio/ventas competitivo" if x < 1.5 else
+            "🔍 Razonable: Valoración de mercado equilibrada" if x < 3 else
+            "⚠️ Alto riesgo: Posible sobrevaloración significativa"
+        ),
+        "RATIO PRECIO SOBRE VALOR CONTABLE (PRICE TO BOOK)": lambda x: (
+            "💎 Oportunidad: Valor contable muy por debajo del precio de mercado" if x < 1 else
+            "✅ Equilibrado: Valoración cercana a su valor patrimonial" if x < 2 else
+            "🚨 Sobrevalorado: Riesgo de corrección significativa"
+        ),
+        "RATIO VALOR DE LA EMPRESA SOBRE EL EBITDA": lambda x: (
+            "🏆 Excelente inversión: EV/EBITDA muy eficiente" if x < 8 else
+            "✅ Atractivo: Múltiplo de valoración competitivo" if x < 12 else
+            "🔍 Razonable: Dentro del rango de mercado" if x < 20 else
+            "⚠️ Precaución: Posible sobrevaloración empresarial"
+        ),
+        "RATIO PEG": lambda x: (
+            "🚀 Crecimiento óptimo: Excelente relación precio-crecimiento" if x < 0.5 else
+            "✅ Atractivo: Crecimiento eficiente" if x < 1 else
+            "🔍 Moderado: Equilibrio entre precio y crecimiento" if x < 2 else
+            "🚨 Alto riesgo: Crecimiento potencialmente sobrevaluado"
+        ),
+        "ROA – RENTABILIDAD SOBRE LOS ACTIVOS": lambda x: (
+            "🏆 Excelente gestión: Eficiencia operativa superior" if x > 15 else
+            "✅ Competitivo: Buena utilización de activos" if x > 10 else
+            "🔍 Mejorable: Rendimiento promedio" if x > 5 else
+            "⚠️ Ineficiente: Necesita optimización estratégica"
+        ),
+        "ROE – RENTABILIDAD SOBRE PATRIMONIO": lambda x: (
+            "💯 Destacado: Rendimiento excepcional para accionistas" if x > 20 else
+            "✅ Atractivo: Buena generación de valor" if x > 15 else
+            "🔍 Estándar: Rendimiento dentro de expectativas" if x > 8 else
+            "⚠️ Bajo: Requiere revisión estratégica"
+        ),
+        "UPA – BENEFICIO POR ACCIÓN": lambda x: (
+            "🚀 Extraordinario: Beneficio por acción muy alto" if x > 10 else
+            "✅ Sólido: Beneficio significativo" if x > 5 else
+            "🔍 Estable: Beneficio moderado" if x > 2 else
+            "⚠️ Limitado: Potencial de mejora"
+        ),
+        "DIVIDENDO POR ACCIÓN": lambda x: (
+            "💰 Premium: Distribución de dividendos excepcional" if x > 5 else
+            "✅ Atractivo: Dividendos consistentes" if x > 3 else
+            "🔍 Moderado: Distribución básica" if x > 1 else
+            "⚠️ Bajo: Poca retribución al accionista"
+        ),
+        "YIELD": lambda x: (
+            "🏆 Alto rendimiento: Dividendos muy atractivos" if x > 5 else
+            "✅ Interesante: Buen retorno para inversores" if x > 3 else
+            "🔍 Razonable: Rendimiento promedio" if x > 1 else
+            "⚠️ Limitado: Bajo atractivo para inversores"
+        )
+    }
+
+    try:
+        valor_numerico = float(valor)
+        return interpretaciones.get(nombre, lambda _: "❓ Ratio no reconocido")(valor_numerico)
+    except (ValueError, TypeError):
+        return "❌ Valor inválido para el análisis"
+
+def calcular_ratios(request):
+    if request.method == 'POST':
+        form = ExtendedNofForm(request.POST)  
+        if form.is_valid():
+            efectivo1 = form.cleaned_data['efectivo1']
+            efectivo2 = form.cleaned_data['efectivo2']
+            ccobrar1 = form.cleaned_data['ccobrar1']
+            ccobrar2 = form.cleaned_data['ccobrar2']
+            existencias1 = form.cleaned_data['existencias1']
+            existencias2 = form.cleaned_data['existencias2']
+            inmueble1 = form.cleaned_data['inmueble1']
+            inmueble2 = form.cleaned_data['inmueble2']
+            aIntangibles1 = form.cleaned_data['aIntangibles1']
+            aIntangibles2 = form.cleaned_data['aIntangibles2']
+            cpagar1 = form.cleaned_data['cpagar1']
+            cpagar2 = form.cleaned_data['cpagar2']
+            obligaciones1 = form.cleaned_data['obligaciones1']
+            obligaciones2 = form.cleaned_data['obligaciones2']
+            obligacionesF1 = form.cleaned_data['obligacionesF1']
+            obligacionesF2 = form.cleaned_data['obligacionesF2']
+            capital1 = form.cleaned_data['capital1']
+            capital2 = form.cleaned_data['capital2']
+            resultadosA1 = form.cleaned_data['resultadosA1']
+            resultadosA2 = form.cleaned_data['resultadosA2']
+            ventas1 = form.cleaned_data['ventas1']
+            ventas2 = form.cleaned_data['ventas2']
+            costo1 = form.cleaned_data['costo1']
+            costo2 = form.cleaned_data['costo2']
+            acciones = form.cleaned_data['acciones']
+            dividendos = form.cleaned_data['dividendos']
+            crecimiento_utilidad = form.cleaned_data['crecimiento_utilidad']
+
+            activos_corrientes1 = efectivo1 + ccobrar1 + existencias1
+            activos_corrientes2 = efectivo2 + ccobrar2 + existencias2
+            activos_no_corrientes1 = inmueble1 + aIntangibles1
+            activos_no_corrientes2 = inmueble2 + aIntangibles2
+            pasivos_corrientes1 = cpagar1 + obligaciones1
+            pasivos_corrientes2 = cpagar2 + obligaciones2
+            pasivos_no_corrientes1 = obligacionesF1
+            pasivos_no_corrientes2 = obligacionesF2
+            total_activos1 = activos_corrientes1 + activos_no_corrientes1
+            total_activos2 = activos_corrientes2 + activos_no_corrientes2
+            total_pasivos1 = pasivos_corrientes1 + pasivos_no_corrientes1
+            total_pasivos2 = pasivos_corrientes2 + pasivos_no_corrientes2
+            patrimonio1 = capital1 + resultadosA1
+            patrimonio2 = capital2 + resultadosA2
+            utilidad1 = ventas1 - costo1
+            utilidad2 = ventas2 - costo2
+
+            ebitda = calcular_ebitda(ventas1, costo1)
+            eva = calcular_eva(ebitda, 10, total_pasivos1 + patrimonio1) 
+            ratios = calcular_ratios_financieros(utilidad1, ventas1, total_pasivos1, patrimonio1, acciones, dividendos, crecimiento_utilidad)
+            interpretaciones = {key: interpretar_ratio(key, value) for key, value in ratios.items()}
+
+            return render(request, 'ratios_nof_2.html', {
+                'form': form,
+                'total_activos1': total_activos1,
+                'total_activos2': total_activos2,
+                'total_pasivos1': total_pasivos1,
+                'total_pasivos2': total_pasivos2,
+                'patrimonio1': patrimonio1,
+                'patrimonio2': patrimonio2,
+                'utilidad1': utilidad1,
+                'utilidad2': utilidad2,
+                'ebitda': ebitda,
+                'eva': eva,
+                'ratios': ratios,
+                "interpretaciones":interpretaciones,
+            })
+
+    else:
+        form = ExtendedNofForm()
+
+    return render(request, 'ratios_nof_2.html', {'form': form})
+
+
 
 
 

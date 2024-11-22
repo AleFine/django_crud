@@ -5,7 +5,7 @@ from ventasApp.views import (
     listar_unidades, agregar_unidades, eliminar_unidades, editar_unidades,
     listar_productos, crear_producto, editar_producto, eliminar_producto,
     listar_ventas, crear_venta, editar_venta, eliminar_venta, get_cliente_documento,reporte_pdf,
-    calcular_factores, factor_actua, factor_capi,calcular_nof
+    calcular_factores, factor_actua, factor_capi,calcular_nof,calcular_ratios
 )
 from django.contrib.auth import views
 
@@ -45,6 +45,8 @@ urlpatterns = [
     path('actualizacion/', factor_actua, name='factor_a'),
     
     path('nof/', calcular_nof, name='calcular_nof'),
+    
+    path('calcular_ratios/', calcular_ratios, name='calcular_ratios'),
     ]
 
 
